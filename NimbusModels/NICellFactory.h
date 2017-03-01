@@ -50,8 +50,8 @@
  * set this factory as the model's delegate:
  *
  * @code
-// Must cast to id to avoid compiler warnings.
-_model.delegate = (id)[NICellFactory class];
+ // Must cast to id to avoid compiler warnings.
+ _model.delegate = (id)[NICellFactory class];
  * @endcode
  *
  * If you would like to customize the factory's output, implement the model's delegate method
@@ -59,19 +59,19 @@ _model.delegate = (id)[NICellFactory class];
  * the object to a cell it will return nil.
  *
  * @code
-- (UITableViewCell *)tableViewModel:(NITableViewModel *)tableViewModel
-                   cellForTableView:(UITableView *)tableView
-                        atIndexPath:(NSIndexPath *)indexPath
-                         withObject:(id)object {
-  UITableViewCell* cell = [NICellFactory tableViewModel:tableViewModel
-                                       cellForTableView:tableView
-                                            atIndexPath:indexPath
-                                             withObject:object];
-  if (nil == cell) {
-    // Custom cell creation here.
-  }
-  return cell;
-}
+ - (UITableViewCell *)tableViewModel:(NITableViewModel *)tableViewModel
+ cellForTableView:(UITableView *)tableView
+ atIndexPath:(NSIndexPath *)indexPath
+ withObject:(id)object {
+ UITableViewCell* cell = [NICellFactory tableViewModel:tableViewModel
+ cellForTableView:tableView
+ atIndexPath:indexPath
+ withObject:object];
+ if (nil == cell) {
+ // Custom cell creation here.
+ }
+ return cell;
+ }
  * @endcode
  */
 + (UITableViewCell *)tableViewModel:(NITableViewModel *)tableViewModel cellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath withObject:(id)object;
@@ -97,11 +97,11 @@ _model.delegate = (id)[NICellFactory class];
  *
  * Example implementation:
  *
-@code
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return [self.cellFactory tableView:tableView heightForRowAtIndexPath:indexPath model:self.model];
-}
-@endcode
+ @code
+ - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+ return [self.cellFactory tableView:tableView heightForRowAtIndexPath:indexPath model:self.model];
+ }
+ @endcode
  *
  * @param tableView The table view within which the cell exists.
  * @param indexPath The location of the cell in the table view.
@@ -123,11 +123,11 @@ _model.delegate = (id)[NICellFactory class];
  *
  * Example implementation:
  *
-@code
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return [NICellFactory tableView:tableView heightForRowAtIndexPath:indexPath model:self.model];
-}
-@endcode
+ @code
+ - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+ return [NICellFactory tableView:tableView heightForRowAtIndexPath:indexPath model:self.model];
+ }
+ @endcode
  *
  * @param tableView The table view within which the cell exists.
  * @param indexPath The location of the cell in the table view.
@@ -203,17 +203,17 @@ _model.delegate = (id)[NICellFactory class];
  *
  * The following is an appropiate implementation in your tableView's delegate:
  *
-@code
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  CGFloat height = tableView.rowHeight;
-  id object = [(NITableViewModel *)tableView.dataSource objectAtIndexPath:indexPath];
-  id class = [object cellClass];
-  if ([class respondsToSelector:@selector(heightForObject:atIndexPath:tableView:)]) {
-    height = [class heightForObject:object atIndexPath:indexPath tableView:tableView];
-  }
-  return height;
-}
-@endcode
+ @code
+ -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+ CGFloat height = tableView.rowHeight;
+ id object = [(NITableViewModel *)tableView.dataSource objectAtIndexPath:indexPath];
+ id class = [object cellClass];
+ if ([class respondsToSelector:@selector(heightForObject:atIndexPath:tableView:)]) {
+ height = [class heightForObject:object atIndexPath:indexPath tableView:tableView];
+ }
+ return height;
+ }
+ @endcode
  *
  * You may also use the
  * @link NICellFactory::tableView:heightForRowAtIndexPath:model: tableView:heightForRowAtIndexPath:model:@endlink
@@ -234,9 +234,9 @@ _model.delegate = (id)[NICellFactory class];
  * Rather than create a new interface, LoadMoreObject, simply for the cell and binding it
  * to the cell view, you can create an NICellObject and pass the class name of the cell.
  *
-@code
-[tableContents addObject:[NICellObject objectWithCellClass:[LoadMoreCell class]]];
-@endcode
+ @code
+ [tableContents addObject:[NICellObject objectWithCellClass:[LoadMoreCell class]]];
+ @endcode
  */
 @interface NICellObject : NSObject <NICellObject>
 

@@ -81,10 +81,10 @@
  * yourself.
  *
  * If you implement the deletion of the object yourself, your code may resemble the following:
-@code
-NSArray *indexPaths = [self removeObjectAtIndexPath:indexPath];
-[tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-@endcode
+ @code
+ NSArray *indexPaths = [self removeObjectAtIndexPath:indexPath];
+ [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+ @endcode
  */
 - (BOOL)tableViewModel:(NIMutableTableViewModel *)tableViewModel
     shouldDeleteObject:(id)object
@@ -107,16 +107,16 @@ NSArray *indexPaths = [self removeObjectAtIndexPath:indexPath];
  * of the exact modifications that have been made to the model.
  *
  * Example of adding a new section:
-@code
-// Appends a new section to the end of the model.
-NSIndexSet* indexSet = [self.model addSectionWithTitle:@"New section"];
-
-// Appends a cell to the last section in the model (in this case, the new section we just created).
-[self.model addObject:[NITitleCellObject objectWithTitle:@"A cell"]];
-
-// Inform the table view that we've modified the model.
-[self.tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-@endcode
+ @code
+ // Appends a new section to the end of the model.
+ NSIndexSet* indexSet = [self.model addSectionWithTitle:@"New section"];
+ 
+ // Appends a cell to the last section in the model (in this case, the new section we just created).
+ [self.model addObject:[NITitleCellObject objectWithTitle:@"A cell"]];
+ 
+ // Inform the table view that we've modified the model.
+ [self.tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+ @endcode
  *
  * @ingroup TableViewModels
  */

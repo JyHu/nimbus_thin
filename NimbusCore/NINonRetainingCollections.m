@@ -23,14 +23,14 @@
 #endif
 
 NSMutableArray* NICreateNonRetainingMutableArray(void) {
-  return (__bridge_transfer NSMutableArray *)CFArrayCreateMutable(nil, 0, nil);
+    return (__bridge_transfer NSMutableArray *)CFArrayCreateMutable(nil, 0, nil);
 }
 
 NSMutableDictionary* NICreateNonRetainingMutableDictionary(void) {
-  return (__bridge_transfer NSMutableDictionary *)CFDictionaryCreateMutable(nil, 0, nil, nil);
+    return (__bridge_transfer NSMutableDictionary *)CFDictionaryCreateMutable(nil, 0, nil, nil);
 }
 
 NSMutableSet* NICreateNonRetainingMutableSet(void) {
-  return (__bridge_transfer NSMutableSet *)CFSetCreateMutable(nil, 0, nil);
+    return (__bridge_transfer NSMutableSet *)CFSetCreateMutable(nil, 0, nil);
 }
 

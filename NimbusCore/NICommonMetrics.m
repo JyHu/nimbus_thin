@@ -23,47 +23,47 @@
 #endif
 
 CGFloat NIMinimumTapDimension(void) {
-  return 44;
+    return 44;
 }
 
 CGFloat NIToolbarHeightForOrientation(UIInterfaceOrientation orientation) {
-  return (NIIsPad()
-          ? 44
-          : (UIInterfaceOrientationIsPortrait(orientation)
-             ? 44
-             : 33));
+    return (NIIsPad()
+            ? 44
+            : (UIInterfaceOrientationIsPortrait(orientation)
+               ? 44
+               : 33));
 }
 
 UIViewAnimationCurve NIStatusBarAnimationCurve(void) {
-  return UIViewAnimationCurveEaseIn;
+    return UIViewAnimationCurveEaseIn;
 }
 
 NSTimeInterval NIStatusBarAnimationDuration(void) {
-  return 0.3;
+    return 0.3;
 }
 
 UIViewAnimationCurve NIStatusBarBoundsChangeAnimationCurve(void) {
-  return UIViewAnimationCurveEaseInOut;
+    return UIViewAnimationCurveEaseInOut;
 }
 
 NSTimeInterval NIStatusBarBoundsChangeAnimationDuration(void) {
-  return 0.35;
+    return 0.35;
 }
 
 CGFloat NIStatusBarHeight(void) {
-  CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-
-  // We take advantage of the fact that the status bar will always be wider than it is tall
-  // in order to avoid having to check the status bar orientation.
-  CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
-
-  return statusBarHeight;
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    
+    // We take advantage of the fact that the status bar will always be wider than it is tall
+    // in order to avoid having to check the status bar orientation.
+    CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
+    
+    return statusBarHeight;
 }
 
 NSTimeInterval NIDeviceRotationDuration(BOOL isFlippingUpsideDown) {
-  return isFlippingUpsideDown ? 0.8 : 0.4;
+    return isFlippingUpsideDown ? 0.8 : 0.4;
 }
 
 UIEdgeInsets NICellContentPadding(void) {
-  return UIEdgeInsetsMake(10, 10, 10, 10);
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }

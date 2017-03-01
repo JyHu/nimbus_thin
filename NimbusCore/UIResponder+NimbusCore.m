@@ -36,14 +36,14 @@ NI_FIX_CATEGORY_BUG(UIResponderNimbusCore)
  * The implementation was adapted from http://stackoverflow.com/questions/5029267/is-there-any-way-of-asking-an-ios-view-which-of-its-children-has-first-responder/14135456#14135456
  */
 + (instancetype)nimbus_currentFirstResponder {
-  sCurrentFirstResponder = nil;
-  [[UIApplication sharedApplication] sendAction:@selector(nimbus_findFirstResponder:)
-                                             to:nil from:nil forEvent:nil];
-  return sCurrentFirstResponder;
+    sCurrentFirstResponder = nil;
+    [[UIApplication sharedApplication] sendAction:@selector(nimbus_findFirstResponder:)
+                                               to:nil from:nil forEvent:nil];
+    return sCurrentFirstResponder;
 }
 
 - (void)nimbus_findFirstResponder:(id)sender {
-  sCurrentFirstResponder = self;
+    sCurrentFirstResponder = self;
 }
 
 @end

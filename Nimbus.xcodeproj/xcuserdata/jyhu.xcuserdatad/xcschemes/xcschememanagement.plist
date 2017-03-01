@@ -49,6 +49,11 @@
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
+		<key>NimbusTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>NimbusTextField.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -153,6 +158,11 @@
 			<true/>
 		</dict>
 		<key>1C9052C81E65BA8800B95641</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1C9053111E670ED200B95641</key>
 		<dict>
 			<key>primary</key>
 			<true/>

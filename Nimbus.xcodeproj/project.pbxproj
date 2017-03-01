@@ -164,6 +164,28 @@
 		1C9052E21E65DD9F00B95641 /* NimbusCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9051511E65B7D000B95641 /* NimbusCore.framework */; };
 		1C9052E31E65DDBD00B95641 /* NimbusCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9051511E65B7D000B95641 /* NimbusCore.framework */; };
 		1C9052E41E65DDCE00B95641 /* NimbusModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9052191E65B86600B95641 /* NimbusModels.framework */; };
+		1C9053161E670ED200B95641 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053151E670ED200B95641 /* main.m */; };
+		1C9053191E670ED200B95641 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053181E670ED200B95641 /* AppDelegate.m */; };
+		1C90531C1E670ED200B95641 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90531B1E670ED200B95641 /* ViewController.m */; };
+		1C90531F1E670ED200B95641 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C90531D1E670ED200B95641 /* Main.storyboard */; };
+		1C9053211E670ED200B95641 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9053201E670ED200B95641 /* Assets.xcassets */; };
+		1C9053241E670ED200B95641 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C9053221E670ED200B95641 /* LaunchScreen.storyboard */; };
+		1C9053431E670F8F00B95641 /* AUUActionsTableModelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90532C1E670F8F00B95641 /* AUUActionsTableModelViewController.m */; };
+		1C9053441E670F8F00B95641 /* AUUBasicInstantiationTableModelTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90532E1E670F8F00B95641 /* AUUBasicInstantiationTableModelTableViewController.m */; };
+		1C9053451E670F8F00B95641 /* AUUBlockCellsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053301E670F8F00B95641 /* AUUBlockCellsViewController.m */; };
+		1C9053461E670F8F00B95641 /* AUUFormCellCatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053321E670F8F00B95641 /* AUUFormCellCatalogViewController.m */; };
+		1C9053471E670F8F00B95641 /* AUUIndexedTableModelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053341E670F8F00B95641 /* AUUIndexedTableModelViewController.m */; };
+		1C9053481E670F8F00B95641 /* AUUModalRadioGroupTableViewModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053361E670F8F00B95641 /* AUUModalRadioGroupTableViewModelController.m */; };
+		1C9053491E670F8F00B95641 /* AUUMutableTableViewModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053381E670F8F00B95641 /* AUUMutableTableViewModelController.m */; };
+		1C90534A1E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90533A1E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.m */; };
+		1C90534B1E670F8F00B95641 /* AUUNITestBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90533C1E670F8F00B95641 /* AUUNITestBaseTableViewController.m */; };
+		1C90534C1E670F8F00B95641 /* AUURadioGroupTableViewModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90533E1E670F8F00B95641 /* AUURadioGroupTableViewModelController.m */; };
+		1C90534D1E670F8F00B95641 /* AUUSectionedTableModelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053401E670F8F00B95641 /* AUUSectionedTableModelViewController.m */; };
+		1C90534E1E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9053421E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.m */; };
+		1C90534F1E67109500B95641 /* NimbusCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9051511E65B7D000B95641 /* NimbusCore.framework */; };
+		1C9053501E67109500B95641 /* NimbusModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9052191E65B86600B95641 /* NimbusModels.framework */; };
+		1C9053541E6712CD00B95641 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9053521E6712CD00B95641 /* circle.png */; };
+		1C9053551E6712CD00B95641 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9053531E6712CD00B95641 /* star.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -418,6 +440,42 @@
 		1C9052D01E65BA8900B95641 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C9052D81E65BA9900B95641 /* NITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NITextField.h; sourceTree = "<group>"; };
 		1C9052D91E65BA9900B95641 /* NITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NITextField.m; sourceTree = "<group>"; };
+		1C9053121E670ED200B95641 /* NimbusTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NimbusTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C9053151E670ED200B95641 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1C9053171E670ED200B95641 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1C9053181E670ED200B95641 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1C90531A1E670ED200B95641 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1C90531B1E670ED200B95641 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1C90531E1E670ED200B95641 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1C9053201E670ED200B95641 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1C9053231E670ED200B95641 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1C9053251E670ED200B95641 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C90532B1E670F8F00B95641 /* AUUActionsTableModelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUActionsTableModelViewController.h; sourceTree = "<group>"; };
+		1C90532C1E670F8F00B95641 /* AUUActionsTableModelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUActionsTableModelViewController.m; sourceTree = "<group>"; };
+		1C90532D1E670F8F00B95641 /* AUUBasicInstantiationTableModelTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUBasicInstantiationTableModelTableViewController.h; sourceTree = "<group>"; };
+		1C90532E1E670F8F00B95641 /* AUUBasicInstantiationTableModelTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUBasicInstantiationTableModelTableViewController.m; sourceTree = "<group>"; };
+		1C90532F1E670F8F00B95641 /* AUUBlockCellsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUBlockCellsViewController.h; sourceTree = "<group>"; };
+		1C9053301E670F8F00B95641 /* AUUBlockCellsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUBlockCellsViewController.m; sourceTree = "<group>"; };
+		1C9053311E670F8F00B95641 /* AUUFormCellCatalogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUFormCellCatalogViewController.h; sourceTree = "<group>"; };
+		1C9053321E670F8F00B95641 /* AUUFormCellCatalogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUFormCellCatalogViewController.m; sourceTree = "<group>"; };
+		1C9053331E670F8F00B95641 /* AUUIndexedTableModelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUIndexedTableModelViewController.h; sourceTree = "<group>"; };
+		1C9053341E670F8F00B95641 /* AUUIndexedTableModelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUIndexedTableModelViewController.m; sourceTree = "<group>"; };
+		1C9053351E670F8F00B95641 /* AUUModalRadioGroupTableViewModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUModalRadioGroupTableViewModelController.h; sourceTree = "<group>"; };
+		1C9053361E670F8F00B95641 /* AUUModalRadioGroupTableViewModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUModalRadioGroupTableViewModelController.m; sourceTree = "<group>"; };
+		1C9053371E670F8F00B95641 /* AUUMutableTableViewModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUMutableTableViewModelController.h; sourceTree = "<group>"; };
+		1C9053381E670F8F00B95641 /* AUUMutableTableViewModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUMutableTableViewModelController.m; sourceTree = "<group>"; };
+		1C9053391E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUNestedRadioGroupViewModelController.h; sourceTree = "<group>"; };
+		1C90533A1E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUNestedRadioGroupViewModelController.m; sourceTree = "<group>"; };
+		1C90533B1E670F8F00B95641 /* AUUNITestBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUNITestBaseTableViewController.h; sourceTree = "<group>"; };
+		1C90533C1E670F8F00B95641 /* AUUNITestBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUNITestBaseTableViewController.m; sourceTree = "<group>"; };
+		1C90533D1E670F8F00B95641 /* AUURadioGroupTableViewModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUURadioGroupTableViewModelController.h; sourceTree = "<group>"; };
+		1C90533E1E670F8F00B95641 /* AUURadioGroupTableViewModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUURadioGroupTableViewModelController.m; sourceTree = "<group>"; };
+		1C90533F1E670F8F00B95641 /* AUUSectionedTableModelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUSectionedTableModelViewController.h; sourceTree = "<group>"; };
+		1C9053401E670F8F00B95641 /* AUUSectionedTableModelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUSectionedTableModelViewController.m; sourceTree = "<group>"; };
+		1C9053411E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUSnapshotRotationTableViewModelController.h; sourceTree = "<group>"; };
+		1C9053421E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUSnapshotRotationTableViewModelController.m; sourceTree = "<group>"; };
+		1C9053521E6712CD00B95641 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		1C9053531E6712CD00B95641 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -580,6 +638,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1C90530F1E670ED200B95641 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C90534F1E67109500B95641 /* NimbusCore.framework in Frameworks */,
+				1C9053501E67109500B95641 /* NimbusModels.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -606,6 +673,7 @@
 				1C9052A71E65B9CB00B95641 /* NimbusPagingScrollViewTests */,
 				1C9052C21E65BA8800B95641 /* NimbusTextField */,
 				1C9052CD1E65BA8800B95641 /* NimbusTextFieldTests */,
+				1C9053131E670ED200B95641 /* NimbusTest */,
 				1C9050DD1E65B66E00B95641 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -633,6 +701,7 @@
 				1C9052A31E65B9CB00B95641 /* NimbusPagingScrollViewTests.xctest */,
 				1C9052C11E65BA8800B95641 /* NimbusTextField.framework */,
 				1C9052C91E65BA8800B95641 /* NimbusTextFieldTests.xctest */,
+				1C9053121E670ED200B95641 /* NimbusTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -933,6 +1002,80 @@
 				1C9052D01E65BA8900B95641 /* Info.plist */,
 			);
 			path = NimbusTextFieldTests;
+			sourceTree = "<group>";
+		};
+		1C9053131E670ED200B95641 /* NimbusTest */ = {
+			isa = PBXGroup;
+			children = (
+				1C9053171E670ED200B95641 /* AppDelegate.h */,
+				1C9053181E670ED200B95641 /* AppDelegate.m */,
+				1C90531A1E670ED200B95641 /* ViewController.h */,
+				1C90531B1E670ED200B95641 /* ViewController.m */,
+				1C9053511E6712A400B95641 /* Resources */,
+				1C9053291E670F7500B95641 /* Tests */,
+				1C90531D1E670ED200B95641 /* Main.storyboard */,
+				1C9053201E670ED200B95641 /* Assets.xcassets */,
+				1C9053221E670ED200B95641 /* LaunchScreen.storyboard */,
+				1C9053251E670ED200B95641 /* Info.plist */,
+				1C9053141E670ED200B95641 /* Supporting Files */,
+			);
+			path = NimbusTest;
+			sourceTree = "<group>";
+		};
+		1C9053141E670ED200B95641 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1C9053151E670ED200B95641 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1C9053291E670F7500B95641 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				1C90532A1E670F7500B95641 /* Table */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		1C90532A1E670F7500B95641 /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				1C90532B1E670F8F00B95641 /* AUUActionsTableModelViewController.h */,
+				1C90532C1E670F8F00B95641 /* AUUActionsTableModelViewController.m */,
+				1C90532D1E670F8F00B95641 /* AUUBasicInstantiationTableModelTableViewController.h */,
+				1C90532E1E670F8F00B95641 /* AUUBasicInstantiationTableModelTableViewController.m */,
+				1C90532F1E670F8F00B95641 /* AUUBlockCellsViewController.h */,
+				1C9053301E670F8F00B95641 /* AUUBlockCellsViewController.m */,
+				1C9053311E670F8F00B95641 /* AUUFormCellCatalogViewController.h */,
+				1C9053321E670F8F00B95641 /* AUUFormCellCatalogViewController.m */,
+				1C9053331E670F8F00B95641 /* AUUIndexedTableModelViewController.h */,
+				1C9053341E670F8F00B95641 /* AUUIndexedTableModelViewController.m */,
+				1C9053351E670F8F00B95641 /* AUUModalRadioGroupTableViewModelController.h */,
+				1C9053361E670F8F00B95641 /* AUUModalRadioGroupTableViewModelController.m */,
+				1C9053371E670F8F00B95641 /* AUUMutableTableViewModelController.h */,
+				1C9053381E670F8F00B95641 /* AUUMutableTableViewModelController.m */,
+				1C9053391E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.h */,
+				1C90533A1E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.m */,
+				1C90533B1E670F8F00B95641 /* AUUNITestBaseTableViewController.h */,
+				1C90533C1E670F8F00B95641 /* AUUNITestBaseTableViewController.m */,
+				1C90533D1E670F8F00B95641 /* AUURadioGroupTableViewModelController.h */,
+				1C90533E1E670F8F00B95641 /* AUURadioGroupTableViewModelController.m */,
+				1C90533F1E670F8F00B95641 /* AUUSectionedTableModelViewController.h */,
+				1C9053401E670F8F00B95641 /* AUUSectionedTableModelViewController.m */,
+				1C9053411E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.h */,
+				1C9053421E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.m */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		1C9053511E6712A400B95641 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1C9053521E6712CD00B95641 /* circle.png */,
+				1C9053531E6712CD00B95641 /* star.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1445,6 +1588,23 @@
 			productReference = 1C9052C91E65BA8800B95641 /* NimbusTextFieldTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		1C9053111E670ED200B95641 /* NimbusTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C9053261E670ED200B95641 /* Build configuration list for PBXNativeTarget "NimbusTest" */;
+			buildPhases = (
+				1C90530E1E670ED200B95641 /* Sources */,
+				1C90530F1E670ED200B95641 /* Frameworks */,
+				1C9053101E670ED200B95641 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NimbusTest;
+			productName = NimbusTest;
+			productReference = 1C9053121E670ED200B95641 /* NimbusTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1533,6 +1693,10 @@
 						CreatedOnToolsVersion = 8.1;
 						ProvisioningStyle = Automatic;
 					};
+					1C9053111E670ED200B95641 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 1C9050D41E65B62200B95641 /* Build configuration list for PBXProject "Nimbus" */;
@@ -1541,6 +1705,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 1C9050D01E65B62200B95641;
 			productRefGroup = 1C9050DD1E65B66E00B95641 /* Products */;
@@ -1567,6 +1732,7 @@
 				1C9052A21E65B9CB00B95641 /* NimbusPagingScrollViewTests */,
 				1C9052C01E65BA8800B95641 /* NimbusTextField */,
 				1C9052C81E65BA8800B95641 /* NimbusTextFieldTests */,
+				1C9053111E670ED200B95641 /* NimbusTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1709,6 +1875,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C9053101E670ED200B95641 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C9053241E670ED200B95641 /* LaunchScreen.storyboard in Resources */,
+				1C9053551E6712CD00B95641 /* star.png in Resources */,
+				1C9053211E670ED200B95641 /* Assets.xcassets in Resources */,
+				1C90531F1E670ED200B95641 /* Main.storyboard in Resources */,
+				1C9053541E6712CD00B95641 /* circle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1919,6 +2097,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1C90530E1E670ED200B95641 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C90531C1E670ED200B95641 /* ViewController.m in Sources */,
+				1C90534C1E670F8F00B95641 /* AUURadioGroupTableViewModelController.m in Sources */,
+				1C9053191E670ED200B95641 /* AppDelegate.m in Sources */,
+				1C9053451E670F8F00B95641 /* AUUBlockCellsViewController.m in Sources */,
+				1C90534D1E670F8F00B95641 /* AUUSectionedTableModelViewController.m in Sources */,
+				1C90534E1E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.m in Sources */,
+				1C9053481E670F8F00B95641 /* AUUModalRadioGroupTableViewModelController.m in Sources */,
+				1C9053491E670F8F00B95641 /* AUUMutableTableViewModelController.m in Sources */,
+				1C90534B1E670F8F00B95641 /* AUUNITestBaseTableViewController.m in Sources */,
+				1C9053471E670F8F00B95641 /* AUUIndexedTableModelViewController.m in Sources */,
+				1C9053441E670F8F00B95641 /* AUUBasicInstantiationTableModelTableViewController.m in Sources */,
+				1C9053161E670ED200B95641 /* main.m in Sources */,
+				1C9053461E670F8F00B95641 /* AUUFormCellCatalogViewController.m in Sources */,
+				1C9053431E670F8F00B95641 /* AUUActionsTableModelViewController.m in Sources */,
+				1C90534A1E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1973,6 +2173,25 @@
 			targetProxy = 1C9052CB1E65BA8800B95641 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1C90531D1E670ED200B95641 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C90531E1E670ED200B95641 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1C9053221E670ED200B95641 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1C9053231E670ED200B95641 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1C9050D51E65B62200B95641 /* Debug */ = {
@@ -4127,6 +4346,106 @@
 			};
 			name = Release;
 		};
+		1C9053271E670ED200B95641 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = NimbusTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jyhu.NimbusTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1C9053281E670ED200B95641 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = NimbusTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jyhu.NimbusTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4318,6 +4637,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		1C9053261E670ED200B95641 /* Build configuration list for PBXNativeTarget "NimbusTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C9053271E670ED200B95641 /* Debug */,
+				1C9053281E670ED200B95641 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

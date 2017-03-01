@@ -30,35 +30,35 @@ static NSString* const kImageCodingKey = @"image";
 @synthesize image = _image;
 
 - (id)initWithTitle:(NSString *)title image:(UIImage *)image {
-  if ((self = [super init])) {
-    _title = title;
-    _image = image;
-  }
-  return self;
+    if ((self = [super init])) {
+        _title = title;
+        _image = image;
+    }
+    return self;
 }
 
 + (id)objectWithTitle:(NSString *)title image:(UIImage *)image {
-  return [[self alloc] initWithTitle:title image:image];
+    return [[self alloc] initWithTitle:title image:image];
 }
 
 - (Class)buttonViewClass {
-  return [NILauncherButtonView class];
+    return [NILauncherButtonView class];
 }
 
 #pragma mark NSCoding
 
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [coder encodeObject:self.title forKey:kTitleCodingKey];
-  [coder encodeObject:self.image forKey:kImageCodingKey];
+    [coder encodeObject:self.title forKey:kTitleCodingKey];
+    [coder encodeObject:self.image forKey:kImageCodingKey];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
-  if ((self = [super init])) {
-    _title = [decoder decodeObjectForKey:kTitleCodingKey];
-    _image = [decoder decodeObjectForKey:kImageCodingKey];
-  }
-  return self;
+    if ((self = [super init])) {
+        _title = [decoder decodeObjectForKey:kTitleCodingKey];
+        _image = [decoder decodeObjectForKey:kImageCodingKey];
+    }
+    return self;
 }
 
 @end

@@ -27,46 +27,46 @@ const UIImageResizingMode UIImageResizingModeStretch = -1;
 #endif
 
 BOOL NIIsPad(void) {
-  static NSInteger isPad = -1;
-  if (isPad < 0) {
-    isPad = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? 1 : 0;
-  }
-  return isPad > 0;
+    static NSInteger isPad = -1;
+    if (isPad < 0) {
+        isPad = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) ? 1 : 0;
+    }
+    return isPad > 0;
 }
 
 BOOL NIIsPhone(void) {
-  static NSInteger isPhone = -1;
-  if (isPhone < 0) {
-    isPhone = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) ? 1 : 0;
-  }
-  return isPhone > 0;
+    static NSInteger isPhone = -1;
+    if (isPhone < 0) {
+        isPhone = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) ? 1 : 0;
+    }
+    return isPhone > 0;
 }
 
 BOOL NIIsTintColorGloballySupported(void) {
-  static NSInteger isTintColorGloballySupported = -1;
-  if (isTintColorGloballySupported < 0) {
-    UIView* view = [[UIView alloc] init];
-    isTintColorGloballySupported = [view respondsToSelector:@selector(tintColor)];
-  }
-  return isTintColorGloballySupported > 0;
+    static NSInteger isTintColorGloballySupported = -1;
+    if (isTintColorGloballySupported < 0) {
+        UIView* view = [[UIView alloc] init];
+        isTintColorGloballySupported = [view respondsToSelector:@selector(tintColor)];
+    }
+    return isTintColorGloballySupported > 0;
 }
 
 BOOL NIDeviceOSVersionIsAtLeast(double versionNumber) {
-  return kCFCoreFoundationVersionNumber >= versionNumber;
+    return kCFCoreFoundationVersionNumber >= versionNumber;
 }
 
 CGFloat NIScreenScale(void) {
-  return [[UIScreen mainScreen] scale];
+    return [[UIScreen mainScreen] scale];
 }
 
 BOOL NIIsRetina(void) {
-  return NIScreenScale() > 1.f;
+    return NIScreenScale() > 1.f;
 }
 
 Class NIUIPopoverControllerClass(void) {
-  return [UIPopoverController class];
+    return [UIPopoverController class];
 }
 
 Class NIUITapGestureRecognizerClass(void) {
-  return [UITapGestureRecognizer class];
+    return [UITapGestureRecognizer class];
 }

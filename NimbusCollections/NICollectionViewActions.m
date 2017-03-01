@@ -31,94 +31,94 @@
 #pragma mark - UICollectionViewDelegate
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-  BOOL shouldHighlight = NO;
-
-  NIDASSERT([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]);
-  if ([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
-    id object = [(id<NIActionsDataSource>)collectionView.dataSource objectAtIndexPath:indexPath];
-
-    if ([self isObjectActionable:object]) {
-      NIObjectActions* action = [self actionForObjectOrClassOfObject:object];
-
-      // If the cell is tappable, reflect that in the selection style.
-      if (nil != action.tapAction || nil != action.tapSelector
-          || nil != action.detailAction || nil != action.detailSelector
-          || nil != action.navigateAction || nil != action.navigateSelector) {
-        shouldHighlight = YES;
-      }
+    BOOL shouldHighlight = NO;
+    
+    NIDASSERT([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]);
+    if ([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        id object = [(id<NIActionsDataSource>)collectionView.dataSource objectAtIndexPath:indexPath];
+        
+        if ([self isObjectActionable:object]) {
+            NIObjectActions* action = [self actionForObjectOrClassOfObject:object];
+            
+            // If the cell is tappable, reflect that in the selection style.
+            if (nil != action.tapAction || nil != action.tapSelector
+                || nil != action.detailAction || nil != action.detailSelector
+                || nil != action.navigateAction || nil != action.navigateSelector) {
+                shouldHighlight = YES;
+            }
+        }
     }
-  }
-
-  return shouldHighlight;
+    
+    return shouldHighlight;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-  NIDASSERT([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]);
-  if ([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
-    id object = [(id<NIActionsDataSource>)collectionView.dataSource objectAtIndexPath:indexPath];
-
-    if ([self isObjectActionable:object]) {
-      NIObjectActions* action = [self actionForObjectOrClassOfObject:object];
-
-      BOOL shouldDeselect = NO;
-      if (action.tapAction) {
-        // Tap actions can deselect the cell if they return YES.
-        shouldDeselect = action.tapAction(object, self.target, indexPath);
-      }
-      if (action.tapSelector && [self.target respondsToSelector:action.tapSelector]) {
-        NSMethodSignature *methodSignature = [self.target methodSignatureForSelector:action.tapSelector];
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
-        invocation.selector = action.tapSelector;
-        if (methodSignature.numberOfArguments >= 3) {
-          [invocation setArgument:&object atIndex:2];
-        }
-        if (methodSignature.numberOfArguments >= 4) {
-          [invocation setArgument:&indexPath atIndex:3];
-        }
-        [invocation invokeWithTarget:self.target];
-
-        NSUInteger length = invocation.methodSignature.methodReturnLength;
-        if (length > 0) {
-          char *buffer = (void *)malloc(length);
-          memset(buffer, 0, sizeof(char) * length);
-          [invocation getReturnValue:buffer];
-          for (NSUInteger index = 0; index < length; ++index) {
-            if (buffer[index]) {
-              shouldDeselect = YES;
-              break;
+    NIDASSERT([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]);
+    if ([collectionView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        id object = [(id<NIActionsDataSource>)collectionView.dataSource objectAtIndexPath:indexPath];
+        
+        if ([self isObjectActionable:object]) {
+            NIObjectActions* action = [self actionForObjectOrClassOfObject:object];
+            
+            BOOL shouldDeselect = NO;
+            if (action.tapAction) {
+                // Tap actions can deselect the cell if they return YES.
+                shouldDeselect = action.tapAction(object, self.target, indexPath);
             }
-          }
-          free(buffer);
+            if (action.tapSelector && [self.target respondsToSelector:action.tapSelector]) {
+                NSMethodSignature *methodSignature = [self.target methodSignatureForSelector:action.tapSelector];
+                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+                invocation.selector = action.tapSelector;
+                if (methodSignature.numberOfArguments >= 3) {
+                    [invocation setArgument:&object atIndex:2];
+                }
+                if (methodSignature.numberOfArguments >= 4) {
+                    [invocation setArgument:&indexPath atIndex:3];
+                }
+                [invocation invokeWithTarget:self.target];
+                
+                NSUInteger length = invocation.methodSignature.methodReturnLength;
+                if (length > 0) {
+                    char *buffer = (void *)malloc(length);
+                    memset(buffer, 0, sizeof(char) * length);
+                    [invocation getReturnValue:buffer];
+                    for (NSUInteger index = 0; index < length; ++index) {
+                        if (buffer[index]) {
+                            shouldDeselect = YES;
+                            break;
+                        }
+                    }
+                    free(buffer);
+                }
+            }
+            
+            if (action.detailAction) {
+                // Tap actions can deselect the cell if they return YES.
+                action.detailAction(object, self.target, indexPath);
+            }
+            if (action.detailSelector && [self.target respondsToSelector:action.detailSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                [self.target performSelector:action.detailSelector withObject:object withObject:indexPath];
+#pragma clang diagnostic pop
+            }
+            
+            if (action.navigateAction) {
+                // Tap actions can deselect the cell if they return YES.
+                action.navigateAction(object, self.target, indexPath);
+            }
+            if (action.navigateSelector && [self.target respondsToSelector:action.navigateSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                [self.target performSelector:action.navigateSelector withObject:object withObject:indexPath];
+#pragma clang diagnostic pop
+            }
+            
+            if (shouldDeselect) {
+                [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+            }
         }
-      }
-
-      if (action.detailAction) {
-        // Tap actions can deselect the cell if they return YES.
-        action.detailAction(object, self.target, indexPath);
-      }
-      if (action.detailSelector && [self.target respondsToSelector:action.detailSelector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [self.target performSelector:action.detailSelector withObject:object withObject:indexPath];
-#pragma clang diagnostic pop
-      }
-
-      if (action.navigateAction) {
-        // Tap actions can deselect the cell if they return YES.
-        action.navigateAction(object, self.target, indexPath);
-      }
-      if (action.navigateSelector && [self.target respondsToSelector:action.navigateSelector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [self.target performSelector:action.navigateSelector withObject:object withObject:indexPath];
-#pragma clang diagnostic pop
-      }
-
-      if (shouldDeselect) {
-        [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-      }
     }
-  }
 }
 
 @end

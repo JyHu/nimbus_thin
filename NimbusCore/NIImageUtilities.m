@@ -17,8 +17,8 @@
 #import "NIImageUtilities.h"
 
 UIImage* NIStretchableImageFromImage(UIImage* image) {
-  const CGSize size = image.size;
-  NSInteger midX = (NSInteger)(size.width / 2.f);
-  NSInteger midY = (NSInteger)(size.height / 2.f);
-  return [image stretchableImageWithLeftCapWidth:midX topCapHeight:midY];
+    const CGSize size = image.size;
+    NSInteger midX = (NSInteger)(size.width / 2.f);
+    NSInteger midY = (NSInteger)(size.height / 2.f);
+    return [image stretchableImageWithLeftCapWidth:midX topCapHeight:midY];
 }

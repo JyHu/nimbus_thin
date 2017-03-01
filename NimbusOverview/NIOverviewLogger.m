@@ -26,96 +26,96 @@ NSString* const NIOverviewLoggerDidAddConsoleLog = @"NIOverviewLoggerDidAddConso
 NSString* const NIOverviewLoggerDidAddEventLog = @"NIOverviewLoggerDidAddEventLog";
 
 @implementation NIOverviewLogger {
-  NSMutableOrderedSet* _deviceLogs;
-  NSMutableOrderedSet* _consoleLogs;
-  NSMutableOrderedSet* _eventLogs;
-  NSTimeInterval _oldestLogAge;
-  NSTimer* _heartbeatTimer;
+    NSMutableOrderedSet* _deviceLogs;
+    NSMutableOrderedSet* _consoleLogs;
+    NSMutableOrderedSet* _eventLogs;
+    NSTimeInterval _oldestLogAge;
+    NSTimer* _heartbeatTimer;
 }
 
 + (NIOverviewLogger*)sharedLogger
 {
-  static dispatch_once_t pred = 0;
-  static NIOverviewLogger* instance = nil;
-  
-  dispatch_once(&pred, ^{
-    instance = [[NIOverviewLogger alloc] init];
-  });
-  
-  return instance;
+    static dispatch_once_t pred = 0;
+    static NIOverviewLogger* instance = nil;
+    
+    dispatch_once(&pred, ^{
+        instance = [[NIOverviewLogger alloc] init];
+    });
+    
+    return instance;
 }
 
 - (id)init {
-  if ((self = [super init])) {
-    _deviceLogs = [[NSMutableOrderedSet alloc] init];
-    _consoleLogs = [[NSMutableOrderedSet alloc] init];
-    _eventLogs = [[NSMutableOrderedSet alloc] init];
-    
-    _oldestLogAge = 60;
-    
-    _heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval: 0.5
-                                                       target: self
-                                                     selector: @selector(heartbeat)
-                                                     userInfo: nil
-                                                      repeats: YES];
-  }
-  return self;
+    if ((self = [super init])) {
+        _deviceLogs = [[NSMutableOrderedSet alloc] init];
+        _consoleLogs = [[NSMutableOrderedSet alloc] init];
+        _eventLogs = [[NSMutableOrderedSet alloc] init];
+        
+        _oldestLogAge = 60;
+        
+        _heartbeatTimer = [NSTimer scheduledTimerWithTimeInterval: 0.5
+                                                           target: self
+                                                         selector: @selector(heartbeat)
+                                                         userInfo: nil
+                                                          repeats: YES];
+    }
+    return self;
 }
 
 - (void)dealloc {
-  [_heartbeatTimer invalidate];
-  _heartbeatTimer = nil;
+    [_heartbeatTimer invalidate];
+    _heartbeatTimer = nil;
 }
 
 - (void)heartbeat {
-  [NIDeviceInfo beginCachedDeviceInfo];
-  NIOverviewDeviceLogEntry* logEntry =
-  [[NIOverviewDeviceLogEntry alloc] initWithTimestamp:[NSDate date]];
-  logEntry.bytesOfTotalDiskSpace = [NIDeviceInfo bytesOfTotalDiskSpace];
-  logEntry.bytesOfFreeDiskSpace = [NIDeviceInfo bytesOfFreeDiskSpace];
-  logEntry.bytesOfFreeMemory = [NIDeviceInfo bytesOfFreeMemory];
-  logEntry.bytesOfTotalMemory = [NIDeviceInfo bytesOfTotalMemory];
-  logEntry.batteryLevel = [NIDeviceInfo batteryLevel];
-  logEntry.batteryState = [NIDeviceInfo batteryState];
-  [NIDeviceInfo endCachedDeviceInfo];
-  
-  [self addDeviceLog:logEntry];
+    [NIDeviceInfo beginCachedDeviceInfo];
+    NIOverviewDeviceLogEntry* logEntry =
+    [[NIOverviewDeviceLogEntry alloc] initWithTimestamp:[NSDate date]];
+    logEntry.bytesOfTotalDiskSpace = [NIDeviceInfo bytesOfTotalDiskSpace];
+    logEntry.bytesOfFreeDiskSpace = [NIDeviceInfo bytesOfFreeDiskSpace];
+    logEntry.bytesOfFreeMemory = [NIDeviceInfo bytesOfFreeMemory];
+    logEntry.bytesOfTotalMemory = [NIDeviceInfo bytesOfTotalMemory];
+    logEntry.batteryLevel = [NIDeviceInfo batteryLevel];
+    logEntry.batteryState = [NIDeviceInfo batteryState];
+    [NIDeviceInfo endCachedDeviceInfo];
+    
+    [self addDeviceLog:logEntry];
 }
 
 - (void)pruneEntriesFromLinkedList:(NSMutableOrderedSet *)ll {
-  NSDate* cutoffDate = [NSDate dateWithTimeIntervalSinceNow:-_oldestLogAge];
-  while ([[((NIOverviewLogEntry *)[ll firstObject])
-           timestamp] compare:cutoffDate] == NSOrderedAscending) {
-    [ll removeObjectAtIndex:0];
-  }
+    NSDate* cutoffDate = [NSDate dateWithTimeIntervalSinceNow:-_oldestLogAge];
+    while ([[((NIOverviewLogEntry *)[ll firstObject])
+             timestamp] compare:cutoffDate] == NSOrderedAscending) {
+        [ll removeObjectAtIndex:0];
+    }
 }
 
 - (void)addDeviceLog:(NIOverviewDeviceLogEntry *)logEntry {
-  [self pruneEntriesFromLinkedList:_deviceLogs];
-
-  [_deviceLogs addObject:logEntry];
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:NIOverviewLoggerDidAddDeviceLog
-                                                      object:nil
-                                                    userInfo:@{@"entry":logEntry}];
+    [self pruneEntriesFromLinkedList:_deviceLogs];
+    
+    [_deviceLogs addObject:logEntry];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NIOverviewLoggerDidAddDeviceLog
+                                                        object:nil
+                                                      userInfo:@{@"entry":logEntry}];
 }
 
 - (void)addConsoleLog:(NIOverviewConsoleLogEntry *)logEntry {
-  [_consoleLogs addObject:logEntry];
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:NIOverviewLoggerDidAddConsoleLog
-                                                      object:nil
-                                                    userInfo:@{@"entry":logEntry}];
+    [_consoleLogs addObject:logEntry];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NIOverviewLoggerDidAddConsoleLog
+                                                        object:nil
+                                                      userInfo:@{@"entry":logEntry}];
 }
 
 - (void)addEventLog:(NIOverviewEventLogEntry *)logEntry {
-  [self pruneEntriesFromLinkedList:_eventLogs];
-
-  [_eventLogs addObject:logEntry];
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:NIOverviewLoggerDidAddEventLog
-                                                      object:nil
-                                                    userInfo:@{@"entry":logEntry}];
+    [self pruneEntriesFromLinkedList:_eventLogs];
+    
+    [_eventLogs addObject:logEntry];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NIOverviewLoggerDidAddEventLog
+                                                        object:nil
+                                                      userInfo:@{@"entry":logEntry}];
 }
 
 @end
@@ -124,10 +124,10 @@ NSString* const NIOverviewLoggerDidAddEventLog = @"NIOverviewLoggerDidAddEventLo
 @implementation NIOverviewLogEntry
 
 - (id)initWithTimestamp:(NSDate *)timestamp {
-  if ((self = [super init])) {
-    _timestamp = timestamp;
-  }
-  return self;
+    if ((self = [super init])) {
+        _timestamp = timestamp;
+    }
+    return self;
 }
 
 @end
@@ -140,11 +140,11 @@ NSString* const NIOverviewLoggerDidAddEventLog = @"NIOverviewLoggerDidAddEventLo
 @implementation NIOverviewConsoleLogEntry
 
 - (id)initWithLog:(NSString *)logText {
-  if ((self = [super initWithTimestamp:[NSDate date]])) {
-    _log = [logText copy];
-  }
-
-  return self;
+    if ((self = [super initWithTimestamp:[NSDate date]])) {
+        _log = [logText copy];
+    }
+    
+    return self;
 }
 
 @end
@@ -153,11 +153,11 @@ NSString* const NIOverviewLoggerDidAddEventLog = @"NIOverviewLoggerDidAddEventLo
 @implementation NIOverviewEventLogEntry
 
 - (id)initWithType:(NSInteger)type {
-  if ((self = [super initWithTimestamp:[NSDate date]])) {
-    _type = type;
-  }
-  
-  return self;
+    if ((self = [super initWithTimestamp:[NSDate date]])) {
+        _type = type;
+    }
+    
+    return self;
 }
 
 @end

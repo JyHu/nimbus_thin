@@ -33,61 +33,61 @@ static const CGFloat kDefaultContentInset = 0;
 
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-  if ((self = [super initWithReuseIdentifier:reuseIdentifier])) {
-    _contentInset = UIEdgeInsetsMake(kDefaultContentInset, kDefaultContentInset, kDefaultContentInset, kDefaultContentInset);
-
-    _button = [UIButton buttonWithType:UIButtonTypeCustom];
-
-    _button.imageView.contentMode = UIViewContentModeCenter;
-
-    _label = [[UILabel alloc] init];
-    _label.backgroundColor = [UIColor clearColor];
-    _label.numberOfLines = 1;
+    if ((self = [super initWithReuseIdentifier:reuseIdentifier])) {
+        _contentInset = UIEdgeInsetsMake(kDefaultContentInset, kDefaultContentInset, kDefaultContentInset, kDefaultContentInset);
+        
+        _button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        _button.imageView.contentMode = UIViewContentModeCenter;
+        
+        _label = [[UILabel alloc] init];
+        _label.backgroundColor = [UIColor clearColor];
+        _label.numberOfLines = 1;
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < NIIOS_6_0
-    _label.textAlignment = UITextAlignmentCenter;
-    _label.lineBreakMode = NSLineBreakByTruncatingTail;
+        _label.textAlignment = UITextAlignmentCenter;
+        _label.lineBreakMode = NSLineBreakByTruncatingTail;
 #else
-    _label.textAlignment = NSTextAlignmentCenter;
-    _label.lineBreakMode = NSLineBreakByTruncatingTail;
+        _label.textAlignment = NSTextAlignmentCenter;
+        _label.lineBreakMode = NSLineBreakByTruncatingTail;
 #endif
-    _label.font = [UIFont boldSystemFontOfSize:12];
-    _label.textColor = [UIColor whiteColor];
-
-    self.layer.rasterizationScale = NIScreenScale();
-    [self.layer setShouldRasterize:YES];
-
-    [self addSubview:_button];
-    [self addSubview:_label];
-  }
-  return self;
+        _label.font = [UIFont boldSystemFontOfSize:12];
+        _label.textColor = [UIColor whiteColor];
+        
+        self.layer.rasterizationScale = NIScreenScale();
+        [self.layer setShouldRasterize:YES];
+        
+        [self addSubview:_button];
+        [self addSubview:_label];
+    }
+    return self;
 }
 
 - (void)layoutSubviews {
-  [super layoutSubviews];
-
-  CGRect contentBounds = UIEdgeInsetsInsetRect(self.bounds, self.contentInset);
-
-  self.label.frame = CGRectMake(CGRectGetMinX(contentBounds), CGRectGetMaxY(contentBounds) - self.label.font.lineHeight,
-                                CGRectGetWidth(contentBounds), self.label.font.lineHeight);
-  self.button.frame = NIRectContract(contentBounds, 0, self.label.bounds.size.height);
+    [super layoutSubviews];
+    
+    CGRect contentBounds = UIEdgeInsetsInsetRect(self.bounds, self.contentInset);
+    
+    self.label.frame = CGRectMake(CGRectGetMinX(contentBounds), CGRectGetMaxY(contentBounds) - self.label.font.lineHeight,
+                                  CGRectGetWidth(contentBounds), self.label.font.lineHeight);
+    self.button.frame = NIRectContract(contentBounds, 0, self.label.bounds.size.height);
 }
 
 #pragma mark - NIRecyclableView
 
 
 - (void)prepareForReuse {
-  self.label.text = nil;
-  [self.button setImage:nil forState:UIControlStateNormal];
+    self.label.text = nil;
+    [self.button setImage:nil forState:UIControlStateNormal];
 }
 
 #pragma mark - NILauncherModelObjectView
 
 
 - (void)shouldUpdateViewWithObject:(NILauncherViewObject *)object {
-  self.label.text = object.title;
-  [self.button setImage:object.image forState:UIControlStateNormal];
-
-  [self setNeedsLayout];
+    self.label.text = object.title;
+    [self.button setImage:object.image forState:UIControlStateNormal];
+    
+    [self setNeedsLayout];
 }
 
 @end

@@ -46,59 +46,59 @@ static NSTimer* gScheduledDelayTimer = nil;
 // By delaying the turnoff of the network activity we avoid "flickering" effects when network
 // activity is starting and stopping rapidly.
 + (void)disableNetworkActivity NI_EXTENSION_UNAVAILABLE_IOS("") {
-  pthread_mutex_lock(&gMutex);
-  if (nil != gScheduledDelayTimer) {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    gScheduledDelayTimer = nil;
-  }
-  pthread_mutex_unlock(&gMutex);
+    pthread_mutex_lock(&gMutex);
+    if (nil != gScheduledDelayTimer) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        gScheduledDelayTimer = nil;
+    }
+    pthread_mutex_unlock(&gMutex);
 }
 
 @end
 
 
 void NINetworkActivityTaskDidStart(void) {
-  pthread_mutex_lock(&gMutex);
-
-  BOOL enableNetworkActivityIndicator = (0 == gNetworkTaskCount);
-
-  ++gNetworkTaskCount;
-  [gScheduledDelayTimer invalidate];
-  gScheduledDelayTimer = nil;
-
-  if (enableNetworkActivityIndicator) {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-  }
-
-  pthread_mutex_unlock(&gMutex);
+    pthread_mutex_lock(&gMutex);
+    
+    BOOL enableNetworkActivityIndicator = (0 == gNetworkTaskCount);
+    
+    ++gNetworkTaskCount;
+    [gScheduledDelayTimer invalidate];
+    gScheduledDelayTimer = nil;
+    
+    if (enableNetworkActivityIndicator) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    }
+    
+    pthread_mutex_unlock(&gMutex);
 }
 
 void NINetworkActivityTaskDidFinish(void) {
-  pthread_mutex_lock(&gMutex);
-
-  --gNetworkTaskCount;
-  // If this asserts, you don't have enough stop requests to match your start requests.
-  NIDASSERT(gNetworkTaskCount >= 0);
-  gNetworkTaskCount = MAX(0, gNetworkTaskCount);
-
-  if (gNetworkTaskCount == 0) {
-    [gScheduledDelayTimer invalidate];
-    gScheduledDelayTimer = nil;
-
-    // Ensure that the timer is scheduled on the main loop, otherwise it will die when the thread
-    // dies.
-    dispatch_async(dispatch_get_main_queue(), ^{
-      pthread_mutex_lock(&gMutex);
-      gScheduledDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kDelayBeforeDisablingActivity
-                                                              target:[NINetworkActivity class]
-                                                            selector:@selector(disableNetworkActivity)
-                                                            userInfo:nil
-                                                             repeats:NO];
-      pthread_mutex_unlock(&gMutex);
-    });
-  }
-
-  pthread_mutex_unlock(&gMutex);
+    pthread_mutex_lock(&gMutex);
+    
+    --gNetworkTaskCount;
+    // If this asserts, you don't have enough stop requests to match your start requests.
+    NIDASSERT(gNetworkTaskCount >= 0);
+    gNetworkTaskCount = MAX(0, gNetworkTaskCount);
+    
+    if (gNetworkTaskCount == 0) {
+        [gScheduledDelayTimer invalidate];
+        gScheduledDelayTimer = nil;
+        
+        // Ensure that the timer is scheduled on the main loop, otherwise it will die when the thread
+        // dies.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            pthread_mutex_lock(&gMutex);
+            gScheduledDelayTimer = [NSTimer scheduledTimerWithTimeInterval:kDelayBeforeDisablingActivity
+                                                                    target:[NINetworkActivity class]
+                                                                  selector:@selector(disableNetworkActivity)
+                                                                  userInfo:nil
+                                                                   repeats:NO];
+            pthread_mutex_unlock(&gMutex);
+        });
+    }
+    
+    pthread_mutex_unlock(&gMutex);
 }
 
 #pragma mark - Network Activity Debugging
@@ -113,59 +113,59 @@ void NISwizzleMethodsForNetworkActivityDebugging(void);
 
 
 - (void)nimbusDebugSetNetworkActivityIndicatorVisible:(BOOL)visible {
-  // This method will only be used when swizzled, so this will actually call
-  // setNetworkActivityIndicatorVisible:
-  [self nimbusDebugSetNetworkActivityIndicatorVisible:visible];
-
-  // Sanity check that this method isn't being called directly when debugging isn't enabled.
-  NIDASSERT(gNetworkActivityDebuggingEnabled);
-
-  // If either of the following assertions fail then you should look at the call stack to
-  // determine what code is erroneously calling setNetworkActivityIndicatorVisible: directly.
-  if (visible) {
-    // The only time we should be enabling the network activity indicator is when the task
-    // count is one.
-    NIDASSERT(1 == gNetworkTaskCount);
-
-  } else {
-    // The only time we should be disabling the network activity indicator is when the task
-    // count is zero.
-    NIDASSERT(0 == gNetworkTaskCount);
-  }
+    // This method will only be used when swizzled, so this will actually call
+    // setNetworkActivityIndicatorVisible:
+    [self nimbusDebugSetNetworkActivityIndicatorVisible:visible];
+    
+    // Sanity check that this method isn't being called directly when debugging isn't enabled.
+    NIDASSERT(gNetworkActivityDebuggingEnabled);
+    
+    // If either of the following assertions fail then you should look at the call stack to
+    // determine what code is erroneously calling setNetworkActivityIndicatorVisible: directly.
+    if (visible) {
+        // The only time we should be enabling the network activity indicator is when the task
+        // count is one.
+        NIDASSERT(1 == gNetworkTaskCount);
+        
+    } else {
+        // The only time we should be disabling the network activity indicator is when the task
+        // count is zero.
+        NIDASSERT(0 == gNetworkTaskCount);
+    }
 }
 
 @end
 
 
 void NISwizzleMethodsForNetworkActivityDebugging(void) {
-  NISwapInstanceMethods([UIApplication class],
-                        @selector(setNetworkActivityIndicatorVisible:),
-                        @selector(nimbusDebugSetNetworkActivityIndicatorVisible:));
+    NISwapInstanceMethods([UIApplication class],
+                          @selector(setNetworkActivityIndicatorVisible:),
+                          @selector(nimbusDebugSetNetworkActivityIndicatorVisible:));
 }
 
 void NIEnableNetworkActivityDebugging(void) {
-  if (!gNetworkActivityDebuggingEnabled) {
-    gNetworkActivityDebuggingEnabled = YES;
-    NISwizzleMethodsForNetworkActivityDebugging();
-  }
+    if (!gNetworkActivityDebuggingEnabled) {
+        gNetworkActivityDebuggingEnabled = YES;
+        NISwizzleMethodsForNetworkActivityDebugging();
+    }
 }
 
 void NIDisableNetworkActivityDebugging(void) {
-  if (gNetworkActivityDebuggingEnabled) {
-    gNetworkActivityDebuggingEnabled = NO;
-    NISwizzleMethodsForNetworkActivityDebugging();
-  }
+    if (gNetworkActivityDebuggingEnabled) {
+        gNetworkActivityDebuggingEnabled = NO;
+        NISwizzleMethodsForNetworkActivityDebugging();
+    }
 }
 
 #else // #ifndef DEBUG
 
 
 void NIEnableNetworkActivityDebugging(void) {
-  // No-op
+    // No-op
 }
 
 void NIDisableNetworkActivityDebugging(void) {
-  // No-op
+    // No-op
 }
 
 #endif // #if defined(DEBUG) || defined(NI_DEBUG)

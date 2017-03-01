@@ -40,54 +40,54 @@
 
 
 - (void)dealloc {
-  [_radioGroup removeForwarding:self];
+    [_radioGroup removeForwarding:self];
 }
 
 - (id)initWithRadioGroup:(NIRadioGroup *)radioGroup tappedCell:(id<NICell>)tappedCell {
-  if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
-    // A valid radio group must be provided.
-    NIDASSERT(nil != radioGroup);
-    _radioGroup = radioGroup;
-    _tappedCell = tappedCell;
-
-    _model = [[NITableViewModel alloc] initWithListArray:_radioGroup.allObjects
-                                                delegate:(id)[NICellFactory class]];
-  }
-  return self;
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
+        // A valid radio group must be provided.
+        NIDASSERT(nil != radioGroup);
+        _radioGroup = radioGroup;
+        _tappedCell = tappedCell;
+        
+        _model = [[NITableViewModel alloc] initWithListArray:_radioGroup.allObjects
+                                                    delegate:(id)[NICellFactory class]];
+    }
+    return self;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style {
-  // Use the initWithRadioGroup initializer.
-  NIDASSERT(NO);
-  return [self initWithRadioGroup:nil tappedCell:nil];
+    // Use the initWithRadioGroup initializer.
+    NIDASSERT(NO);
+    return [self initWithRadioGroup:nil tappedCell:nil];
 }
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-
-  self.tableView.dataSource = self.model;
-  self.tableView.delegate = [self.radioGroup forwardingTo:self.tableView.delegate];
+    [super viewDidLoad];
+    
+    self.tableView.dataSource = self.model;
+    self.tableView.delegate = [self.radioGroup forwardingTo:self.tableView.delegate];
 }
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < NIIOS_6_0
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-  return NIIsSupportedOrientation(toInterfaceOrientation);
+    return NIIsSupportedOrientation(toInterfaceOrientation);
 }
 #endif
 
 #if (defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0)
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
 #else
-- (NSUInteger)supportedInterfaceOrientations {
+    - (NSUInteger)supportedInterfaceOrientations {
 #endif
-  return UIInterfaceOrientationMaskAllButUpsideDown;
-}
-
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+    }
+    
 #pragma mark - UITableViewDelegate
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  [self.tappedCell shouldUpdateCellWithObject:self.radioGroup];
-}
-
-@end
+    
+    
+    - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+        [self.tappedCell shouldUpdateCellWithObject:self.radioGroup];
+    }
+    
+    @end

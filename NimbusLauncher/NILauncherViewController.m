@@ -30,48 +30,48 @@
 @implementation NILauncherViewController
 
 - (void)loadView {
-  [super loadView];
-
-  self.launcherView = [[NILauncherView alloc] initWithFrame:self.view.bounds];
-  self.launcherView.autoresizingMask = UIViewAutoresizingFlexibleDimensions;
-  self.launcherView.dataSource = self;
-  self.launcherView.delegate = self;
-
-  self.view = self.launcherView;
-
-  self.shouldReloadData = YES;
+    [super loadView];
+    
+    self.launcherView = [[NILauncherView alloc] initWithFrame:self.view.bounds];
+    self.launcherView.autoresizingMask = UIViewAutoresizingFlexibleDimensions;
+    self.launcherView.dataSource = self;
+    self.launcherView.delegate = self;
+    
+    self.view = self.launcherView;
+    
+    self.shouldReloadData = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-
-  if (self.view && self.shouldReloadData) {
-    [self.launcherView reloadData];
-    self.shouldReloadData = NO;
-  }
+    [super viewWillAppear:animated];
+    
+    if (self.view && self.shouldReloadData) {
+        [self.launcherView reloadData];
+        self.shouldReloadData = NO;
+    }
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  [self.launcherView willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self.launcherView willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  [self.launcherView willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self.launcherView willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 #pragma mark - NILauncherDataSource
 
 
 - (NSInteger)launcherView:(NILauncherView *)launcherView numberOfButtonsInPage:(NSInteger)page {
-  return 0;
+    return 0;
 }
 
 - (UIView<NILauncherButtonView> *)launcherView:(NILauncherView *)launcherView buttonViewForPage:(NSInteger)page atIndex:(NSInteger)buttonIndex {
-  return nil;
+    return nil;
 }
 
 @end

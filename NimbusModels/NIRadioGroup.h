@@ -228,11 +228,11 @@
  *
  * Example:
  *
-@code
-// Let the radio group handle delegate methods and then forward them to whatever delegate was
-// already assigned.
-self.tableView.delegate = [self.radioGroup forwardingTo:self.tableView.delegate];
-@endcode
+ @code
+ // Let the radio group handle delegate methods and then forward them to whatever delegate was
+ // already assigned.
+ self.tableView.delegate = [self.radioGroup forwardingTo:self.tableView.delegate];
+ @endcode
  *
  * @param forwardDelegate The delegate to forward invocations to.
  * @returns self so that this method can be chained.

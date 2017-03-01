@@ -42,9 +42,9 @@ void NIOverviewSwizzleMethods(void);
 
 
 CGFloat NIOverviewStatusBarHeight(void) {
-  CGRect statusBarFrame = [[UIApplication sharedApplication] _statusBarFrame];
-  CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
-  return statusBarHeight;
+    CGRect statusBarFrame = [[UIApplication sharedApplication] _statusBarFrame];
+    CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
+    return statusBarHeight;
 }
 
 @implementation UIViewController (NIDebugging)
@@ -55,7 +55,7 @@ CGFloat NIOverviewStatusBarHeight(void) {
  * This method is used by view controllers to adjust the size of their views on iOS 7 devices.
  */
 - (CGFloat)__statusBarHeightAdjustmentForCurrentOrientation {
-  return NIOverviewStatusBarHeight() + [NIOverview height];
+    return NIOverviewStatusBarHeight() + [NIOverview height];
 }
 
 /**
@@ -64,7 +64,7 @@ CGFloat NIOverviewStatusBarHeight(void) {
  * This method is used by view controllers to adjust the size of their views on pre-iOS 7 devices.
  */
 - (CGFloat)__statusBarHeightForCurrentInterfaceOrientation {
-  return NIOverviewStatusBarHeight() + [NIOverview height];
+    return NIOverviewStatusBarHeight() + [NIOverview height];
 }
 
 @end
@@ -81,8 +81,8 @@ CGFloat NIOverviewStatusBarHeight(void) {
  * for application-level code that depends on statusBarFrame for calculations.
  */
 - (CGRect)_statusBarFrame {
-  return CGRectMake(0, 0,
-                    CGFLOAT_MAX, NIOverviewStatusBarHeight() + [NIOverview height]);
+    return CGRectMake(0, 0,
+                      CGFLOAT_MAX, NIOverviewStatusBarHeight() + [NIOverview height]);
 }
 
 /**
@@ -92,7 +92,7 @@ CGFloat NIOverviewStatusBarHeight(void) {
  * navigation controllers.
  */
 - (CGFloat)_statusBarHeightForOrientation:(int)arg1 {
-  return NIOverviewStatusBarHeight() + [NIOverview height];
+    return NIOverviewStatusBarHeight() + [NIOverview height];
 }
 
 /**
@@ -101,85 +101,85 @@ CGFloat NIOverviewStatusBarHeight(void) {
  * This allows us to hide the overview when the status bar is hidden.
  */
 - (void)_setStatusBarHidden:(BOOL)hidden withAnimation:(UIStatusBarAnimation)animation {
-  [self _setStatusBarHidden:hidden withAnimation:animation];
-
-  if (UIStatusBarAnimationNone == animation) {
-    [NIOverview view].alpha = 1;
-    [NIOverview view].hidden = hidden;
-
-  } else if (UIStatusBarAnimationSlide == animation) {
-    [NIOverview view].alpha = 1;
-
-    CGRect frame = [NIOverview frame];
-
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:NIStatusBarAnimationDuration()];
-    [UIView setAnimationCurve:NIStatusBarAnimationCurve()];
-
-    [NIOverview view].frame = frame;
-
-    [UIView commitAnimations];
+    [self _setStatusBarHidden:hidden withAnimation:animation];
     
-  } else if (UIStatusBarAnimationFade == animation) {
-    CGRect frame = [NIOverview frame];
-    [NIOverview view].frame = frame;
-
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:NIStatusBarAnimationDuration()];
-    [UIView setAnimationCurve:NIStatusBarAnimationCurve()];
-    
-    [NIOverview view].alpha = hidden ? 0 : 1;
-    
-    [UIView commitAnimations];
-  }
+    if (UIStatusBarAnimationNone == animation) {
+        [NIOverview view].alpha = 1;
+        [NIOverview view].hidden = hidden;
+        
+    } else if (UIStatusBarAnimationSlide == animation) {
+        [NIOverview view].alpha = 1;
+        
+        CGRect frame = [NIOverview frame];
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:NIStatusBarAnimationDuration()];
+        [UIView setAnimationCurve:NIStatusBarAnimationCurve()];
+        
+        [NIOverview view].frame = frame;
+        
+        [UIView commitAnimations];
+        
+    } else if (UIStatusBarAnimationFade == animation) {
+        CGRect frame = [NIOverview frame];
+        [NIOverview view].frame = frame;
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:NIStatusBarAnimationDuration()];
+        [UIView setAnimationCurve:NIStatusBarAnimationCurve()];
+        
+        [NIOverview view].alpha = hidden ? 0 : 1;
+        
+        [UIView commitAnimations];
+    }
 }
 
 /**
  * Swizzled implementation of - (void)setStatusBarStyle:animated:
  */
 - (void)_setStatusBarStyle:(UIStatusBarStyle)statusBarStyle animated:(BOOL)animated {
-  [self _setStatusBarStyle:statusBarStyle animated:animated];
-
-  if (animated) {
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-  }
-
-  // TODO (jverkoey July 23, 2011): Add a translucent property to the overview view.
-  if (UIStatusBarStyleDefault == statusBarStyle) {
-    [[NIOverview view] setTranslucent:NO];
-
-  } else if (UIStatusBarStyleLightContent == statusBarStyle) {
-    [[NIOverview view] setTranslucent:YES];
-  }
-
-  if (animated) {
-    [UIView commitAnimations];
-  }
+    [self _setStatusBarStyle:statusBarStyle animated:animated];
+    
+    if (animated) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3];
+    }
+    
+    // TODO (jverkoey July 23, 2011): Add a translucent property to the overview view.
+    if (UIStatusBarStyleDefault == statusBarStyle) {
+        [[NIOverview view] setTranslucent:NO];
+        
+    } else if (UIStatusBarStyleLightContent == statusBarStyle) {
+        [[NIOverview view] setTranslucent:YES];
+    }
+    
+    if (animated) {
+        [UIView commitAnimations];
+    }
 }
 
 @end
 
 
 void NIOverviewSwizzleMethods(void) {
-  NISwapInstanceMethods([UIViewController class],
-                        @selector(_statusBarHeightForCurrentInterfaceOrientation),
-                        @selector(__statusBarHeightForCurrentInterfaceOrientation));
-  NISwapInstanceMethods([UIViewController class],
-                        @selector(_statusBarHeightAdjustmentForCurrentOrientation),
-                        @selector(__statusBarHeightAdjustmentForCurrentOrientation));
-  NISwapInstanceMethods([UIApplication class],
-                        @selector(statusBarFrame),
-                        @selector(_statusBarFrame));
-  NISwapInstanceMethods([UIApplication class],
-                        @selector(statusBarHeightForOrientation:),
-                        @selector(_statusBarHeightForOrientation:));
-  NISwapInstanceMethods([UIApplication class],
-                        @selector(setStatusBarHidden:withAnimation:),
-                        @selector(_setStatusBarHidden:withAnimation:));
-  NISwapInstanceMethods([UIApplication class],
-                        @selector(setStatusBarStyle:animated:),
-                        @selector(_setStatusBarStyle:animated:));
+    NISwapInstanceMethods([UIViewController class],
+                          @selector(_statusBarHeightForCurrentInterfaceOrientation),
+                          @selector(__statusBarHeightForCurrentInterfaceOrientation));
+    NISwapInstanceMethods([UIViewController class],
+                          @selector(_statusBarHeightAdjustmentForCurrentOrientation),
+                          @selector(__statusBarHeightAdjustmentForCurrentOrientation));
+    NISwapInstanceMethods([UIApplication class],
+                          @selector(statusBarFrame),
+                          @selector(_statusBarFrame));
+    NISwapInstanceMethods([UIApplication class],
+                          @selector(statusBarHeightForOrientation:),
+                          @selector(_statusBarHeightForOrientation:));
+    NISwapInstanceMethods([UIApplication class],
+                          @selector(setStatusBarHidden:withAnimation:),
+                          @selector(_setStatusBarHidden:withAnimation:));
+    NISwapInstanceMethods([UIApplication class],
+                          @selector(setStatusBarStyle:animated:),
+                          @selector(_setStatusBarStyle:animated:));
 }
 
 #endif

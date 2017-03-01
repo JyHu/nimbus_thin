@@ -31,7 +31,7 @@
 /**
  * Sets the text alignment and line break mode for a given range.
  */
-- (void)setTextAlignment:(CTTextAlignment)textAlignment 
+- (void)setTextAlignment:(CTTextAlignment)textAlignment
            lineBreakMode:(CTLineBreakMode)lineBreakMode
               lineHeight:(CGFloat)lineHeight
                    range:(NSRange)range;
@@ -39,7 +39,7 @@
 /**
  * Sets the text alignment and the line break mode for the entire string.
  */
-- (void)setTextAlignment:(CTTextAlignment)textAlignment 
+- (void)setTextAlignment:(CTTextAlignment)textAlignment
            lineBreakMode:(CTLineBreakMode)lineBreakMode
               lineHeight:(CGFloat)lineHeight;
 

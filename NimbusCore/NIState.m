@@ -28,31 +28,31 @@ static NSOperationQueue* sNimbusGlobalOperationQueue = nil;
 @implementation Nimbus
 
 + (void)setImageMemoryCache:(NIImageMemoryCache *)imageMemoryCache {
-  if (sNimbusGlobalMemoryCache != imageMemoryCache) {
-    sNimbusGlobalMemoryCache = nil;
-    sNimbusGlobalMemoryCache = imageMemoryCache;
-  }
+    if (sNimbusGlobalMemoryCache != imageMemoryCache) {
+        sNimbusGlobalMemoryCache = nil;
+        sNimbusGlobalMemoryCache = imageMemoryCache;
+    }
 }
 
 + (NIImageMemoryCache *)imageMemoryCache {
-  if (nil == sNimbusGlobalMemoryCache) {
-    sNimbusGlobalMemoryCache = [[NIImageMemoryCache alloc] init];
-  }
-  return sNimbusGlobalMemoryCache;
+    if (nil == sNimbusGlobalMemoryCache) {
+        sNimbusGlobalMemoryCache = [[NIImageMemoryCache alloc] init];
+    }
+    return sNimbusGlobalMemoryCache;
 }
 
 + (void)setNetworkOperationQueue:(NSOperationQueue *)queue {
-  if (sNimbusGlobalOperationQueue != queue) {
-    sNimbusGlobalOperationQueue = nil;
-    sNimbusGlobalOperationQueue = queue;
-  }
+    if (sNimbusGlobalOperationQueue != queue) {
+        sNimbusGlobalOperationQueue = nil;
+        sNimbusGlobalOperationQueue = queue;
+    }
 }
 
 + (NSOperationQueue *)networkOperationQueue {
-  if (nil == sNimbusGlobalOperationQueue) {
-    sNimbusGlobalOperationQueue = [[NSOperationQueue alloc] init];
-  }
-  return sNimbusGlobalOperationQueue;
+    if (nil == sNimbusGlobalOperationQueue) {
+        sNimbusGlobalOperationQueue = [[NSOperationQueue alloc] init];
+    }
+    return sNimbusGlobalOperationQueue;
 }
 
 @end

@@ -29,8 +29,8 @@
 @optional
 
 /**
- * Determines whether or not to draw a divider between cells. 
- * 
+ * Determines whether or not to draw a divider between cells.
+ *
  * If the cell does not implement this method, a cell divider will be provided.
  */
 - (BOOL)drawsCellDivider;
@@ -40,10 +40,10 @@
 
 // Flags set on the cell's backgroundView's tag property.
 typedef enum {
-  NIGroupedCellBackgroundFlagIsLast       = (1 << 0),
-  NIGroupedCellBackgroundFlagIsFirst      = (1 << 1),
-  NIGroupedCellBackgroundFlagInitialized  = (1 << 2),
-  NIGroupedCellBackgroundFlagNoDivider    = (1 << 3),
+    NIGroupedCellBackgroundFlagIsLast       = (1 << 0),
+    NIGroupedCellBackgroundFlagIsFirst      = (1 << 1),
+    NIGroupedCellBackgroundFlagInitialized  = (1 << 2),
+    NIGroupedCellBackgroundFlagNoDivider    = (1 << 3),
 } NIGroupedCellBackgroundFlag;
 
 /**
@@ -128,4 +128,4 @@ typedef enum {
  *      @param drawDivider YES if the image includes a divider
  *      @returns A tag for an image that matches the given parameters.
  *      @fn NIGroupedCellBackground::backgroundTagForFirst:last:drawDivider:
-*/
+ */

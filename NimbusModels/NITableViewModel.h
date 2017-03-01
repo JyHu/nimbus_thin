@@ -33,9 +33,9 @@ typedef UITableViewCell* (^NITableViewModelCellForIndexPathBlock)(UITableView* t
 @class NITableViewModelFooter;  // Provides the information for a footer.
 
 typedef enum {
-  NITableViewModelSectionIndexNone, // Displays no section index.
-  NITableViewModelSectionIndexDynamic, // Generates a section index from the first letters of the section titles.
-  NITableViewModelSectionIndexAlphabetical, // Generates an alphabetical section index.
+    NITableViewModelSectionIndexNone, // Displays no section index.
+    NITableViewModelSectionIndexDynamic, // Generates a section index from the first letters of the section titles.
+    NITableViewModelSectionIndexAlphabetical, // Generates an alphabetical section index.
 } NITableViewModelSectionIndex;
 
 /**

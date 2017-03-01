@@ -29,68 +29,68 @@
 @implementation NIViewRecycler
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (id)init {
-  if ((self = [super init])) {
-    _reuseIdentifiersToRecycledViews = [[NSMutableDictionary alloc] init];
-
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self
-           selector:@selector(reduceMemoryUsage)
-               name:UIApplicationDidReceiveMemoryWarningNotification
-             object:nil];
-  }
-  return self;
+    if ((self = [super init])) {
+        _reuseIdentifiersToRecycledViews = [[NSMutableDictionary alloc] init];
+        
+        NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self
+               selector:@selector(reduceMemoryUsage)
+                   name:UIApplicationDidReceiveMemoryWarningNotification
+                 object:nil];
+    }
+    return self;
 }
 
 #pragma mark - Memory Warnings
 
 - (void)reduceMemoryUsage {
-  [self removeAllViews];
+    [self removeAllViews];
 }
 
 #pragma mark - Public
 
 - (UIView<NIRecyclableView> *)dequeueReusableViewWithIdentifier:(NSString *)reuseIdentifier {
-  NSMutableArray* views = [_reuseIdentifiersToRecycledViews objectForKey:reuseIdentifier];
-  UIView<NIRecyclableView>* view = [views lastObject];
-  if (nil != view) {
-    [views removeLastObject];
-    if ([view respondsToSelector:@selector(prepareForReuse)]) {
-      [view prepareForReuse];
+    NSMutableArray* views = [_reuseIdentifiersToRecycledViews objectForKey:reuseIdentifier];
+    UIView<NIRecyclableView>* view = [views lastObject];
+    if (nil != view) {
+        [views removeLastObject];
+        if ([view respondsToSelector:@selector(prepareForReuse)]) {
+            [view prepareForReuse];
+        }
     }
-  }
-  return view;
+    return view;
 }
 
 - (void)recycleView:(UIView<NIRecyclableView> *)view {
-  NIDASSERT([view isKindOfClass:[UIView class]]);
-
-  NSString* reuseIdentifier = nil;
-  if ([view respondsToSelector:@selector(reuseIdentifier)]) {
-    reuseIdentifier = [view reuseIdentifier];;
-  }
-  if (nil == reuseIdentifier) {
-    reuseIdentifier = NSStringFromClass([view class]);
-  }
-
-  NIDASSERT(nil != reuseIdentifier);
-  if (nil == reuseIdentifier) {
-    return;
-  }
-
-  NSMutableArray* views = [_reuseIdentifiersToRecycledViews objectForKey:reuseIdentifier];
-  if (nil == views) {
-    views = [[NSMutableArray alloc] init];
-    [_reuseIdentifiersToRecycledViews setObject:views forKey:reuseIdentifier];
-  }
-  [views addObject:view];
+    NIDASSERT([view isKindOfClass:[UIView class]]);
+    
+    NSString* reuseIdentifier = nil;
+    if ([view respondsToSelector:@selector(reuseIdentifier)]) {
+        reuseIdentifier = [view reuseIdentifier];;
+    }
+    if (nil == reuseIdentifier) {
+        reuseIdentifier = NSStringFromClass([view class]);
+    }
+    
+    NIDASSERT(nil != reuseIdentifier);
+    if (nil == reuseIdentifier) {
+        return;
+    }
+    
+    NSMutableArray* views = [_reuseIdentifiersToRecycledViews objectForKey:reuseIdentifier];
+    if (nil == views) {
+        views = [[NSMutableArray alloc] init];
+        [_reuseIdentifiersToRecycledViews setObject:views forKey:reuseIdentifier];
+    }
+    [views addObject:view];
 }
 
 - (void)removeAllViews {
-  [_reuseIdentifiersToRecycledViews removeAllObjects];
+    [_reuseIdentifiersToRecycledViews removeAllObjects];
 }
 
 @end
@@ -98,14 +98,14 @@
 @implementation NIRecyclableView
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-  if ((self = [super initWithFrame:CGRectZero])) {
-    _reuseIdentifier = reuseIdentifier;
-  }
-  return self;
+    if ((self = [super initWithFrame:CGRectZero])) {
+        _reuseIdentifier = reuseIdentifier;
+    }
+    return self;
 }
 
 - (id)initWithFrame:(CGRect)frame {
-  return [self initWithReuseIdentifier:nil];
+    return [self initWithReuseIdentifier:nil];
 }
 
 @end

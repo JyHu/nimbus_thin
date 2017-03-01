@@ -31,56 +31,56 @@
 UIImage* NISnapshotOfViewWithTransparencyOption(UIView* view, BOOL transparency);
 
 UIImage* NISnapshotOfViewWithTransparencyOption(UIView* view, BOOL transparency) {
-  // Passing 0 as the last argument ensures that the image context will match the current device's
-  // scaling mode.
-  UIGraphicsBeginImageContextWithOptions(view.bounds.size, !transparency, 0);
-
-  CGContextRef cx = UIGraphicsGetCurrentContext();
-
-  // Views that can scroll do so by modifying their bounds. We want to capture the part of the view
-  // that is currently in the frame, so we offset by the bounds of the view accordingly.
-  CGContextTranslateCTM(cx, -view.bounds.origin.x, -view.bounds.origin.y);
-
-  BOOL didDraw = NO;
+    // Passing 0 as the last argument ensures that the image context will match the current device's
+    // scaling mode.
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, !transparency, 0);
+    
+    CGContextRef cx = UIGraphicsGetCurrentContext();
+    
+    // Views that can scroll do so by modifying their bounds. We want to capture the part of the view
+    // that is currently in the frame, so we offset by the bounds of the view accordingly.
+    CGContextTranslateCTM(cx, -view.bounds.origin.x, -view.bounds.origin.y);
+    
+    BOOL didDraw = NO;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= NIIOS_7_0
-  if ([view respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
-    didDraw = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
-  }
+    if ([view respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+        didDraw = [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    }
 #endif
-  if (!didDraw) {
-    [view.layer renderInContext:cx];
-  }
-
-  UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-
-  return image;
+    if (!didDraw) {
+        [view.layer renderInContext:cx];
+    }
+    
+    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 UIImage* NISnapshotOfView(UIView* view) {
-  return NISnapshotOfViewWithTransparencyOption(view, NO);
+    return NISnapshotOfViewWithTransparencyOption(view, NO);
 }
 
 UIImageView* NISnapshotViewOfView(UIView* view) {
-  UIImage* image = NISnapshotOfView(view);
-
-  UIImageView* snapshotView = [[UIImageView alloc] initWithImage:image];
-  snapshotView.frame = view.frame;
-
-  return snapshotView;
+    UIImage* image = NISnapshotOfView(view);
+    
+    UIImageView* snapshotView = [[UIImageView alloc] initWithImage:image];
+    snapshotView.frame = view.frame;
+    
+    return snapshotView;
 }
 
 UIImage* NISnapshotOfViewWithTransparency(UIView* view) {
-  return NISnapshotOfViewWithTransparencyOption(view, YES);
+    return NISnapshotOfViewWithTransparencyOption(view, YES);
 }
 
 UIImageView* NISnapshotViewOfViewWithTransparency(UIView* view) {
-  UIImage* image = NISnapshotOfViewWithTransparency(view);
-
-  UIImageView* snapshotView = [[UIImageView alloc] initWithImage:image];
-  snapshotView.frame = view.frame;
-  
-  return snapshotView;
+    UIImage* image = NISnapshotOfViewWithTransparency(view);
+    
+    UIImageView* snapshotView = [[UIImageView alloc] initWithImage:image];
+    snapshotView.frame = view.frame;
+    
+    return snapshotView;
 }
 
 @interface NISnapshotRotation()
@@ -95,120 +95,120 @@ UIImageView* NISnapshotViewOfViewWithTransparency(UIView* view) {
 @implementation NISnapshotRotation
 
 - (id)initWithDelegate:(id<NISnapshotRotationDelegate>)delegate {
-  if ((self = [super init])) {
-    _delegate = delegate;
-
-    // Check whether this feature is supported or not.
-    UIImage* image = [[UIImage alloc] init];
-    _isSupportedOS = [image respondsToSelector:@selector(resizableImageWithCapInsets:resizingMode:)];
-  }
-  return self;
+    if ((self = [super init])) {
+        _delegate = delegate;
+        
+        // Check whether this feature is supported or not.
+        UIImage* image = [[UIImage alloc] init];
+        _isSupportedOS = [image respondsToSelector:@selector(resizableImageWithCapInsets:resizingMode:)];
+    }
+    return self;
 }
 
 - (id)init {
-  return [self initWithDelegate:nil];
+    return [self initWithDelegate:nil];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  if (!self.isSupportedOS) {
-    return;
-  }
-
-  UIView* containerView = [self.delegate containerViewForSnapshotRotation:self];
-  UIView* rotationView = [self.delegate rotatingViewForSnapshotRotation:self];
-
-  // The container view must not be the same as the rotation view.
-  NIDASSERT(containerView != rotationView);
-  if (containerView == rotationView) {
-    return;
-  }
-
-  self.frameBeforeRotation = rotationView.frame;
-  self.snapshotViewBeforeRotation = NISnapshotViewOfViewWithTransparency(rotationView);
-  [containerView insertSubview:self.snapshotViewBeforeRotation aboveSubview:rotationView];
+    if (!self.isSupportedOS) {
+        return;
+    }
+    
+    UIView* containerView = [self.delegate containerViewForSnapshotRotation:self];
+    UIView* rotationView = [self.delegate rotatingViewForSnapshotRotation:self];
+    
+    // The container view must not be the same as the rotation view.
+    NIDASSERT(containerView != rotationView);
+    if (containerView == rotationView) {
+        return;
+    }
+    
+    self.frameBeforeRotation = rotationView.frame;
+    self.snapshotViewBeforeRotation = NISnapshotViewOfViewWithTransparency(rotationView);
+    [containerView insertSubview:self.snapshotViewBeforeRotation aboveSubview:rotationView];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  if (!self.isSupportedOS) {
-    return;
-  }
-
-  UIView* containerView = [self.delegate containerViewForSnapshotRotation:self];
-  UIView* rotationView = [self.delegate rotatingViewForSnapshotRotation:self];
-
-  // The container view must not be the same as the rotation view.
-  NIDASSERT(containerView != rotationView);
-  if (containerView == rotationView) {
-    return;
-  }
-
-  self.frameAfterRotation = rotationView.frame;
-  
-  [UIView setAnimationsEnabled:NO];
-  
-  self.snapshotViewAfterRotation = NISnapshotViewOfViewWithTransparency(rotationView);
-  // Set the new frame while maintaining the old frame's height.
-  self.snapshotViewAfterRotation.frame = CGRectMake(self.frameBeforeRotation.origin.x,
-                                                    self.frameBeforeRotation.origin.y,
-                                                    self.frameBeforeRotation.size.width,
-                                                    self.snapshotViewAfterRotation.frame.size.height);
-  
-  UIImage* imageBeforeRotation = self.snapshotViewBeforeRotation.image;
-  UIImage* imageAfterRotation = self.snapshotViewAfterRotation.image;
-
-  if ([self.delegate respondsToSelector:@selector(fixedInsetsForSnapshotRotation:)]) {
-    UIEdgeInsets fixedInsets = [self.delegate fixedInsetsForSnapshotRotation:self];
-
-    imageBeforeRotation = [imageBeforeRotation resizableImageWithCapInsets:fixedInsets resizingMode:UIImageResizingModeStretch];
-    imageAfterRotation = [imageAfterRotation resizableImageWithCapInsets:fixedInsets resizingMode:UIImageResizingModeStretch];
-  }
-
-  self.snapshotViewBeforeRotation.image = imageBeforeRotation;
-  self.snapshotViewAfterRotation.image = imageAfterRotation;
-
-  [UIView setAnimationsEnabled:YES];
-
-  if (imageAfterRotation.size.height < imageBeforeRotation.size.height) {
-    self.snapshotViewAfterRotation.alpha = 0;
-
-    [containerView insertSubview:self.snapshotViewAfterRotation aboveSubview:self.snapshotViewBeforeRotation];
-
-    self.snapshotViewAfterRotation.alpha = 1;
-
-  } else {
-    [containerView insertSubview:self.snapshotViewAfterRotation belowSubview:self.snapshotViewBeforeRotation];
-    self.snapshotViewBeforeRotation.alpha = 0;
-  }
-
-  self.snapshotViewAfterRotation.frame = self.frameAfterRotation;
-  self.snapshotViewBeforeRotation.frame = CGRectMake(self.frameAfterRotation.origin.x,
-                                                     self.frameAfterRotation.origin.y,
-                                                     self.frameAfterRotation.size.width,
-                                                     self.snapshotViewBeforeRotation.frame.size.height);
-
-  rotationView.hidden = YES;
+    if (!self.isSupportedOS) {
+        return;
+    }
+    
+    UIView* containerView = [self.delegate containerViewForSnapshotRotation:self];
+    UIView* rotationView = [self.delegate rotatingViewForSnapshotRotation:self];
+    
+    // The container view must not be the same as the rotation view.
+    NIDASSERT(containerView != rotationView);
+    if (containerView == rotationView) {
+        return;
+    }
+    
+    self.frameAfterRotation = rotationView.frame;
+    
+    [UIView setAnimationsEnabled:NO];
+    
+    self.snapshotViewAfterRotation = NISnapshotViewOfViewWithTransparency(rotationView);
+    // Set the new frame while maintaining the old frame's height.
+    self.snapshotViewAfterRotation.frame = CGRectMake(self.frameBeforeRotation.origin.x,
+                                                      self.frameBeforeRotation.origin.y,
+                                                      self.frameBeforeRotation.size.width,
+                                                      self.snapshotViewAfterRotation.frame.size.height);
+    
+    UIImage* imageBeforeRotation = self.snapshotViewBeforeRotation.image;
+    UIImage* imageAfterRotation = self.snapshotViewAfterRotation.image;
+    
+    if ([self.delegate respondsToSelector:@selector(fixedInsetsForSnapshotRotation:)]) {
+        UIEdgeInsets fixedInsets = [self.delegate fixedInsetsForSnapshotRotation:self];
+        
+        imageBeforeRotation = [imageBeforeRotation resizableImageWithCapInsets:fixedInsets resizingMode:UIImageResizingModeStretch];
+        imageAfterRotation = [imageAfterRotation resizableImageWithCapInsets:fixedInsets resizingMode:UIImageResizingModeStretch];
+    }
+    
+    self.snapshotViewBeforeRotation.image = imageBeforeRotation;
+    self.snapshotViewAfterRotation.image = imageAfterRotation;
+    
+    [UIView setAnimationsEnabled:YES];
+    
+    if (imageAfterRotation.size.height < imageBeforeRotation.size.height) {
+        self.snapshotViewAfterRotation.alpha = 0;
+        
+        [containerView insertSubview:self.snapshotViewAfterRotation aboveSubview:self.snapshotViewBeforeRotation];
+        
+        self.snapshotViewAfterRotation.alpha = 1;
+        
+    } else {
+        [containerView insertSubview:self.snapshotViewAfterRotation belowSubview:self.snapshotViewBeforeRotation];
+        self.snapshotViewBeforeRotation.alpha = 0;
+    }
+    
+    self.snapshotViewAfterRotation.frame = self.frameAfterRotation;
+    self.snapshotViewBeforeRotation.frame = CGRectMake(self.frameAfterRotation.origin.x,
+                                                       self.frameAfterRotation.origin.y,
+                                                       self.frameAfterRotation.size.width,
+                                                       self.snapshotViewBeforeRotation.frame.size.height);
+    
+    rotationView.hidden = YES;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  if (!self.isSupportedOS) {
-    return;
-  }
-
-  UIView* containerView = [self.delegate containerViewForSnapshotRotation:self];
-  UIView* rotationView = [self.delegate rotatingViewForSnapshotRotation:self];
-
-  // The container view must not be the same as the rotation view.
-  NIDASSERT(containerView != rotationView);
-  if (containerView == rotationView) {
-    return;
-  }
-
-  [self.snapshotViewBeforeRotation removeFromSuperview];
-  [self.snapshotViewAfterRotation removeFromSuperview];
-  self.snapshotViewBeforeRotation = nil;
-  self.snapshotViewAfterRotation = nil;
-
-  rotationView.hidden = NO;
+    if (!self.isSupportedOS) {
+        return;
+    }
+    
+    UIView* containerView = [self.delegate containerViewForSnapshotRotation:self];
+    UIView* rotationView = [self.delegate rotatingViewForSnapshotRotation:self];
+    
+    // The container view must not be the same as the rotation view.
+    NIDASSERT(containerView != rotationView);
+    if (containerView == rotationView) {
+        return;
+    }
+    
+    [self.snapshotViewBeforeRotation removeFromSuperview];
+    [self.snapshotViewAfterRotation removeFromSuperview];
+    self.snapshotViewBeforeRotation = nil;
+    self.snapshotViewAfterRotation = nil;
+    
+    rotationView.hidden = NO;
 }
 
 @end
@@ -220,80 +220,80 @@ UIImageView* NISnapshotViewOfViewWithTransparency(UIView* view) {
 @implementation NITableViewSnapshotRotation
 
 - (void)setDelegate:(id<NISnapshotRotationDelegate>)delegate {
-  if (delegate == self) {
-    [super setDelegate:delegate];
-
-  } else {
-    self.forwardingDelegate = delegate;
-  }
+    if (delegate == self) {
+        [super setDelegate:delegate];
+        
+    } else {
+        self.forwardingDelegate = delegate;
+    }
 }
 
 - (id)init {
-  if ((self = [super init])) {
-    self.delegate = self;
-  }
-  return self;
+    if ((self = [super init])) {
+        self.delegate = self;
+    }
+    return self;
 }
 
 #pragma mark - Forward Invocations
 
 - (BOOL)shouldForwardSelectorToDelegate:(SEL)selector {
-  struct objc_method_description description;
-  // Only forward the selector if it's part of the protocol.
-  description = protocol_getMethodDescription(@protocol(NISnapshotRotationDelegate), selector, NO, YES);
-
-  BOOL isSelectorInProtocol = (description.name != NULL && description.types != NULL);
-  return (isSelectorInProtocol && [self.forwardingDelegate respondsToSelector:selector]);
+    struct objc_method_description description;
+    // Only forward the selector if it's part of the protocol.
+    description = protocol_getMethodDescription(@protocol(NISnapshotRotationDelegate), selector, NO, YES);
+    
+    BOOL isSelectorInProtocol = (description.name != NULL && description.types != NULL);
+    return (isSelectorInProtocol && [self.forwardingDelegate respondsToSelector:selector]);
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {
-  if ([super respondsToSelector:selector] == YES) {
-    return YES;
-    
-  } else {
-    return [self shouldForwardSelectorToDelegate:selector];
-  }
+    if ([super respondsToSelector:selector] == YES) {
+        return YES;
+        
+    } else {
+        return [self shouldForwardSelectorToDelegate:selector];
+    }
 }
 
 - (id)forwardingTargetForSelector:(SEL)selector {
-  if ([self shouldForwardSelectorToDelegate:selector]) {
-    return self.forwardingDelegate;
-
-  } else {
-    return nil;
-  }
+    if ([self shouldForwardSelectorToDelegate:selector]) {
+        return self.forwardingDelegate;
+        
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - NISnapshotRotation
 
 - (UIView *)containerViewForSnapshotRotation:(NISnapshotRotation *)snapshotRotation {
-  return [self.forwardingDelegate containerViewForSnapshotRotation:snapshotRotation];
+    return [self.forwardingDelegate containerViewForSnapshotRotation:snapshotRotation];
 }
 
 - (UIView *)rotatingViewForSnapshotRotation:(NISnapshotRotation *)snapshotRotation {
-  return [self.forwardingDelegate rotatingViewForSnapshotRotation:snapshotRotation];
+    return [self.forwardingDelegate rotatingViewForSnapshotRotation:snapshotRotation];
 }
 
 - (UIEdgeInsets)fixedInsetsForSnapshotRotation:(NISnapshotRotation *)snapshotRotation {
-  UIEdgeInsets insets = UIEdgeInsetsZero;
-
-  // Find the right edge of the content view in the coordinate space of the UITableView.
-  UIView* rotatingView = [self.forwardingDelegate rotatingViewForSnapshotRotation:snapshotRotation];
-  NIDASSERT([rotatingView isKindOfClass:[UITableView class]]);
-  if ([rotatingView isKindOfClass:[UITableView class]]) {
-    UITableView* tableView = (UITableView *)rotatingView;
-
-    NSArray* visibleCells = tableView.visibleCells;
-    if (visibleCells.count > 0) {
-      UIView* contentView = [[visibleCells objectAtIndex:0] contentView];
-      CGFloat contentViewRightEdge = [tableView convertPoint:CGPointMake(contentView.bounds.size.width, 0) fromView:contentView].x;
-
-      CGFloat fixedRightWidth = tableView.bounds.size.width - contentViewRightEdge;
-      CGFloat fixedLeftWidth = MIN(snapshotRotation.frameAfterRotation.size.width, snapshotRotation.frameBeforeRotation.size.width) - fixedRightWidth - 1;
-      insets = UIEdgeInsetsMake(0, fixedLeftWidth, 0, fixedRightWidth);
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    
+    // Find the right edge of the content view in the coordinate space of the UITableView.
+    UIView* rotatingView = [self.forwardingDelegate rotatingViewForSnapshotRotation:snapshotRotation];
+    NIDASSERT([rotatingView isKindOfClass:[UITableView class]]);
+    if ([rotatingView isKindOfClass:[UITableView class]]) {
+        UITableView* tableView = (UITableView *)rotatingView;
+        
+        NSArray* visibleCells = tableView.visibleCells;
+        if (visibleCells.count > 0) {
+            UIView* contentView = [[visibleCells objectAtIndex:0] contentView];
+            CGFloat contentViewRightEdge = [tableView convertPoint:CGPointMake(contentView.bounds.size.width, 0) fromView:contentView].x;
+            
+            CGFloat fixedRightWidth = tableView.bounds.size.width - contentViewRightEdge;
+            CGFloat fixedLeftWidth = MIN(snapshotRotation.frameAfterRotation.size.width, snapshotRotation.frameBeforeRotation.size.width) - fixedRightWidth - 1;
+            insets = UIEdgeInsetsMake(0, fixedLeftWidth, 0, fixedRightWidth);
+        }
     }
-  }
-  return insets;
+    return insets;
 }
 
 @end
