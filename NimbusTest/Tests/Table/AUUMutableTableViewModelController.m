@@ -55,7 +55,8 @@
 
 - (void)didTapAddButton
 {
-    NSIndexSet *indexSet = [self.model addSectionWithTitle:[self randomName]];
+    NSIndexSet *indexSet = [self.model addSectionHeaderWithTitle:[self randomName]];
+    [self.model addSectionFooterWithTitle:[NSString stringWithFormat:@"%@ -- footer", [self randomName]] toSection:[self.model numberOfSectionsInTableView:self.tableView] - 1];
     NSMutableArray *objects = [NSMutableArray array];
     for (NSInteger i = 0; i < arc4random_uniform(10) + 1; i ++) {
         [objects addObject:[self.actions attachToObject:[NITitleCellObject objectWithTitle:[self randomName]] tapBlock:^BOOL(id object, id target, NSIndexPath *indexPath) {

@@ -8,6 +8,6 @@
 
 #import "AUUNITestBaseTableViewController.h"
 
-@interface AUUSnapshotRotationTableViewModelController : AUUNITestBaseTableViewController
+@interface AUUSnapshotRotationTableViewModelController : UIViewController
 
 @end

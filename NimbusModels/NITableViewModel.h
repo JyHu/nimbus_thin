@@ -24,7 +24,7 @@
 typedef UITableViewCell* (^NITableViewModelCellForIndexPathBlock)(UITableView* tableView, NSIndexPath* indexPath, id object);
 #endif // #if NS_BLOCKS_AVAILABLE
 
-@protocol NITableViewModelDelegate;
+@protocol NITableViewModelCellDelegate;
 
 
 #pragma mark Sectioned Array Objects
@@ -54,10 +54,10 @@ typedef enum {
 #pragma mark Creating Table View Models
 
 // Designated initializer.
-- (id)initWithDelegate:(id<NITableViewModelDelegate>)delegate;
-- (id)initWithListArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelDelegate>)delegate;
+- (id)initWithDelegate:(id<NITableViewModelCellDelegate>)delegate;
+- (id)initWithListArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelCellDelegate>)delegate;
 // Each NSString in the array starts a new section. Any other object is a new row (with exception of certain model-specific objects).
-- (id)initWithSectionedArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelDelegate>)delegate;
+- (id)initWithSectionedArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelCellDelegate>)delegate;
 
 #pragma mark Accessing Objects
 
@@ -75,13 +75,15 @@ typedef enum {
 
 #pragma mark Creating Table View Cells
 
-@property (nonatomic, weak) id<NITableViewModelDelegate> delegate;
+@property (nonatomic, weak) id<NITableViewModelCellDelegate> delegate;
 
 #if NS_BLOCKS_AVAILABLE
 // If both the delegate and this block are provided, cells returned by this block will be used
 // and the delegate will not be called.
 @property (nonatomic, copy) NITableViewModelCellForIndexPathBlock createCellBlock;
 #endif // #if NS_BLOCKS_AVAILABLE
+
+
 
 @end
 
@@ -90,7 +92,7 @@ typedef enum {
  *
  * @ingroup TableViewModels
  */
-@protocol NITableViewModelDelegate <NSObject>
+@protocol NITableViewModelCellDelegate <NSObject>
 
 @required
 
@@ -104,27 +106,21 @@ typedef enum {
                         atIndexPath: (NSIndexPath *)indexPath
                          withObject: (id)object;
 
-@end
+@optional
+// 留给外部调用的，实现这个方法用于创建section的表头和表尾
+- (UITableViewHeaderFooterView *)tableViewModel:(NITableViewModel *)tableViewModel
+                             headerForTableView:(UITableView *)tableView
+                                      inSection:(NSUInteger)section
+                                     withObject:(id)object;
 
-/**
- * An object used in sectioned arrays to denote a section footer title.
- *
- * Meant to be used in a sectioned array for NITableViewModel.
- *
- * <h3>Example</h3>
- *
- * @code
- *  [NITableViewModelFooter footerWithTitle:@"Footer"]
- * @endcode
- */
-@interface NITableViewModelFooter : NSObject
-
-+ (id)footerWithTitle:(NSString *)title;
-- (id)initWithTitle:(NSString *)title;
-
-@property (nonatomic, copy) NSString* title;
+- (UITableViewHeaderFooterView *)tableViewModel:(NITableViewModel *)tableViewModel
+                             footerForTableView:(UITableView *)tableView
+                                      inSection:(NSUInteger)section
+                                     withObject:(id)object;
 
 @end
+
+
 
 /** @name Creating Table View Models */
 

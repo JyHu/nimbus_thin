@@ -16,6 +16,8 @@
 #import "NIRadioGroup.h"
 #import "NIRadioGroupController.h"
 #import "NITableViewActions.h"
+#import "NITableHeaderFooterView.h"
+#import "NITableHeaderFooterFactory.h"
 
 //! Project version number for NimbusModels.
 FOUNDATION_EXPORT double NimbusModelsVersionNumber;

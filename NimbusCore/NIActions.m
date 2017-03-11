@@ -224,24 +224,79 @@
 @implementation NIObjectActions
 @end
 
-NIActionBlock NIPushControllerAction(Class controllerClass) {
-    return [^(id object, id target, NSIndexPath* indexPath) {
-        // You must initialize the actions object with initWithTarget: and pass a valid
-        // controller.
-        NIDASSERT(nil != target);
-        NIDASSERT([target isKindOfClass:[UIViewController class]]);
-        UIViewController *controller = target;
-        
-        if (nil != controller && [controller isKindOfClass:[UIViewController class]]) {
-            // No navigation controller to push this new controller; this controller
-            // is going to be lost.
-            NIDASSERT(nil != controller.navigationController);
-            
-            UIViewController* controllerToPush = [[controllerClass alloc] init];
-            [controller.navigationController pushViewController:controllerToPush
-                                                       animated:YES];
+
+#pragma mark - navgation push
+
+NIActionBlock NIPushControllerAction(Class cls) {
+    return NIPushControllerWithInfoAction(cls, nil);
+}
+NIActionBlock NIPushControllerWithInfoAction(Class cls, id info) {
+    return NIPushControllerWithBlockAction(cls, info, nil);
+}
+NIActionBlock NIPushControllerWithBlockAction(Class cls, id info, NIParameterTransitionBlock parameterBlock) {
+    return [^BOOL(id object, id target, NSIndexPath *indexPath) {
+        UIViewController *destController = [[cls alloc] init];
+        if ([destController isKindOfClass:[UIViewController class]]) {
+            UINavigationController *navigationController = [target isKindOfClass:[UINavigationController class]] ?
+            (UINavigationController *)target : ((UIViewController *)target).navigationController;
+            if (navigationController) {
+                if ([destController conformsToProtocol:@protocol(NIActionsDataTransition)]) {
+                    id transferObject = parameterBlock ? parameterBlock(object) : object;
+                    [(id <NIActionsDataTransition>)destController transitionFrom:target withObject:transferObject userInfo:info];
+                }
+                
+                [navigationController pushViewController:destController animated:YES];
+            }
         }
-        
-        return NO;
+        return YES;
     } copy];
 }
+
+
+
+
+#pragma mark - controller present
+
+
+NIActionBlock NIPresentControllerAction(Class cls) {
+    return NIPresentControllerWithInfoAction(cls, nil);
+}
+NIActionBlock NIPresentControllerWithInfoAction(Class cls, id info) {
+    return NIPresentControllerWithBlockAction(cls, info, nil);
+}
+NIActionBlock NIPresentControllerWithBlockAction(Class cls, id info, NIParameterTransitionBlock parametersBlock) {
+    return [^BOOL(id object, id target, NSIndexPath *indexPath) {
+        
+        UIViewController *destController = [[cls alloc] init];
+        
+        if ([destController isKindOfClass:[UIViewController class]]) {
+            if ([target isKindOfClass:[UIViewController class]]) {
+                if ([destController conformsToProtocol:@protocol(NIActionsDataTransition)]) {
+                    id transferObject = parametersBlock ? parametersBlock(object) : object;
+                    [(id <NIActionsDataTransition>)destController transitionFrom:target withObject:transferObject userInfo:info];
+                }
+                [target presentViewController:[[UINavigationController alloc] initWithRootViewController:destController] animated:YES completion:nil];
+            }
+        }
+        return YES;
+    } copy];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,70 +8,17 @@
 
 
 
-
-
-
-
-/*
- 
- 
- 
- 
- 
- 
- 
-                    有问题，待调试。。。。
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #import "AUUSnapshotRotationTableViewModelController.h"
 
-@interface AUUSnapshotRotationTableViewModelController () <NISnapshotRotationDelegate>
+@interface AUUSnapshotRotationTableViewModelController () <NISnapshotRotationDelegate, UITableViewDelegate>
+
+@property (retain, nonatomic) UITableView *tableView;
 
 @property (retain, nonatomic) NISnapshotRotation *snapshotRotation;
+
+@property (retain, nonatomic) NITableViewModel *model;
+
+@property (retain, nonatomic) NITableViewActions *actions;
 
 @end
 
@@ -95,6 +42,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:self.tableView];
+    
+    [self loadData];
+    
+    self.tableView.dataSource = self.model;
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
 
@@ -103,38 +57,45 @@
     self.snapshotRotation = [[NITableViewSnapshotRotation alloc] initWithDelegate:self];
     
     NICellDrawRectBlock drawTextBlock = ^CGFloat(CGRect rect, id object, UITableViewCell *cell) {
-        if (cell.isHighlighted || cell.isSelected) {
-            [[UIColor clearColor] set];
-        } else {
-            [[UIColor whiteColor] set];
+        if ([object isKindOfClass:[NSString class]]) {
+            NSString *text = object;
+            UIFont *titleFont = [UIFont boldSystemFontOfSize:16];
+            CGFloat titleWidth = rect.size.width - 20;
+            CGSize size = [text boundingRectWithSize:CGSizeMake(titleWidth, CGFLOAT_MAX)
+                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                          attributes:@{NSFontAttributeName : titleFont}
+                                             context:nil].size;
+            if (cell) {
+                if (cell.isHighlighted || cell.isSelected) {
+                    [[UIColor clearColor] set];
+                } else {
+                    [[UIColor whiteColor] set];
+                }
+                
+                UIRectFill(rect);
+                [[UIColor blackColor] set];
+                [text drawInRect:CGRectMake(10, 5, size.width, size.height)
+                  withAttributes:@{NSFontAttributeName : titleFont}];
+            }
+
+            return size.height + 10;
         }
-        
-        UIRectFill(rect);
-        
-        NSString *text = object;
-        [[UIColor blackColor] set];
-        UIFont *titleFont = [UIFont boldSystemFontOfSize:16];
-        CGFloat titleWidth = rect.size.width - 20;
-        
-        CGSize size = [text boundingRectWithSize:CGSizeMake(titleWidth, CGFLOAT_MAX) options:NSStringDrawingUsesDeviceMetrics attributes:@{NSFontAttributeName : titleFont} context:nil].size;
-        
-        if (cell != nil) {
-            [text drawInRect:CGRectMake(10, 5, size.width, size.height) withAttributes:@{NSFontAttributeName : titleFont}];
-        }
-        
-        return size.height + 10;
+        return 0;
     };
     
     NSMutableArray *tableContent = [[NSMutableArray alloc] init];
     for (NSInteger i = 0; i < 10; i ++) {
-        [tableContent addObject:[NIDrawRectBlockCellObject objectWithBlock:drawTextBlock object:@"This is a cell with a large amount of text that is going to wrap over multiple lines"]];
-        [tableContent addObject:[NIDrawRectBlockCellObject objectWithBlock:drawTextBlock object:@"This is a short label"]];
+        [tableContent addObject:[NIDrawRectBlockCellObject objectWithBlock:drawTextBlock
+                                                                    object:@"This is a cell with a large amount of text that is going to wrap over multiple lines. This is a cell with a large amount of text that is going to wrap over multiple lines."]];
+        [tableContent addObject:[NIDrawRectBlockCellObject objectWithBlock:drawTextBlock
+                                                                    object:@"This is a short label"]];
     }
     
     self.model = [[NITableViewModel alloc] initWithListArray:tableContent delegate:(id)[NICellFactory class]];
     
     self.actions = [[NITableViewActions alloc] initWithTarget:self];
     [self.actions attachToClass:[NIDrawRectBlockCellObject class] navigationBlock:NIPushControllerAction([self class])];
+    self.tableView.delegate = [self.actions forwardingTo:self];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -173,19 +134,19 @@
     return self.tableView;
 }
 
+#pragma mark - getter
+
+- (UITableView *)tableView
+{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    }
+    return _tableView;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

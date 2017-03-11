@@ -80,6 +80,7 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, id object, UITableViewCell* 
  * @ingroup TableCellCatalog
  */
 @interface NITextCell : UITableViewCell <NICell>
+
 @end
 
 /**

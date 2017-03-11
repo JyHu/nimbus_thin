@@ -28,14 +28,20 @@
     [self loadData];
     
     self.tableView.dataSource = self.model;
-    if (self.actions) {
-        self.tableView.delegate = [self.actions forwardingTo:self];
-    }
+    self.tableView.delegate = [self.actions forwardingTo:self];
 }
 
 - (void)loadData
 {
     
+}
+
+- (NITableViewActions *)actions
+{
+    if (!_actions) {
+        _actions = [[NITableViewActions alloc] initWithTarget:self];
+    }
+    return _actions;
 }
 
 - (void)didReceiveMemoryWarning {

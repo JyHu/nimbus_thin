@@ -22,34 +22,40 @@
 
 - (void)loadData
 {
-    UIImage *image = [UIImage imageNamed:@"11.jpg"];
+    UIImage *image = [UIImage imageNamed:@"19.jpg"];
     NICellDrawRectBlock drawTextBlock = ^CGFloat(CGRect rect, id object, UITableViewCell *cell) {
-        if (cell.isHighlighted || cell.isSelected) {
-            [[UIColor clearColor] set];
-        } else {
-            [[UIColor whiteColor] set];
+        if (cell) {
+            if (cell.isHighlighted || cell.isSelected) {
+                [[UIColor clearColor] set];
+            } else {
+                [[UIColor whiteColor] set];
+            }
+            
+            UIRectFill(rect);
+            
+            NSString *text = object;
+            [[UIColor blackColor] set];
+            UIFont *titleFont = [UIFont boldSystemFontOfSize:16];
+            [text drawAtPoint:CGPointMake(10, 5) withAttributes:@{NSFontAttributeName : titleFont}];
+            
+            [[UIColor grayColor] set];
+            [@"Subtitle" drawAtPoint:CGPointMake(10, 5 + titleFont.lineHeight) withAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12]}];
+            [image drawInRect:CGRectMake(CGRectGetMaxX(rect) - 60 - 10, 5, 60, 60)];
         }
-        
-        UIRectFill(rect);
-        
-        NSString *text = object;
-        [[UIColor blackColor] set];
-        UIFont *titleFont = [UIFont boldSystemFontOfSize:16];
-        [text drawAtPoint:CGPointMake(10, 5) withAttributes:@{NSFontAttributeName : titleFont}];
-        
-        [[UIColor grayColor] set];
-        [@"Subtitle" drawAtPoint:CGPointMake(10, 5 + titleFont.lineHeight) withAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12]}];
-        [image drawInRect:CGRectMake(CGRectGetMaxX(rect) - 60 - 10, 5, 60, 60)];
-        
-        return 0;
+    
+        return 70;
     };
     
     NSMutableArray *tableContents = [[NSMutableArray alloc] init];
-    for (NSInteger i = 0; i < 1000; i ++) {
+    for (NSInteger i = 0; i < 100; i ++) {
         [tableContents addObject:[NIDrawRectBlockCellObject objectWithBlock:drawTextBlock object:[NSString stringWithFormat:@"This is cell #%zd", i]]];
     }
     
     self.model = [[NITableViewModel alloc] initWithSectionedArray:tableContents delegate:(id)[NICellFactory class]];
+    [self.actions attachToClass:[NIDrawRectBlockCellObject class] tapBlock:^BOOL(id object, id target, NSIndexPath *indexPath) {
+        NSLog(@"object:%@ - target:%@ - indexPath:%@", object, target, indexPath);
+        return YES;
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

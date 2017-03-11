@@ -15,11 +15,13 @@
 //
 
 #import "NITableViewActions.h"
-
+#import "NITableHeaderFooterFactory.h"
 #import "NICellFactory.h"
 #import "NimbusCore.h"
 #import "NIActions+Subclassing.h"
 #import <objc/runtime.h>
+#import "NITableHeaderFooterFactory.h"
+#import "NITableHeaderFooterView.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "Nimbus requires ARC support."
@@ -134,9 +136,61 @@
 
 #pragma mark - UITableViewDelegate
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        return [(id<NIActionsDataSource>)tableView.dataSource tableView:tableView headerInSection:section];
+    }
+    return nil;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        return [(id<NIActionsDataSource>)tableView.dataSource tableView:tableView footerInSection:section];
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = tableView.sectionHeaderHeight;
+    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        id object = [(id<NIActionsDataSource>)tableView.dataSource objectForHeaderInSection:section];
+        id class = [object headerFooterClass];
+        if ([class respondsToSelector:@selector(heightForObject:atSection:tableView:)]) {
+            height = [class heightForObject:object atSection:section tableView:tableView];
+        }
+    }
+    return height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    CGFloat height = tableView.sectionFooterHeight;
+    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        id object = [(id<NIActionsDataSource>)tableView.dataSource objectForFooterInSection:section];
+        id class = [object headerFooterClass];
+        if ([class respondsToSelector:@selector(heightForObject:atSection:tableView:)]) {
+            height = [class heightForObject:object atSection:section tableView:tableView];
+        }
+    }
+    return height;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = tableView.rowHeight;
+    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        id object = [(id<NIActionsDataSource>)tableView.dataSource objectAtIndexPath:indexPath];
+        id class = [object cellClass];
+        if ([class respondsToSelector:@selector(heightForObject:atIndexPath:tableView:)]) {
+            height = [class heightForObject:object atIndexPath:indexPath tableView:tableView];
+        }
+    }
+    return height;
+}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NIDASSERT([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]);
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
         id object = [(id<NIActionsDataSource>)tableView.dataSource objectAtIndexPath:indexPath];
         if ([self isObjectActionable:object]) {
@@ -147,7 +201,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
     }
-    
     // Forward the invocation along.
     for (id<UITableViewDelegate> delegate in self.forwardDelegates) {
         if ([delegate respondsToSelector:_cmd]) {

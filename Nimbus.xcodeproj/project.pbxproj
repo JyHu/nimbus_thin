@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C10CFE21E72A807000B3860 /* NITableHeaderFooterFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFE01E72A807000B3860 /* NITableHeaderFooterFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1C10CFE31E72A807000B3860 /* NITableHeaderFooterFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C10CFE11E72A807000B3860 /* NITableHeaderFooterFactory.m */; };
+		1C10CFE61E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFE41E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1C10CFE91E73F8E9000B3860 /* 19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C10CFE81E73F8E9000B3860 /* 19.jpg */; };
 		1C9050E61E65B66E00B95641 /* NimbusAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9050DC1E65B66E00B95641 /* NimbusAttributedLabel.framework */; };
 		1C9050EB1E65B66E00B95641 /* NimbusAttributedLabelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9050EA1E65B66E00B95641 /* NimbusAttributedLabelTests.m */; };
 		1C9050ED1E65B66E00B95641 /* NimbusAttributedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C9050DF1E65B66E00B95641 /* NimbusAttributedLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -186,6 +190,8 @@
 		1C9053501E67109500B95641 /* NimbusModels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9052191E65B86600B95641 /* NimbusModels.framework */; };
 		1C9053541E6712CD00B95641 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9053521E6712CD00B95641 /* circle.png */; };
 		1C9053551E6712CD00B95641 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9053531E6712CD00B95641 /* star.png */; };
+		1C9053601E6726AD00B95641 /* NITableHeaderFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C90535E1E6726AD00B95641 /* NITableHeaderFooterView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1C9053611E6726AD00B95641 /* NITableHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90535F1E6726AD00B95641 /* NITableHeaderFooterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,6 +268,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C10CFE01E72A807000B3860 /* NITableHeaderFooterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NITableHeaderFooterFactory.h; sourceTree = "<group>"; };
+		1C10CFE11E72A807000B3860 /* NITableHeaderFooterFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NITableHeaderFooterFactory.m; sourceTree = "<group>"; };
+		1C10CFE41E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NITableHeaderFooterFactory+Private.h"; sourceTree = "<group>"; };
+		1C10CFE81E73F8E9000B3860 /* 19.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 19.jpg; sourceTree = "<group>"; };
 		1C9050DC1E65B66E00B95641 /* NimbusAttributedLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NimbusAttributedLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C9050DF1E65B66E00B95641 /* NimbusAttributedLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NimbusAttributedLabel.h; sourceTree = "<group>"; };
 		1C9050E01E65B66E00B95641 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -476,6 +486,8 @@
 		1C9053421E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUSnapshotRotationTableViewModelController.m; sourceTree = "<group>"; };
 		1C9053521E6712CD00B95641 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		1C9053531E6712CD00B95641 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		1C90535E1E6726AD00B95641 /* NITableHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NITableHeaderFooterView.h; sourceTree = "<group>"; };
+		1C90535F1E6726AD00B95641 /* NITableHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NITableHeaderFooterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -913,6 +925,11 @@
 				1C9052421E65B89400B95641 /* NITableViewModel.h */,
 				1C9052431E65B89400B95641 /* NITableViewModel.m */,
 				1C9052441E65B89400B95641 /* NITableViewModel+Private.h */,
+				1C90535E1E6726AD00B95641 /* NITableHeaderFooterView.h */,
+				1C90535F1E6726AD00B95641 /* NITableHeaderFooterView.m */,
+				1C10CFE01E72A807000B3860 /* NITableHeaderFooterFactory.h */,
+				1C10CFE11E72A807000B3860 /* NITableHeaderFooterFactory.m */,
+				1C10CFE41E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h */,
 				1C90521C1E65B86600B95641 /* Info.plist */,
 			);
 			path = NimbusModels;
@@ -1073,6 +1090,7 @@
 			isa = PBXGroup;
 			children = (
 				1C9053521E6712CD00B95641 /* circle.png */,
+				1C10CFE81E73F8E9000B3860 /* 19.jpg */,
 				1C9053531E6712CD00B95641 /* star.png */,
 			);
 			path = Resources;
@@ -1182,7 +1200,10 @@
 				1C9052571E65B89400B95641 /* NITableViewModel.h in Headers */,
 				1C9052551E65B89400B95641 /* NITableViewActions.h in Headers */,
 				1C9052531E65B89400B95641 /* NIRadioGroupController.h in Headers */,
+				1C10CFE21E72A807000B3860 /* NITableHeaderFooterFactory.h in Headers */,
+				1C9053601E6726AD00B95641 /* NITableHeaderFooterView.h in Headers */,
 				1C9052471E65B89400B95641 /* NICellCatalog.h in Headers */,
+				1C10CFE61E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h in Headers */,
 				1C90524B1E65B89400B95641 /* NICellFactory+Private.h in Headers */,
 				1C9052591E65B89400B95641 /* NITableViewModel+Private.h in Headers */,
 				1C9052501E65B89400B95641 /* NIMutableTableViewModel+Private.h in Headers */,
@@ -1883,6 +1904,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9053241E670ED200B95641 /* LaunchScreen.storyboard in Resources */,
+				1C10CFE91E73F8E9000B3860 /* 19.jpg in Resources */,
 				1C9053551E6712CD00B95641 /* star.png in Resources */,
 				1C9053211E670ED200B95641 /* Assets.xcassets in Resources */,
 				1C90531F1E670ED200B95641 /* Main.storyboard in Resources */,
@@ -2025,7 +2047,9 @@
 				1C9052541E65B89400B95641 /* NIRadioGroupController.m in Sources */,
 				1C9052581E65B89400B95641 /* NITableViewModel.m in Sources */,
 				1C9052561E65B89400B95641 /* NITableViewActions.m in Sources */,
+				1C9053611E6726AD00B95641 /* NITableHeaderFooterView.m in Sources */,
 				1C90524D1E65B89400B95641 /* NIFormCellCatalog.m in Sources */,
+				1C10CFE31E72A807000B3860 /* NITableHeaderFooterFactory.m in Sources */,
 				1C9052521E65B89400B95641 /* NIRadioGroup.m in Sources */,
 				1C9052481E65B89400B95641 /* NICellCatalog.m in Sources */,
 				1C9052461E65B89400B95641 /* NICellBackgrounds.m in Sources */,
@@ -4645,6 +4669,7 @@
 				1C9053281E670ED200B95641 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

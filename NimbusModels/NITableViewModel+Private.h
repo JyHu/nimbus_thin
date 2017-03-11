@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class NITableHeaderFooterObject;
+
 @interface NITableViewModel()
 
 @property (nonatomic, strong) NSArray* sections; // Array of NITableViewModelSection
@@ -27,6 +29,7 @@
 - (void)_compileDataWithSectionedArray:(NSArray *)sectionedArray;
 - (void)_compileSectionIndex;
 - (void)_setSectionsWithArray:(NSArray *)sectionsArray;
+- (NSMutableArray *)_uncompressListDatas:(id)datas;
 
 @end
 
@@ -34,8 +37,9 @@
 
 + (id)section;
 
-@property (nonatomic, copy) NSString* headerTitle;
-@property (nonatomic, copy) NSString* footerTitle;
+@property (nonatomic, strong) NITableHeaderFooterObject *headerObject;
+@property (nonatomic, strong) NITableHeaderFooterObject *footerObject;
+
 @property (nonatomic, strong) NSArray* rows;
 
 @end

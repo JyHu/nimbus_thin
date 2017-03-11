@@ -23,7 +23,7 @@
  *
  * @ingroup TableViewModels
  */
-@protocol NIMutableTableViewModelDelegate <NSObject, NITableViewModelDelegate>
+@protocol NIMutableTableViewModelDelegate <NSObject, NITableViewModelCellDelegate>
 
 @optional
 
@@ -122,114 +122,219 @@
  */
 @interface NIMutableTableViewModel : NITableViewModel
 
+#pragma mark - 添加数据
+#pragma mark -
+
+
+/**
+ 在所有section的最后一个section插入一个数据，如果当前没有数据，默认的会新建一个section，并把数据方法第一个section里
+ 
+ @param object 要插入的数据
+ @return 插入位置的 IndexPath
+ */
 - (NSArray *)addObject:(id)object;
-- (NSArray *)addObject:(id)object toSection:(NSUInteger)section;
+
+/**
+ 在指定的section最后追加一条数据，默认最远是当前所有section的后一个。
+ 比如当前有4个section，如果要追加到第5个的话，会新建一个section，然后把数据添加到第五个section里。
+ 如果要插入到第6个的话，就是超出最大的距离了。
+ 
+ @param object 要追加的数据
+ @param sectionIndex 要追加的数据所在的section的索引
+ @return 追加数据位置的IndexPath
+ */
+- (NSArray *)addObject:(id)object toSection:(NSUInteger)sectionIndex;
+
+/**
+ 追加一组数据到最后一个分组，如果当前一个分组也没有，那么先在最后追加一个分组，然后把数据放置进去
+ 
+ @param array 要追加的数据数组
+ @return 追加的所有数据的IndexPath
+ */
 - (NSArray *)addObjectsFromArray:(NSArray *)array;
-- (NSArray *)insertObject:(id)object atRow:(NSUInteger)row inSection:(NSUInteger)section;
+
+/**
+ 插入一条数据到指定的位置
+ 
+ @param object 要插入的数据
+ @param indexPath 要插入的数据的位置
+ @return 插入数据的IndexPath
+ */
+- (NSArray *)insertObject:(id)object atIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ 追加一组数据到指定的分组
+ 
+ @param array 要追加的数据
+ @param sectionIndex 要追加数据的分组的索引
+ @return 追加的数据的 IndexPath
+ */
+- (NSArray *)addObjectsFromArray:(NSArray *)array toSection:(NSUInteger)sectionIndex;
+
+/**
+ 重新添加一个分组内的数据
+ 
+ @param objects 要添加的数据列表
+ @param sectionIndex 添加到的分组的索引
+ @return 追加的数据的 IndexPath
+ */
+- (NSArray *)setObjects:(NSArray *)objects toSection:(NSUInteger)sectionIndex;
+
+
+#pragma mark - 移动数据
+#pragma mark -
+
+
+/**
+ 移动一个数据到指定位置
+ 
+ @param fIndexPath 开始位置
+ @param tIndexPath 目标位置
+ @return 移动的结果
+ */
+- (BOOL)bringObjectFromIndexPath:(NSIndexPath *)fIndexPath toIndexPath:(NSIndexPath *)indexPath;
+
+
+#pragma mark - 删除数据
+#pragma mark -
+
+
+/**
+ 移除table数据中指定位置的数据
+ 
+ @param indexPath 要移除的数据的位置
+ @return 移除位置的 IndexPath
+ */
 - (NSArray *)removeObjectAtIndexPath:(NSIndexPath *)indexPath;
 
-- (NSIndexSet *)addSectionWithTitle:(NSString *)title;
-- (NSIndexSet *)insertSectionWithTitle:(NSString *)title atIndex:(NSUInteger)index;
-- (NSIndexSet *)removeSectionAtIndex:(NSUInteger)index;
+/**
+ 完全删除一个分组section
+ 
+ @param sectionIndex 要删除的分组section
+ @return 被删除的section的索引集合
+ */
+- (NSIndexSet *)removeSectionAtIndex:(NSUInteger)sectionIndex;
+
+/**
+ 清空指定section下的所有数据，但是保留这个section
+ 
+ @param sectionIndex 要清理的section的索引
+ @return 被清理掉的section的索引集合
+ */
+- (NSIndexSet *)removeObjectsInSection:(NSUInteger)sectionIndex;
+
+
+
+#pragma mark - 追加一个分组，并设置header、footer视图
+#pragma mark -
+/*
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 给当前的最后一个分组添加一个header、footer视图，如果存在则跳过
+ 
+ title header、footer的标题，默认为使用 NITitle....Object
+ object header、footer的object数据，为 NITableHeaderFooterObject 或其子类
+ 
+ 返回值是添加的分组的索引集合，如果无效的话，返回nil
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+- (NSIndexSet *)addSectionHeaderWithTitle:(NSString *)title;
+- (NSIndexSet *)addSectionFooterWithTitle:(NSString *)title;
+- (NSIndexSet *)addSectionHeaderWithObject:(id)object;
+- (NSIndexSet *)addSectionFooterWithObject:(id)object;
+
+
+#pragma mark - 追加一个分组，并设置header、footer视图
+#pragma mark -
+/*
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 追加一个分组，并设置header、footer视图
+ 
+ title header、footer的标题，默认为使用 NITitle....Object
+ object header、footer的object数据，为 NITableHeaderFooterObject 或其子类
+ 
+ 返回值是追加的分组的索引集合，如果无效的话，返回nil
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+- (NSIndexSet *)appendSectionHeaderWithTitle:(NSString *)title;
+- (NSIndexSet *)appendSectionFooterWithTitle:(NSString *)title;
+- (NSIndexSet *)appendSectionHeaderWithObject:(id)object;
+- (NSIndexSet *)appendSectionFooterWithObject:(id)object;
+
+
+#pragma mark - 给指定的section添加一个section header 或者section footer
+#pragma mark -
+/*
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 给指定的section添加一个section header 或者section footer，如果已经存在header或者footer则跳过
+ 
+ title 要添加的头标题或者尾标题，会默认的使用 NITitle....Object
+ object 要添加的头视图、尾视图的object数据，为 NITableHeaderFooterObject 或其子类
+ sectionIndex 要添加到得分组的索引，如果索引有效即可以直接取到，那么直接添加，如果索引比当前table的最后的一个索引多1的话，那么会追加一个分组，然后设置头视图或者尾视图。如果过远，即索引超过最后的一个索引大于1的话，那么跳过。
+ 
+ 返回值是添加到的分组的索引集合，如果无效的话，返回nil
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+- (NSIndexSet *)addSectionHeaderWithTitle:(NSString *)title toSection:(NSUInteger)sectionIndex;
+- (NSIndexSet *)addSectionFooterWithTitle:(NSString *)title toSection:(NSUInteger)sectionIndex;
+- (NSIndexSet *)addSectionHeaderWithObject:(id)object toSection:(NSUInteger)sectionIndex;
+- (NSIndexSet *)addSectionFooterWithObject:(id)object toSection:(NSUInteger)sectionIndex;
+
+
+
+#pragma mark - 根据给定的数据重新设置section的header、footer 视图
+#pragma mark -
+/**
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 根据给定的数据重新设置section的header、footer 视图
+ 
+ title 要重新设置的header、footer的标题，默认的使用 NITitle....Object
+ object 要重新设置的header、footer的object数据，为 NITableHeaderFooterObject 或其子类
+ sectionIndex 要添加到得分组的索引，如果索引有效即可以直接取到，那么直接添加，如果索引比当前table的最后的一个索引多1的话，那么会追加一个分组，然后设置头视图或者尾视图。如果过远，即索引超过最后的一个索引大于1的话，那么跳过。
+ 
+ 返回值是要操作的分组的索引集合，如果无效的话，返回nil
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+- (NSIndexSet *)replaceSectionHeaderWithTitle:(NSString *)title inSection:(NSUInteger)sectionIndex;
+- (NSIndexSet *)replaceSectionFooterWithTitle:(NSString *)title inSection:(NSUInteger)sectionIndex;
+- (NSIndexSet *)replaceSectionHeaderWithObject:(id)object inSection:(NSUInteger)sectionIndex;
+- (NSIndexSet *)replaceSectionFooterWithObject:(id)object inSection:(NSUInteger)sectionIndex;
+
+
+#pragma mark - 根据给定的索引，删除section的header、footer的视图
+#pragma mark -
+/**
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 根据给定的索引，删除section的header、footer的视图
+ 
+ sectionIndex 要操作的section的索引
+ 
+ 返回值是要操作的分组的索引集合，如果无效的话，返回nil
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ */
+- (NSIndexSet *)removeSectionHeaderInSection:(NSUInteger)sectionIndex;
+- (NSIndexSet *)removeSectionFooterInSection:(NSUInteger)sectionIndex;
+
+#pragma mark - 其他操作
+#pragma mark -
+
+/**
+ 清理掉所有的cell object的内容，但是保留所有的section实体
+ */
+- (void)removeAllDatas;
+/**
+ 清空所有的table数据，包括section header、footer一样清理掉
+ */
+- (void)clearAllDatas;
+
+/**
+ 获取当前tableView Model里的所有的数据
+
+ @return 以二维数组的方式返回，每个一位数组为一个section里的所有数据
+ */
+- (NSArray *)allDatas;
 
 - (void)updateSectionIndex;
 
 @property (nonatomic, weak) id<NIMutableTableViewModelDelegate> delegate;
 
 @end
-
-/** @name Modifying Objects */
-
-/**
- * Appends an object to the last section.
- *
- * If no sections exist, a section will be created without a title and the object will be added to
- * this new section.
- *
- * @param object The object to append to the last section.
- * @returns An array with a single NSIndexPath representing the index path of the new object
- *               in the model.
- * @fn NIMutableTableViewModel::addObject:
- */
-
-/**
- * Appends an object to the end of the given section.
- *
- * @param object The object to append to the section.
- * @param section The index of the section to which this object should be appended.
- * @returns An array with a single NSIndexPath representing the index path of the new object
- *               in the model.
- * @fn NIMutableTableViewModel::addObject:toSection:
- */
-
-/**
- * Appends an array of objects to the last section.
- *
- * If no section exists, a section will be created without a title and the objects will be added to
- * this new section.
- *
- * @param array The array of objects to append to the last section.
- * @returns An array of NSIndexPath objects representing the index paths of the objects in the
- *               model.
- * @fn NIMutableTableViewModel::addObjectsFromArray:
- */
-
-/**
- * Inserts an object into the given section at the given row.
- *
- * @param object The object to append to the section.
- * @param row The row within the section at which to insert the object.
- * @param section The index of the section in which the object should be inserted.
- * @returns An array with a single NSIndexPath representing the index path of the new object
- *               in the model.
- * @fn NIMutableTableViewModel::insertObject:atRow:inSection:
- */
-
-/**
- * Removes an object at the given index path.
- *
- * If the index path does not represent a valid object then a debug assertion will fire and the
- * method will return nil without removing any object.
- *
- * @param indexPath The index path at which to remove a single object.
- * @returns An array with a single NSIndexPath representing the index path of the object that
- *               was removed from the model, or nil if no object exists at the given index path.
- * @fn NIMutableTableViewModel::removeObjectAtIndexPath:
- */
-
-/** @name Modifying Sections */
-
-/**
- * Appends a section with a given title to the model.
- *
- * @param title The title of the new section.
- * @returns An index set with a single index representing the index of the new section.
- * @fn NIMutableTableViewModel::addSectionWithTitle:
- */
-
-/**
- * Inserts a section with a given title to the model at the given index.
- *
- * @param title The title of the new section.
- * @param index The index in the model at which to add the new section.
- * @returns An index set with a single index representing the index of the new section.
- * @fn NIMutableTableViewModel::insertSectionWithTitle:atIndex:
- */
-
-/**
- * Removes a section at the given index.
- *
- * @param index The index in the model of the section to remove.
- * @returns An index set with a single index representing the index of the removed section.
- * @fn NIMutableTableViewModel::removeSectionAtIndex:
- */
-
-/** @name Updating the Section Index */
-
-/**
- * Updates the section index with the current section index settings.
- *
- * This method should be called after modifying the model if a section index is being used.
- *
- * @fn NIMutableTableViewModel::updateSectionIndex
- */

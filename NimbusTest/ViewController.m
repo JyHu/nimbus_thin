@@ -52,6 +52,11 @@
     
     self.tableView.dataSource = self.model;
     self.tableView.delegate = [self.actions forwardingTo:self];
+    
+    
+    NIMaxLogLevel = NILOGLEVEL_INFO;
+    
+    
 }
 
 - (void)loadData
@@ -93,7 +98,10 @@
                    navigationBlock:NIPushControllerAction([AUUSnapshotRotationTableViewModelController class])],
       
       [self.actions attachToObject:[NISubtitleCellObject objectWithTitle:@"Mutable Models" subtitle:@"Mutating table view models"]
-                   navigationBlock:NIPushControllerAction([AUUMutableTableViewModelController class])]
+                   navigationBlock:NIPushControllerAction([AUUMutableTableViewModelController class])],
+      
+      [NITitleFooterObject objectWithTitle:@"Table Footers"],
+      [NITitleHeaderObject objectWithTitle:@"new table header"]
       ];
     
     self.model = [[NITableViewModel alloc] initWithSectionedArray:sectionedObjects delegate:(id)[NICellFactory class]];

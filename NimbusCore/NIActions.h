@@ -16,6 +16,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class UITableViewHeaderFooterView;
+@class UITableView;
+
 /**
  * For attaching actions to objects.
  *
@@ -126,18 +129,51 @@ NSArray *objects = @[
 #if defined __cplusplus
 extern "C" {
 #endif
+    
+/*
+ 
+ 这个block存在的意义：
+ 
+ 假如现在有 A B C D E几个页面需要跳转到页面F
+ 
+ 如果这几个页面跳转的时候，传递的数据都是在cell点击的时候传递同样的数据模型，
+ 比如都是FTFContractCellObject，则就不需要这个block，因为都是传递的同一
+ 类型的数据，那么跳转到新的页面以后就不需要做额外的判断。
+ 
+ 但是，如果这几个页面跳转的时候传递的数据不一样，比如合约点击跳转到合约详情页
+ 的时候传递的是 FTFContractCellObject，而搜索的时候跳转到合约详情页的是
+ FTFContractSearchCellObject ,那么跳转到合约详情页后就无法很准确的知道
+ 是哪种数据，就需要做一个ifelse的判断，这时候就需要这个block，在页面跳转生
+ 成action的时候，把主要的数据传递过去，比如contractID，contractName。
+ 
+ 当然，如果不用这个block，在跳转到的页面做判断也是可以的
+ 
+ */
+typedef id (^NIParameterTransitionBlock) (id cellObject);
 
 /**
- * Returns a block that pushes an instance of the controllerClass onto the navigation stack.
- *
- * Allocates an instance of the controller class and calls the init selector.
- *
- * The target property of the NIActions instance must be an instance of UIViewController
- * with an attached navigationController.
- *
- * @param controllerClass The class of controller to instantiate.
+ 生成push的block的方法
+ 
+ @param cls 要跳转的页面的class
+ @param info 附带的信息
+ @param parameterBlock 参数转换用的block
+ @return Block
  */
-NIActionBlock NIPushControllerAction(Class controllerClass);
+NIActionBlock NIPushControllerWithBlockAction(Class cls, id info, NIParameterTransitionBlock parameterBlock);
+NIActionBlock NIPushControllerWithInfoAction(Class cls, id info);
+NIActionBlock NIPushControllerAction(Class cls);
+
+/**
+ 生成present的block的方法
+ 
+ @param cls 要跳转的页面的class
+ @param info 附带的信息
+ @param parametersBlock 参数转换用的block
+ @return block
+ */
+NIActionBlock NIPresentControllerWithBlockAction(Class cls, id info, NIParameterTransitionBlock parametersBlock);
+NIActionBlock NIPresentControllerWithInfoAction(Class cls, id info);
+NIActionBlock NIPresentControllerAction(Class cls);
 
 #if defined __cplusplus
 };
@@ -152,6 +188,20 @@ NIActionBlock NIPushControllerAction(Class controllerClass);
  * @param indexPath The index path of the requested object.
  */
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
+
+- (id)objectForHeaderInSection:(NSUInteger)section;
+
+- (id)objectForFooterInSection:(NSUInteger)section;
+
+- (UITableViewHeaderFooterView *)tableView:(UITableView *)tableView headerInSection:(NSUInteger)section;
+
+- (UITableViewHeaderFooterView *)tableView:(UITableView *)tableView footerInSection:(NSUInteger)section;
+
+@end
+
+@protocol NIActionsDataTransition <NSObject>
+
+- (void)transitionFrom:(id)controller withObject:(id)object userInfo:(id)info;
 
 @end
 

@@ -26,7 +26,6 @@
 @implementation NIDrawRectBlockCellObject
 
 
-
 - (id)initWithBlock:(NICellDrawRectBlock)block object:(id)object {
     if ((self = [super initWithCellClass:[NIDrawRectBlockCell class]])) {
         _block = block;
@@ -40,7 +39,6 @@
 }
 
 @end
-
 
 @implementation NITitleCellObject
 
