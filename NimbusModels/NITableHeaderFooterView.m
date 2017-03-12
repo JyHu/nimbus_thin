@@ -43,41 +43,37 @@
     return self;
 }
 
-+ (instancetype)headerWithReuseIdentifier:(NSString *)reuseIdentifier
-{
-    NITableHeaderFooterView *header = [[NITableHeaderFooterView alloc] initWithReuseIdentifier:reuseIdentifier];
-    return header;
-}
-
-+ (instancetype)footerWithReuseIdentifier:(NSString *)reuseIdentifier
-{
-    NITableHeaderFooterView *footer = [[NITableHeaderFooterView alloc] initWithReuseIdentifier:reuseIdentifier];
-    return footer;
-}
-
 - (BOOL)shouldUpdateHeaderFooterWithObject:(id)object
 {
-    if ([object isKindOfClass:[NITitleHeaderObject class]])
-    {
-        NITitleHeaderObject *titleHeaderObject = (NITitleHeaderObject *)object;
-        self.textLabel.text = titleHeaderObject.title;
-    }
-    else if ([object isKindOfClass:[NITitleFooterObject class]])
-    {
-        NITitleFooterObject *titleFooterObject = (NITitleFooterObject *)object;
-        self.textLabel.text = titleFooterObject.title;
-    }
-    else if ([object isKindOfClass:[NISubTitleHeaderObject class]])
+    if ([object isKindOfClass:[NISubTitleHeaderObject class]])
     {
         NISubTitleHeaderObject *detailHeaderObject = (NISubTitleHeaderObject *)object;
         self.textLabel.text = detailHeaderObject.title;
         self.detailTextLabel.text = detailHeaderObject.detail;
+        self.textLabel.font = [UIFont boldSystemFontOfSize:15];
+        self.detailTextLabel.font = [UIFont systemFontOfSize:15];
+        self.contentView.backgroundColor = [UIColor blueColor];
     }
     else if ([object isKindOfClass:[NISubTitleFooterObject class]])
     {
         NISubTitleFooterObject *detailFooterObject = (NISubTitleFooterObject *)object;
         self.textLabel.text = detailFooterObject.title;
         self.detailTextLabel.text = detailFooterObject.detail;
+        self.textLabel.font = [UIFont systemFontOfSize:15];
+        self.detailTextLabel.font = [UIFont systemFontOfSize:15];
+        self.contentView.backgroundColor = [UIColor greenColor];
+    }
+    else if ([object isKindOfClass:[NITitleHeaderObject class]])
+    {
+        NITitleHeaderObject *titleHeaderObject = (NITitleHeaderObject *)object;
+        self.textLabel.text = titleHeaderObject.title;
+        self.textLabel.font = [UIFont boldSystemFontOfSize:15];
+    }
+    else if ([object isKindOfClass:[NITitleFooterObject class]])
+    {
+        NITitleFooterObject *titleFooterObject = (NITitleFooterObject *)object;
+        self.textLabel.text = titleFooterObject.title;
+        self.textLabel.font = [UIFont systemFontOfSize:15];
     }
         
     return YES;
@@ -91,6 +87,8 @@
     } else if ([object isKindOfClass:[NICommonFooterViewObject class]]) {
         NICommonFooterViewObject *commonFooterViewObject = (NICommonFooterViewObject *)object;
         return commonFooterViewObject.commonView.frame.size.height;
+    } else if ([object isKindOfClass:[NISubTitleHeaderObject class]] || [object isKindOfClass:[NISubTitleFooterObject class]]) {
+        return 60;
     } else if ([object isKindOfClass:[NITitleHeaderObject class]] || [object isKindOfClass:[NITitleFooterObject class]]) {
         return 30;
     }

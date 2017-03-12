@@ -11,7 +11,7 @@
 		1C10CFE31E72A807000B3860 /* NITableHeaderFooterFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C10CFE11E72A807000B3860 /* NITableHeaderFooterFactory.m */; };
 		1C10CFE61E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFE41E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C10CFE91E73F8E9000B3860 /* 19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C10CFE81E73F8E9000B3860 /* 19.jpg */; };
-		1C10CFEC1E7478DC000B3860 /* NITableHeaderFooterView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFEA1E7478DC000B3860 /* NITableHeaderFooterView+Private.h */; };
+		1C10CFEC1E7478DC000B3860 /* NITableHeaderFooterView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFEA1E7478DC000B3860 /* NITableHeaderFooterView+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C9050E61E65B66E00B95641 /* NimbusAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9050DC1E65B66E00B95641 /* NimbusAttributedLabel.framework */; };
 		1C9050EB1E65B66E00B95641 /* NimbusAttributedLabelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9050EA1E65B66E00B95641 /* NimbusAttributedLabelTests.m */; };
 		1C9050ED1E65B66E00B95641 /* NimbusAttributedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C9050DF1E65B66E00B95641 /* NimbusAttributedLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1199,7 +1199,6 @@
 				1C9052291E65B86700B95641 /* NimbusModels.h in Headers */,
 				1C90524E1E65B89400B95641 /* NIMutableTableViewModel.h in Headers */,
 				1C90524C1E65B89400B95641 /* NIFormCellCatalog.h in Headers */,
-				1C10CFEC1E7478DC000B3860 /* NITableHeaderFooterView+Private.h in Headers */,
 				1C9052451E65B89400B95641 /* NICellBackgrounds.h in Headers */,
 				1C9052571E65B89400B95641 /* NITableViewModel.h in Headers */,
 				1C9052551E65B89400B95641 /* NITableViewActions.h in Headers */,
@@ -1209,6 +1208,7 @@
 				1C9052471E65B89400B95641 /* NICellCatalog.h in Headers */,
 				1C10CFE61E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h in Headers */,
 				1C90524B1E65B89400B95641 /* NICellFactory+Private.h in Headers */,
+				1C10CFEC1E7478DC000B3860 /* NITableHeaderFooterView+Private.h in Headers */,
 				1C9052591E65B89400B95641 /* NITableViewModel+Private.h in Headers */,
 				1C9052501E65B89400B95641 /* NIMutableTableViewModel+Private.h in Headers */,
 			);

@@ -16,6 +16,14 @@
 
 @implementation AUUSectionedTableModelViewController
 
+- (instancetype)init
+{
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
+        
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
@@ -24,45 +32,22 @@
 {
     NSArray *tableContents = @[
                                [NITitleCellObject objectWithTitle:@"First section"],
-                               @"Section with rows              - 0",
+                               @"Section with rows",
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NISubTitleFooterObject objectWithTitle:@"subtitle footer title" detail:@"subtitle footer detail"],
+                               [NISubTitleHeaderObject objectWithTitle:@"subtitle header title" detail:@"subtitle header detail"],
                                [NITitleCellObject objectWithTitle:@"Row"],
                                [NITitleCellObject objectWithTitle:@"Row"],
                                [NITitleCellObject objectWithTitle:@"Row"],
                                
-                               @"Section without any row        - 1",
-                               [NITitleFooterObject objectWithTitle:@"footer - 1"],
-                               @"Another section                - 2",
+                               @"Section without any row",
+                               
+                               @"Another section",
                                [NITitleCellObject objectWithTitle:@"Row"],
                                
-                               @"                               - 3",
-                               [NITitleCellObject objectWithTitle:@"This section has no header"],
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               [NITitleCellObject objectWithTitle:@"First section"],
-                               @"Section with rows              - 4",
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               
-                               @"Section without any row        - 5",
-                               
-                               @"Another section                - 6",
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               
-                               @"                               - 7",
-                               [NITitleCellObject objectWithTitle:@"This section has no header"],
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               [NITitleCellObject objectWithTitle:@"First section"],
-                               @"Section with rows              - 8",
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               
-                               @"Section without any row        - 9",
-                               
-                               @"Another section                - 10",
-                               [NITitleCellObject objectWithTitle:@"Row"],
-                               
-                               @"                               - 11",
+                               @"",
                                [NITitleCellObject objectWithTitle:@"This section has no header"],
                                [NITitleCellObject objectWithTitle:@"Row"]
                                ];

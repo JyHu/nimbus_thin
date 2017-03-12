@@ -166,7 +166,7 @@
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
         NITableHeaderFooterObject *footerObject = [(id<NIActionsDataSource>)tableView.dataSource objectForFooterInSection:section];
         NITableViewModel *tableViewModel = tableView.dataSource;
-        if (footerObject && [tableViewModel.delegate respondsToSelector:@selector(tableViewModel:headerForTableView:inSection:withObject:)]) {
+        if (footerObject && [tableViewModel.delegate respondsToSelector:@selector(tableViewModel:footerForTableView:inSection:withObject:)]) {
             footerView = [tableViewModel.delegate tableViewModel:self footerForTableView:tableView inSection:section withObject:footerObject];
         } else {
             footerView = [NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:self object:footerObject];

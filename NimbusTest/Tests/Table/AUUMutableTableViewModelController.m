@@ -9,6 +9,7 @@
 #import "AUUMutableTableViewModelController.h"
 #import "NimbusModels.h"
 #import "NimbusCore.h"
+#import "NITableHeaderFooterFactory.h"
 
 @interface AUUMutableTableViewModelController ()<NIMutableTableViewModelDelegate, NITableHeaderFooterDelegate>
 
@@ -128,6 +129,16 @@
     [self.model objectForFooterInSection:sectionIndex];
     
     NSLog(@"在vc中响应点击表尾的代理 ： %@", @(sectionIndex));
+}
+
+- (UITableViewHeaderFooterView *)tableViewModel:(NITableViewModel *)tableViewModel headerForTableView:(UITableView *)tableView inSection:(NSUInteger)section withObject:(id)object
+{
+    return [NITableHeaderFooterFactory headerFooterForTable:self.tableView inSection:section withTableViewModel:tableViewModel object:object];
+}
+
+- (UITableViewHeaderFooterView *)tableViewModel:(NITableViewModel *)tableViewModel footerForTableView:(UITableView *)tableView inSection:(NSUInteger)section withObject:(id)object
+{
+    return [NITableHeaderFooterFactory headerFooterForTable:self.tableView inSection:section withTableViewModel:tableViewModel object:object];
 }
 
 @end
