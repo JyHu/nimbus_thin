@@ -21,13 +21,13 @@
 #import "NIActions+Subclassing.h"
 #import <objc/runtime.h>
 #import "NITableHeaderFooterFactory.h"
-#import "NITableHeaderFooterView.h"
+#import "NITableHeaderFooterView+Private.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "Nimbus requires ARC support."
 #endif
 
-@interface NITableViewActions()
+@interface NITableViewActions() <NITableHeaderFooterDelegate>
 @property (nonatomic, strong) NSMutableSet* forwardDelegates;
 @end
 
@@ -138,18 +138,49 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NITableHeaderFooterView *headerView = nil;
+    
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
-        return [(id<NIActionsDataSource>)tableView.dataSource tableView:tableView headerInSection:section];
+        NITableHeaderFooterObject *headerObject = [(id<NIActionsDataSource>)tableView.dataSource objectForHeaderInSection:section];
+        NITableViewModel *tableViewModel = tableView.dataSource;
+        if (headerObject && [tableViewModel.delegate respondsToSelector:@selector(tableViewModel:headerForTableView:inSection:withObject:)]) {
+            headerView = [tableViewModel.delegate tableViewModel:self headerForTableView:tableView inSection:section withObject:headerObject];
+        } else {
+            headerView = [NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:self object:headerObject];
+        }
     }
-    return nil;
+    
+    if (headerView) {
+        headerView.type = NITableViewHeaderFooterTypeHeader;
+        headerView.pri_sectionIndex = section;
+        headerView.pri_tableView = tableView;
+        headerView.pri_headerFooterDelegate = self;
+    }
+    
+    return headerView;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
+    NITableHeaderFooterView *footerView = nil;
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
-        return [(id<NIActionsDataSource>)tableView.dataSource tableView:tableView footerInSection:section];
+        NITableHeaderFooterObject *footerObject = [(id<NIActionsDataSource>)tableView.dataSource objectForFooterInSection:section];
+        NITableViewModel *tableViewModel = tableView.dataSource;
+        if (footerObject && [tableViewModel.delegate respondsToSelector:@selector(tableViewModel:headerForTableView:inSection:withObject:)]) {
+            footerView = [tableViewModel.delegate tableViewModel:self footerForTableView:tableView inSection:section withObject:footerObject];
+        } else {
+            footerView = [NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:self object:footerObject];
+        }
     }
-    return nil;
+    
+    if (footerView) {
+        footerView.type = NITableViewHeaderFooterTypeFooter;
+        footerView.pri_sectionIndex = section;
+        footerView.pri_tableView = tableView;
+        footerView.pri_headerFooterDelegate = self;
+    }
+    
+    return footerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -201,6 +232,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
     }
+    
     // Forward the invocation along.
     for (id<UITableViewDelegate> delegate in self.forwardDelegates) {
         if ([delegate respondsToSelector:_cmd]) {
@@ -280,6 +312,24 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectSectionHeaderAtIndex:(NSUInteger)index
+{
+    id object = nil;
+    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        object = [(id<NIActionsDataSource>)tableView.dataSource objectForHeaderInSection:index];
+    }
+    [self tableView:tableView didSelectHeaderFooterViewWithObject:object sectionIndex:index type:NITableViewHeaderFooterTypeHeader];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectSectionFooterAtIndex:(NSUInteger)index
+{
+    id object = nil;
+    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+        object = [(id<NIActionsDataSource>)tableView.dataSource objectForFooterInSection:index];
+    }
+    [self tableView:tableView didSelectHeaderFooterViewWithObject:object sectionIndex:index type:NITableViewHeaderFooterTypeFooter];
+}
+
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     NIDASSERT([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]);
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
@@ -304,6 +354,59 @@
     for (id<UITableViewDelegate> delegate in self.forwardDelegates) {
         if ([delegate respondsToSelector:_cmd]) {
             [delegate tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectHeaderFooterViewWithObject:(id)object sectionIndex:(NSUInteger)sectionIndex type:(NITableViewHeaderFooterType)type
+{
+    NITableViewActions *strongSelf = self;
+    if (object) {
+        if ([self isObjectActionable:object]) {
+            
+            NSUInteger indexes[1] = {sectionIndex};
+            NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:1];// [NSIndexPath indexPathWithIndex:index];
+            
+            NIObjectActions* action = [strongSelf actionForObjectOrClassOfObject:object];
+            if (action.tapAction) {
+                action.tapAction(object, strongSelf.target, indexPath);
+            }
+            if (action.tapSelector && [strongSelf.target respondsToSelector:action.tapSelector]) {
+                NSMethodSignature *methodSignature = [strongSelf.target methodSignatureForSelector:action.tapSelector];
+                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+                invocation.selector = action.tapSelector;
+                if (methodSignature.numberOfArguments >= 3) {
+                    [invocation setArgument:&object atIndex:2];
+                }
+                if (methodSignature.numberOfArguments >= 4) {
+                    [invocation setArgument:&indexPath atIndex:3];
+                }
+                [invocation invokeWithTarget:strongSelf.target];
+            }
+            
+            if (action.navigateAction) {
+                action.navigateAction(object, strongSelf.target, indexPath);
+            }
+            
+            if (action.navigateSelector && [strongSelf.target respondsToSelector:action.navigateSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                [strongSelf.target performSelector:action.navigateSelector withObject:object withObject:indexPath];
+#pragma clang diagnostic pop
+            }
+        }
+    }
+    
+    // Forward the invocation along.
+    for (id<NITableHeaderFooterDelegate> delegate in strongSelf.forwardDelegates) {
+        if (type == NITableViewHeaderFooterTypeHeader) {
+            if ([delegate respondsToSelector:@selector(tableView:didSelectSectionHeaderAtIndex:)]) {
+                [delegate tableView:tableView didSelectSectionHeaderAtIndex:sectionIndex];
+            }
+        } else if (type == NITableViewHeaderFooterTypeFooter) {
+            if ([delegate respondsToSelector:@selector(tableView:didSelectSectionFooterAtIndex:)]) {
+                [delegate tableView:tableView didSelectSectionFooterAtIndex:sectionIndex];
+            }
         }
     }
 }

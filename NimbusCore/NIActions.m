@@ -238,13 +238,12 @@ NIActionBlock NIPushControllerWithBlockAction(Class cls, id info, NIParameterTra
         UIViewController *destController = [[cls alloc] init];
         if ([destController isKindOfClass:[UIViewController class]]) {
             UINavigationController *navigationController = [target isKindOfClass:[UINavigationController class]] ?
-            (UINavigationController *)target : ((UIViewController *)target).navigationController;
+                        (UINavigationController *)target : ((UIViewController *)target).navigationController;
             if (navigationController) {
                 if ([destController conformsToProtocol:@protocol(NIActionsDataTransition)]) {
                     id transferObject = parameterBlock ? parameterBlock(object) : object;
                     [(id <NIActionsDataTransition>)destController transitionFrom:target withObject:transferObject userInfo:info];
                 }
-                
                 [navigationController pushViewController:destController animated:YES];
             }
         }
@@ -266,9 +265,7 @@ NIActionBlock NIPresentControllerWithInfoAction(Class cls, id info) {
 }
 NIActionBlock NIPresentControllerWithBlockAction(Class cls, id info, NIParameterTransitionBlock parametersBlock) {
     return [^BOOL(id object, id target, NSIndexPath *indexPath) {
-        
         UIViewController *destController = [[cls alloc] init];
-        
         if ([destController isKindOfClass:[UIViewController class]]) {
             if ([target isKindOfClass:[UIViewController class]]) {
                 if ([destController conformsToProtocol:@protocol(NIActionsDataTransition)]) {

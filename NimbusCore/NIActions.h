@@ -193,10 +193,6 @@ NIActionBlock NIPresentControllerAction(Class cls);
 
 - (id)objectForFooterInSection:(NSUInteger)section;
 
-- (UITableViewHeaderFooterView *)tableView:(UITableView *)tableView headerInSection:(NSUInteger)section;
-
-- (UITableViewHeaderFooterView *)tableView:(UITableView *)tableView footerInSection:(NSUInteger)section;
-
 @end
 
 @protocol NIActionsDataTransition <NSObject>

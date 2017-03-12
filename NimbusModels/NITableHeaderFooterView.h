@@ -19,7 +19,12 @@
 
 @end
 
+@protocol NITableHeaderFooterDelegate <NSObject>
 
+- (void)tableView:(nullable UITableView *)tableView didSelectSectionHeaderAtIndex:(NSUInteger)sectionIndex;
+- (void)tableView:(nullable UITableView *)tableView didSelectSectionFooterAtIndex:(NSUInteger)sectionIndex;
+
+@end
 
 typedef NS_ENUM(NSUInteger, NITableViewHeaderFooterType) {
     NITableViewHeaderFooterTypeHeader,
@@ -28,19 +33,16 @@ typedef NS_ENUM(NSUInteger, NITableViewHeaderFooterType) {
 
 
 
-
 @interface NITableHeaderFooterView : UITableViewHeaderFooterView <NITableHeaderFooterView>
 
 @property (assign, nonatomic) NITableViewHeaderFooterType type;
 
-@property (retain, nonatomic) _Nullable id headerFooterObject;
-
 @property (retain, nonatomic, readonly)  UITapGestureRecognizer * _Nullable tapGesture;
-
-+ (nullable instancetype)headerWithReuseIdentifier:(nullable NSString *)reuseIdentifier;
-+ (nullable instancetype)footerWithReuseIdentifier:(nullable NSString *)reuseIdentifier;
 
 - (void)handleForTap;
 
 @end
 
+@interface NITableCommonViewHeaderFooterView : NITableHeaderFooterView
+
+@end

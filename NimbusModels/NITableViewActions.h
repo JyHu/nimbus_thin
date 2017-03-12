@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
+#import "NITableHeaderFooterView.h"
 #import "NimbusCore.h"
 
 /**
@@ -46,7 +46,7 @@
  *
  * @ingroup ModelTools
  */
-@interface NITableViewActions : NIActions <UITableViewDelegate>
+@interface NITableViewActions : NIActions <UITableViewDelegate, NITableHeaderFooterDelegate>
 
 #pragma mark Forwarding
 

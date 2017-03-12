@@ -8,6 +8,8 @@
 
 #import "NITableHeaderFooterView.h"
 #import "NITableHeaderFooterFactory.h"
+#import "NITableHeaderFooterView+Private.h"
+#import "NIActions+Subclassing.h"
 
 @interface NITableHeaderFooterView()
 
@@ -65,26 +67,6 @@
         NITitleFooterObject *titleFooterObject = (NITitleFooterObject *)object;
         self.textLabel.text = titleFooterObject.title;
     }
-    else if ([object isKindOfClass:[NICommonHeaderViewObject class]])
-    {
-        NICommonHeaderViewObject *commonViewHeaderObject = (NICommonHeaderViewObject *)object;
-        UIView *commonHeaderView = commonViewHeaderObject.commonView;
-        if (commonHeaderView)
-        {
-            commonHeaderView.frame = CGRectMake(0, 0, CGRectGetWidth(commonHeaderView.frame), CGRectGetHeight(commonHeaderView.frame));
-            [self.contentView addSubview:commonHeaderView];
-        }
-    }
-    else if ([object isKindOfClass:[NICommonFooterViewObject class]])
-    {
-        NICommonFooterViewObject *commonFooterViewObject = (NICommonFooterViewObject *)object;
-        UIView *commonFooterView = commonFooterViewObject.commonView;
-        if (commonFooterView)
-        {
-            commonFooterView.frame = CGRectMake(0, 0, CGRectGetWidth(commonFooterView.frame), CGRectGetHeight(commonFooterView.frame));
-            [self.contentView addSubview:commonFooterView];
-        }
-    }
     else if ([object isKindOfClass:[NISubTitleHeaderObject class]])
     {
         NISubTitleHeaderObject *detailHeaderObject = (NISubTitleHeaderObject *)object;
@@ -97,9 +79,7 @@
         self.textLabel.text = detailFooterObject.title;
         self.detailTextLabel.text = detailFooterObject.detail;
     }
-    
-    self.headerFooterObject = object;
-    
+        
     return YES;
 }
 
@@ -123,12 +103,82 @@
     if (!_pri_tapGesture)
     {
         _pri_tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                  action:@selector(handleForTap)];
+                                                                  action:@selector(_handleForTap)];
     }
     
     return _pri_tapGesture;
 }
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    self.textLabel.text = nil;
+    self.detailTextLabel.text = nil;
+}
+
+- (void)_handleForTap
+{
+    if (self.pri_headerFooterDelegate) {
+        if (self.type == NITableViewHeaderFooterTypeHeader &&
+            [self.pri_headerFooterDelegate respondsToSelector:@selector(tableView:didSelectSectionHeaderAtIndex:)]) {
+            [self.pri_headerFooterDelegate tableView:self.pri_tableView
+                       didSelectSectionHeaderAtIndex:self.pri_sectionIndex];
+        }
+        else if (self.type == NITableViewHeaderFooterTypeFooter &&
+                 [self.pri_headerFooterDelegate respondsToSelector:@selector(tableView:didSelectSectionFooterAtIndex:)]) {
+            [self.pri_headerFooterDelegate tableView:self.pri_tableView
+                       didSelectSectionFooterAtIndex:self.pri_sectionIndex];
+        }
+    }
+    
+    [self handleForTap];
+}
+
 - (void)handleForTap {}
+
+
+@end
+
+@interface NITableCommonViewHeaderFooterView()
+
+@property (retain, nonatomic) UIView *pri_commonView;
+
+@end
+
+@implementation NITableCommonViewHeaderFooterView
+
+- (BOOL)shouldUpdateHeaderFooterWithObject:(id)object
+{
+    if ([object isKindOfClass:[NICommonHeaderViewObject class]])
+    {
+        NICommonHeaderViewObject *commonViewHeaderObject = (NICommonHeaderViewObject *)object;
+        self.pri_commonView = commonViewHeaderObject.commonView;
+        if (self.pri_commonView)
+        {
+            self.pri_commonView.frame = CGRectMake(0, 0, CGRectGetWidth(self.pri_commonView.frame), CGRectGetHeight(self.pri_commonView.frame));
+            [self.contentView addSubview:self.pri_commonView];
+        }
+    }
+    else if ([object isKindOfClass:[NICommonFooterViewObject class]])
+    {
+        NICommonFooterViewObject *commonFooterViewObject = (NICommonFooterViewObject *)object;
+        self.pri_commonView = commonFooterViewObject.commonView;
+        if (self.pri_commonView)
+        {
+            self.pri_commonView.frame = CGRectMake(0, 0, CGRectGetWidth(self.pri_commonView.frame), CGRectGetHeight(self.pri_commonView.frame));
+            [self.contentView addSubview:self.pri_commonView];
+        }
+    }
+    
+    return YES;
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    if (self.pri_commonView) {
+        [self.pri_commonView removeFromSuperview];
+    }
+}
 
 @end

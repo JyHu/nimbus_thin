@@ -258,7 +258,7 @@
     if (self.sections && self.sections.count > 0) {
         NITableViewModelSection *section = [self.sections lastObject];
         if (!section.footerObject) {
-            section.headerObject = object;
+            section.footerObject = object;
             return [NSIndexSet indexSetWithIndex:self.sections.count - 1];
         }
     }

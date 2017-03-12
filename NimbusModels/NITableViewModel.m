@@ -452,24 +452,6 @@
     return nil;
 }
 
-- (UITableViewHeaderFooterView *)tableView:(UITableView *)tableView headerInSection:(NSUInteger)section
-{
-    NITableHeaderFooterObject *headerObject = [self objectForHeaderInSection:section];
-    if (headerObject && [self.delegate respondsToSelector:@selector(tableViewModel:headerForTableView:inSection:withObject:)]) {
-        return [self.delegate tableViewModel:self headerForTableView:tableView inSection:section withObject:headerObject];
-    }
-    return [NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:self object:headerObject];
-}
-
-- (UITableViewHeaderFooterView *)tableView:(UITableView *)tableView footerInSection:(NSUInteger)section
-{
-    NITableHeaderFooterObject *footerObject = [self objectForFooterInSection:section];
-    if (footerObject && [self.delegate respondsToSelector:@selector(tableViewModel:footerForTableView:inSection:withObject:)]) {
-        return [self.delegate tableViewModel:self footerForTableView:tableView inSection:section withObject:footerObject];
-    }
-    return [NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:self object:footerObject];
-}
-
 //获取指定cellobject对象的索引
 - (NSIndexPath *)indexPathForObject:(id)object {
     if (nil == object) {

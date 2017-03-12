@@ -8,6 +8,7 @@
 
 #import "NITableHeaderFooterFactory.h"
 #import "NITableHeaderFooterFactory+Private.h"
+#import "NITableHeaderFooterView+Private.h"
 
 
 
@@ -213,7 +214,7 @@
 
 + (instancetype)objectWithCommonView:(UIView *)view
 {
-    return [self objectWithCommonView:view headerClass:[NITableHeaderFooterView class] userInfo:nil];
+    return [self objectWithCommonView:view headerClass:[NITableCommonViewHeaderFooterView class] userInfo:nil];
 }
 
 + (instancetype)objectWithCommonView:(UIView *)view headerClass:(Class)cls userInfo:(id)userInfo
@@ -223,7 +224,7 @@
 
 - (instancetype)initWithCommonView:(UIView *)view
 {
-    return [self initWithCommonView:view headerClass:[NITableHeaderFooterView class] userInfo:nil];
+    return [self initWithCommonView:view headerClass:[NITableCommonViewHeaderFooterView class] userInfo:nil];
 }
 
 - (instancetype)initWithCommonView:(UIView *)view headerClass:(Class)cls userInfo:(id)userInfo
@@ -247,7 +248,7 @@
 
 + (instancetype)objectWithCommonView:(UIView *)view
 {
-    return [self objectWithCommonView:view footerClass:[NITableHeaderFooterView class] userInfo:nil];
+    return [self objectWithCommonView:view footerClass:[NITableCommonViewHeaderFooterView class] userInfo:nil];
 }
 
 + (instancetype)objectWithCommonView:(UIView *)view footerClass:(Class)cls userInfo:(id)userInfo
@@ -257,7 +258,7 @@
 
 - (instancetype)initWithCommonView:(UIView *)view
 {
-    return [self initWithCommonView:view footerClass:[NITableHeaderFooterView class] userInfo:nil];
+    return [self initWithCommonView:view footerClass:[NITableCommonViewHeaderFooterView class] userInfo:nil];
 }
 
 - (instancetype)initWithCommonView:(UIView *)view footerClass:(Class)cls userInfo:(id)userInfo

@@ -24,17 +24,45 @@
 {
     NSArray *tableContents = @[
                                [NITitleCellObject objectWithTitle:@"First section"],
-                               @"Section with rows",
+                               @"Section with rows              - 0",
                                [NITitleCellObject objectWithTitle:@"Row"],
                                [NITitleCellObject objectWithTitle:@"Row"],
                                [NITitleCellObject objectWithTitle:@"Row"],
                                
-                               @"Section without any row",
-                               
-                               @"Another section",
+                               @"Section without any row        - 1",
+                               [NITitleFooterObject objectWithTitle:@"footer - 1"],
+                               @"Another section                - 2",
                                [NITitleCellObject objectWithTitle:@"Row"],
                                
-                               @"",
+                               @"                               - 3",
+                               [NITitleCellObject objectWithTitle:@"This section has no header"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"First section"],
+                               @"Section with rows              - 4",
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               
+                               @"Section without any row        - 5",
+                               
+                               @"Another section                - 6",
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               
+                               @"                               - 7",
+                               [NITitleCellObject objectWithTitle:@"This section has no header"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"First section"],
+                               @"Section with rows              - 8",
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               
+                               @"Section without any row        - 9",
+                               
+                               @"Another section                - 10",
+                               [NITitleCellObject objectWithTitle:@"Row"],
+                               
+                               @"                               - 11",
                                [NITitleCellObject objectWithTitle:@"This section has no header"],
                                [NITitleCellObject objectWithTitle:@"Row"]
                                ];

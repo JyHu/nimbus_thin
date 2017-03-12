@@ -192,7 +192,7 @@
  @param tIndexPath 目标位置
  @return 移动的结果
  */
-- (BOOL)bringObjectFromIndexPath:(NSIndexPath *)fIndexPath toIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)bringObjectFromIndexPath:(NSIndexPath *)fIndexPath toIndexPath:(NSIndexPath *)tIndexPath;
 
 
 #pragma mark - 删除数据

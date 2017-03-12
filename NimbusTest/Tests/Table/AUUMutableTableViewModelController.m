@@ -10,7 +10,7 @@
 #import "NimbusModels.h"
 #import "NimbusCore.h"
 
-@interface AUUMutableTableViewModelController ()<NIMutableTableViewModelDelegate>
+@interface AUUMutableTableViewModelController ()<NIMutableTableViewModelDelegate, NITableHeaderFooterDelegate>
 
 @property (retain, nonatomic) NIMutableTableViewModel *model;
 
@@ -29,6 +29,10 @@
     [self loadData];
     self.tableView.dataSource = self.model;
     self.tableView.delegate = [self.actions forwardingTo:self];
+    [self.actions attachToClass:[NITableHeaderFooterObject class] tapBlock:^BOOL(id object, id target, NSIndexPath *indexPath) {
+        NSLog(@"tap block index %@", @([indexPath indexAtPosition:0]));
+        return YES;
+    }];
 }
 
 - (void)loadData
@@ -55,8 +59,8 @@
 
 - (void)didTapAddButton
 {
-    NSIndexSet *indexSet = [self.model addSectionHeaderWithTitle:[self randomName]];
-    [self.model addSectionFooterWithTitle:[NSString stringWithFormat:@"%@ -- footer", [self randomName]] toSection:[self.model numberOfSectionsInTableView:self.tableView] - 1];
+    NSIndexSet *indexSet = [self.model appendSectionHeaderWithTitle:[self randomName]];
+    [self.model addSectionFooterWithTitle:[NSString stringWithFormat:@"%@ -- footer", [self randomName]]];
     NSMutableArray *objects = [NSMutableArray array];
     for (NSInteger i = 0; i < arc4random_uniform(10) + 1; i ++) {
         [objects addObject:[self.actions attachToObject:[NITitleCellObject objectWithTitle:[self randomName]] tapBlock:^BOOL(id object, id target, NSIndexPath *indexPath) {
@@ -73,9 +77,11 @@
         }]];
     }
     NSArray *indexPaths = [self.model addObjectsFromArray:objects];
-    [self.model updateSectionIndex];
-    [self.tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView scrollToRowAtIndexPath:indexPaths.lastObject atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (indexSet) {
+        [self.model updateSectionIndex];
+        [self.tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView scrollToRowAtIndexPath:indexPaths.lastObject atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,6 +114,20 @@
 - (UITableViewCell *)tableViewModel:(NITableViewModel *)tableViewModel cellForTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath withObject:(id)object
 {
     return [NICellFactory tableViewModel:tableViewModel cellForTableView:tableView atIndexPath:indexPath withObject:object];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectSectionHeaderAtIndex:(NSUInteger)sectionIndex
+{
+    [self.model objectForHeaderInSection:sectionIndex];
+    
+    NSLog(@"在vc中响应点击表头的代理 ： %@", @(sectionIndex));
+}
+
+- (void)tableView:(UITableView *)tableView didSelectSectionFooterAtIndex:(NSUInteger)sectionIndex
+{
+    [self.model objectForFooterInSection:sectionIndex];
+    
+    NSLog(@"在vc中响应点击表尾的代理 ： %@", @(sectionIndex));
 }
 
 @end
