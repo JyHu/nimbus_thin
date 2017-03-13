@@ -31,7 +31,7 @@
 #endif // #if NS_BLOCKS_AVAILABLE
 
 
-- (id)initWithDelegate:(id<NITableViewModelCellDelegate>)delegate {
+- (id)initWithDelegate:(id<NITableViewModelViewsDelegate>)delegate {
     if ((self = [super init])) {
         self.delegate = delegate;
         
@@ -44,14 +44,14 @@
     return self;
 }
 
-- (id)initWithListArray:(NSArray *)listArray delegate:(id<NITableViewModelCellDelegate>)delegate {
+- (id)initWithListArray:(NSArray *)listArray delegate:(id<NITableViewModelViewsDelegate>)delegate {
     if ((self = [self initWithDelegate:delegate])) {
         [self _compileDataWithListArray:listArray];
     }
     return self;
 }
 
-- (id)initWithSectionedArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelCellDelegate>)delegate {
+- (id)initWithSectionedArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelViewsDelegate>)delegate {
     if ((self = [self initWithDelegate:delegate])) {
         [self _compileDataWithSectionedArray:sectionedArray];
     }

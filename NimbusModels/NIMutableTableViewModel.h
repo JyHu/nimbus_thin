@@ -23,7 +23,7 @@
  *
  * @ingroup TableViewModels
  */
-@protocol NIMutableTableViewModelDelegate <NSObject, NITableViewModelCellDelegate>
+@protocol NIMutableTableViewModelDelegate <NSObject, NITableViewModelViewsDelegate>
 
 @optional
 

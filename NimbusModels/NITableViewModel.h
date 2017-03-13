@@ -24,7 +24,7 @@
 typedef UITableViewCell* (^NITableViewModelCellForIndexPathBlock)(UITableView* tableView, NSIndexPath* indexPath, id object);
 #endif // #if NS_BLOCKS_AVAILABLE
 
-@protocol NITableViewModelCellDelegate;
+@protocol NITableViewModelViewsDelegate;
 
 
 #pragma mark Sectioned Array Objects
@@ -54,10 +54,10 @@ typedef enum {
 #pragma mark Creating Table View Models
 
 // Designated initializer.
-- (id)initWithDelegate:(id<NITableViewModelCellDelegate>)delegate;
-- (id)initWithListArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelCellDelegate>)delegate;
+- (id)initWithDelegate:(id<NITableViewModelViewsDelegate>)delegate;
+- (id)initWithListArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelViewsDelegate>)delegate;
 // Each NSString in the array starts a new section. Any other object is a new row (with exception of certain model-specific objects).
-- (id)initWithSectionedArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelCellDelegate>)delegate;
+- (id)initWithSectionedArray:(NSArray *)sectionedArray delegate:(id<NITableViewModelViewsDelegate>)delegate;
 
 #pragma mark Accessing Objects
 
@@ -75,7 +75,7 @@ typedef enum {
 
 #pragma mark Creating Table View Cells
 
-@property (nonatomic, weak) id<NITableViewModelCellDelegate> delegate;
+@property (nonatomic, weak) id<NITableViewModelViewsDelegate> delegate;
 
 #if NS_BLOCKS_AVAILABLE
 // If both the delegate and this block are provided, cells returned by this block will be used
@@ -92,7 +92,7 @@ typedef enum {
  *
  * @ingroup TableViewModels
  */
-@protocol NITableViewModelCellDelegate <NSObject>
+@protocol NITableViewModelViewsDelegate <NSObject>
 
 @required
 

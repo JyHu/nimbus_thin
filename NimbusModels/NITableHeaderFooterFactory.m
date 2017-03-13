@@ -275,10 +275,18 @@
 @implementation NITableHeaderFooterFactory
 
 - (UITableViewHeaderFooterView *)tableViewModel:(NITableViewModel *)tableViewModel
-                       headerFooterForTableView:(UITableView *)tableView
+                             headerForTableView:(UITableView *)tableView
                                       inSection:(NSUInteger)section withObject:(id)object
 {
     return [[self class] headerFooterForTable:tableView inSection:section withTableViewModel:tableViewModel object:object];
+}
+
+- (UITableViewHeaderFooterView *)tableViewModel:(NITableViewModel *)tableViewModel
+                             footerForTableView:(UITableView *)tableView
+                                      inSection:(NSUInteger)section withObject:(id)object
+{
+    return [[self class] headerFooterForTable:tableView inSection:section
+                           withTableViewModel:tableViewModel object:object];
 }
 
 + (UITableViewHeaderFooterView *)headerFooterForTable:(UITableView *)tableView

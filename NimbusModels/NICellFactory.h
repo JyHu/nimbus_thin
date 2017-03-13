@@ -40,13 +40,13 @@
  *
  * @ingroup TableCellFactory
  */
-@interface NICellFactory : NSObject <NITableViewModelCellDelegate>
+@interface NICellFactory : NSObject <NITableViewModelViewsDelegate>
 
 /**
  * Creates a cell from a given object if and only if the object conforms to the NICellObject
  * protocol.
  *
- * This method signature matches the NITableViewModelCellDelegate method so that you can
+ * This method signature matches the NITableViewModelViewsDelegate method so that you can
  * set this factory as the model's delegate:
  *
  * @code
@@ -165,7 +165,7 @@
 /** A nib that contains a table view cell to display this object's contents. */
 - (UINib *)cellNib;
 
-/** When call the tableView's heightForRowAtIndexPath method, we need get cell class and call NITableViewModelCellDelegate's heightForRowAtIndexPath */
+/** When call the tableView's heightForRowAtIndexPath method, we need get cell class and call NITableViewModelViewsDelegate's heightForRowAtIndexPath */
 - (Class)cellNibClass;
 
 @end
