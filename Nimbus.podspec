@@ -24,48 +24,48 @@ Pod::Spec.new do |s|
     "Stephane Moore" => "stephane.moore@gmail.com"
   }
   s.social_media_url   = "http://twitter.com/NimbusKit"
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/JyHu/nimbus_thin.git", :tag => s.version }
   s.requires_arc = true
 
   s.subspec 'AttributedLabel' do |ss|
-    ss.source_files = 'src/attributedlabel/src'
+    ss.source_files = 'NimbusAttributedLabel'
     ss.dependency 'Nimbus/Core'
   end
 
   s.subspec 'Core' do |ss|
-    ss.source_files = 'src/core/src'
+    ss.source_files = 'NimbusCore'
   end
 
   s.subspec 'Badge' do |ss|
-    ss.source_files = 'src/badge/src'
+    ss.source_files = 'NimbusBadge'
     ss.dependency 'Nimbus/Core'
   end
 
   s.subspec 'Collections' do |ss|
-    ss.source_files = 'src/collections/src'
+    ss.source_files = 'NimbusCollections'
     ss.dependency 'Nimbus/Core'
   end
 
   s.subspec 'Interapp' do |ss|
-    ss.source_files = 'src/interapp/src'
+    ss.source_files = 'NimbusInterapp'
     ss.dependency 'Nimbus/Core'
     ss.framework = 'CoreLocation'
   end
 
   s.subspec 'Launcher' do |ss|
-    ss.source_files = 'src/launcher/src'
+    ss.source_files = 'NimbusLauncher'
     ss.dependency 'Nimbus/Core'
     ss.dependency 'Nimbus/PagingScrollView'
   end
 
   s.subspec 'Models' do |ss|
-    ss.source_files = 'src/models/src'
+    ss.source_files = 'NimbusModels'
     ss.dependency 'Nimbus/Core'
   end
 
   s.subspec 'Overview' do |ss|
-    ss.source_files = 'src/overview/src'
+    ss.source_files = 'NimbusOverview'
     ss.dependency 'Nimbus/Core'
     ss.dependency 'Nimbus/Models'
     s.resource_bundles = {
@@ -74,12 +74,12 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'PagingScrollView' do |ss|
-    ss.source_files = 'src/pagingscrollview/src'
+    ss.source_files = 'NimbusPagingScrollView'
     ss.dependency 'Nimbus/Core'
   end
 
   s.subspec 'Textfield' do |ss|
-    ss.source_files = 'src/textfield/src'
+    ss.source_files = 'NimbusTextField'
     ss.dependency 'Nimbus/Core'
   end
 end
