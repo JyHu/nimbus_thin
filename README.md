@@ -36,6 +36,12 @@ Getting Started
 本项目源自nimbus，主要是由于原有项目过于久远，现在更新不多，还有ios技术的更新，旧的一些实现和API，现在已经有了新的替代方案，所以才抽取出来部分内容。在提取内容的同时，也做了一些优化和功能上的完善。
 目前我们的项目使用的也是这套框架。
 
+## USEAGE
+
+`pod 'Nimbus', :git => 'https://github.com/JyHu/nimbus_thin.git'`
+
+里面包含`Subspec`，可以使用例如`Nimbus/Models`的方式选择性的添加自己需要的内容。
+
 ## UPDATES
 
 * 清理掉里面过期的无用的framework和API
