@@ -221,20 +221,6 @@ CGFloat NIScreenScale(void);
  */
 BOOL NIIsRetina(void);
 
-/**
- * This method is now deprecated. Use [UIPopoverController class] instead.
- *
- * MAINTENANCE: Remove by Feb 28, 2014.
- */
-Class NIUIPopoverControllerClass(void) __NI_DEPRECATED_METHOD;
-
-/**
- * This method is now deprecated. Use [UITapGestureRecognizer class] instead.
- *
- * MAINTENANCE: Remove by Feb 28, 2014.
- */
-Class NIUITapGestureRecognizerClass(void) __NI_DEPRECATED_METHOD;
-
 #if defined(__cplusplus)
 } // extern "C"
 #endif

@@ -16,6 +16,9 @@
 
 #import "NIActions.h"
 
+/**
+ 私有方法，用于记录一些action
+ */
 @interface NIObjectActions : NSObject
 
 @property (nonatomic, copy) NIActionBlock tapAction;
@@ -32,6 +35,9 @@
 
 @property (nonatomic, weak) id target;
 
+/**
+ 根据给定的数据对象获取一个action，这个方法是私有的，可以在内部使用
+ */
 - (NIObjectActions *)actionForObjectOrClassOfObject:(id<NSObject>)object;
 
 @end

@@ -52,7 +52,6 @@
         self.detailTextLabel.text = detailHeaderObject.detail;
         self.textLabel.font = [UIFont boldSystemFontOfSize:15];
         self.detailTextLabel.font = [UIFont systemFontOfSize:15];
-        self.contentView.backgroundColor = [UIColor blueColor];
     }
     else if ([object isKindOfClass:[NISubTitleFooterObject class]])
     {
@@ -61,7 +60,6 @@
         self.detailTextLabel.text = detailFooterObject.detail;
         self.textLabel.font = [UIFont systemFontOfSize:15];
         self.detailTextLabel.font = [UIFont systemFontOfSize:15];
-        self.contentView.backgroundColor = [UIColor greenColor];
     }
     else if ([object isKindOfClass:[NITitleHeaderObject class]])
     {
@@ -168,7 +166,7 @@
         }
     }
     
-    return YES;
+    return [super shouldUpdateHeaderFooterWithObject:object];
 }
 
 - (void)prepareForReuse

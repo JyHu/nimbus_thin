@@ -64,9 +64,6 @@
 - (void)didSetObject:(id)object withName:(NSString *)name;
 - (void)willRemoveObject:(id)object withName:(NSString *)name;
 
-// Deprecated method. Use shouldSetObject:withName:previousObject: instead.
-- (BOOL)willSetObject:(id)object withName:(NSString *)name previousObject:(id)previousObject __NI_DEPRECATED_METHOD;
-
 @end
 
 /**

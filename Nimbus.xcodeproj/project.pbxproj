@@ -12,6 +12,7 @@
 		1C10CFE61E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFE41E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C10CFE91E73F8E9000B3860 /* 19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C10CFE81E73F8E9000B3860 /* 19.jpg */; };
 		1C10CFEC1E7478DC000B3860 /* NITableHeaderFooterView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFEA1E7478DC000B3860 /* NITableHeaderFooterView+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		1C10CFF41E764FA9000B3860 /* AUUTestDataTransitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C10CFF31E764FA9000B3860 /* AUUTestDataTransitionViewController.m */; };
 		1C9050E61E65B66E00B95641 /* NimbusAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9050DC1E65B66E00B95641 /* NimbusAttributedLabel.framework */; };
 		1C9050EB1E65B66E00B95641 /* NimbusAttributedLabelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9050EA1E65B66E00B95641 /* NimbusAttributedLabelTests.m */; };
 		1C9050ED1E65B66E00B95641 /* NimbusAttributedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C9050DF1E65B66E00B95641 /* NimbusAttributedLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -274,6 +275,8 @@
 		1C10CFE41E72AC5A000B3860 /* NITableHeaderFooterFactory+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NITableHeaderFooterFactory+Private.h"; sourceTree = "<group>"; };
 		1C10CFE81E73F8E9000B3860 /* 19.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 19.jpg; sourceTree = "<group>"; };
 		1C10CFEA1E7478DC000B3860 /* NITableHeaderFooterView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NITableHeaderFooterView+Private.h"; sourceTree = "<group>"; };
+		1C10CFF21E764FA9000B3860 /* AUUTestDataTransitionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUUTestDataTransitionViewController.h; sourceTree = "<group>"; };
+		1C10CFF31E764FA9000B3860 /* AUUTestDataTransitionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUUTestDataTransitionViewController.m; sourceTree = "<group>"; };
 		1C9050DC1E65B66E00B95641 /* NimbusAttributedLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NimbusAttributedLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C9050DF1E65B66E00B95641 /* NimbusAttributedLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NimbusAttributedLabel.h; sourceTree = "<group>"; };
 		1C9050E01E65B66E00B95641 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1085,6 +1088,8 @@
 				1C9053401E670F8F00B95641 /* AUUSectionedTableModelViewController.m */,
 				1C9053411E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.h */,
 				1C9053421E670F8F00B95641 /* AUUSnapshotRotationTableViewModelController.m */,
+				1C10CFF21E764FA9000B3860 /* AUUTestDataTransitionViewController.h */,
+				1C10CFF31E764FA9000B3860 /* AUUTestDataTransitionViewController.m */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -2144,6 +2149,7 @@
 				1C9053461E670F8F00B95641 /* AUUFormCellCatalogViewController.m in Sources */,
 				1C9053431E670F8F00B95641 /* AUUActionsTableModelViewController.m in Sources */,
 				1C90534A1E670F8F00B95641 /* AUUNestedRadioGroupViewModelController.m in Sources */,
+				1C10CFF41E764FA9000B3860 /* AUUTestDataTransitionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

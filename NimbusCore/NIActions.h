@@ -150,7 +150,7 @@ extern "C" {
  
  */
 typedef id (^NIParameterTransitionBlock) (id cellObject);
-
+    
 /**
  生成push的block的方法
  
@@ -174,7 +174,10 @@ NIActionBlock NIPushControllerAction(Class cls);
 NIActionBlock NIPresentControllerWithBlockAction(Class cls, id info, NIParameterTransitionBlock parametersBlock);
 NIActionBlock NIPresentControllerWithInfoAction(Class cls, id info);
 NIActionBlock NIPresentControllerAction(Class cls);
-
+    
+// 设置present时目标页面的navigationController类型
+void NISetNavigationControllerClass(Class cls);
+    
 #if defined __cplusplus
 };
 #endif
@@ -189,14 +192,39 @@ NIActionBlock NIPresentControllerAction(Class cls);
  */
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ 根据给定的分组索引获得section header的object
+
+ @param section 要获得header数据的分组索引
+ */
 - (id)objectForHeaderInSection:(NSUInteger)section;
 
+/**
+ 根据给定的分组索引获得section footer的object
+
+ @param section 要获得footer数据的分组索引
+ */
 - (id)objectForFooterInSection:(NSUInteger)section;
 
 @end
 
+/**
+ 页面跳转时用到的代理方法
+ 
+ 如果你使用 NIPushController....Action 与 NIPresentController....Action 系列方法进行页面的
+ 跳转的话，可以在目标页面实现这个协议，那么在页面跳转的时候这里就会自动的调用transitionFrom:withObject:userInfo:
+ 协议方法为你的目标页面传递相应的数据
+ 
+ */
 @protocol NIActionsDataTransition <NSObject>
 
+/**
+ 为你的目标页面传递相应的参数数据
+
+ @param controller 跳转开始的页面
+ @param object 相应视图的Object数据
+ @param info 附加的用户信息
+ */
 - (void)transitionFrom:(id)controller withObject:(id)object userInfo:(id)info;
 
 @end

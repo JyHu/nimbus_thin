@@ -280,9 +280,9 @@
     // sections are ordered (this may not be alphabetical).
     if (NITableViewModelSectionIndexDynamic == _sectionIndexType) {
         for (NITableViewModelSection* section in _sections) {
-            NITableHeaderFooterObject *headerFooterObject = section.headerObject;
-            if (headerFooterObject && [headerFooterObject isKindOfClass:[NITitleHeaderObject class]]) {
-                NITitleHeaderObject *titleHeaderObject = (NITitleHeaderObject *)headerFooterObject;
+            NITableHeaderFooterObject *headerObject = section.headerObject;
+            if (headerObject && [headerObject isKindOfClass:[NITitleHeaderObject class]]) {
+                NITitleHeaderObject *titleHeaderObject = (NITitleHeaderObject *)headerObject;
                 NSString* headerTitle = titleHeaderObject.title;
                 if ([headerTitle length] > 0) {
                     NSString* prefix = [headerTitle substringToIndex:1];
@@ -317,10 +317,10 @@
         // Map all of the sections to indices.
         NSInteger sectionIndex = 0;
         for (NITableViewModelSection* section in _sections) {
-            NITableHeaderFooterObject *headerFooterObject = section.headerObject;
-            if (headerFooterObject && [headerFooterObject isKindOfClass:[NITitleFooterObject class]]) {
-                NITitleFooterObject *titleFooterObject = (NITitleFooterObject *)headerFooterObject;
-                NSString* headerTitle = titleFooterObject.title;
+            NITableHeaderFooterObject *headerObject = section.headerObject;
+            if (headerObject && [headerObject isKindOfClass:[NITitleHeaderObject class]]) {
+                NITitleHeaderObject *titleHeaderObject = (NITitleHeaderObject *)headerObject;
+                NSString* headerTitle = titleHeaderObject.title;
                 if ([headerTitle length] > 0) {
                     NSString* prefix = [headerTitle substringToIndex:1];
                     if (nil == [sectionPrefixToSectionIndex objectForKey:prefix]) {

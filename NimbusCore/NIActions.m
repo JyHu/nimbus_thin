@@ -237,9 +237,11 @@ NIActionBlock NIPushControllerWithBlockAction(Class cls, id info, NIParameterTra
     return [^BOOL(id object, id target, NSIndexPath *indexPath) {
         UIViewController *destController = [[cls alloc] init];
         if ([destController isKindOfClass:[UIViewController class]]) {
+            // 从目标页面取出 UINavigationController ，用于push
             UINavigationController *navigationController = [target isKindOfClass:[UINavigationController class]] ?
                         (UINavigationController *)target : ((UIViewController *)target).navigationController;
             if (navigationController) {
+                // 如果目标页面实现了 NIActionsDataTransition 协议，那么就传递数据过去
                 if ([destController conformsToProtocol:@protocol(NIActionsDataTransition)]) {
                     id transferObject = parameterBlock ? parameterBlock(object) : object;
                     [(id <NIActionsDataTransition>)destController transitionFrom:target withObject:transferObject userInfo:info];
@@ -252,10 +254,17 @@ NIActionBlock NIPushControllerWithBlockAction(Class cls, id info, NIParameterTra
 }
 
 
-
-
 #pragma mark - controller present
 
+static Class __navigationControllerClass;
+void NISetNavigationControllerClass(Class cls) {
+    // 只有设置的是NavigationController才需要缓存，否则都设置成nil
+    if (cls == [UINavigationController class]) {
+        __navigationControllerClass = cls;
+    } else {
+        __navigationControllerClass = nil;
+    }
+}
 
 NIActionBlock NIPresentControllerAction(Class cls) {
     return NIPresentControllerWithInfoAction(cls, nil);
@@ -266,13 +275,17 @@ NIActionBlock NIPresentControllerWithInfoAction(Class cls, id info) {
 NIActionBlock NIPresentControllerWithBlockAction(Class cls, id info, NIParameterTransitionBlock parametersBlock) {
     return [^BOOL(id object, id target, NSIndexPath *indexPath) {
         UIViewController *destController = [[cls alloc] init];
-        if ([destController isKindOfClass:[UIViewController class]]) {
-            if ([target isKindOfClass:[UIViewController class]]) {
-                if ([destController conformsToProtocol:@protocol(NIActionsDataTransition)]) {
-                    id transferObject = parametersBlock ? parametersBlock(object) : object;
-                    [(id <NIActionsDataTransition>)destController transitionFrom:target withObject:transferObject userInfo:info];
-                }
-                [target presentViewController:[[UINavigationController alloc] initWithRootViewController:destController] animated:YES completion:nil];
+        if ([destController isKindOfClass:[UIViewController class]] && [target isKindOfClass:[UIViewController class]]) {
+            // 如果目标页面实现了 NIActionsDataTransition 协议，那么就传递数据过去
+            if ([destController conformsToProtocol:@protocol(NIActionsDataTransition)]) {
+                id transferObject = parametersBlock ? parametersBlock(object) : object;
+                [(id <NIActionsDataTransition>)destController transitionFrom:target withObject:transferObject userInfo:info];
+            }
+            // 如果目标页面不是 UINavigationController 而且 __navigationControllerClass 存在，那么就创建一个navigationController
+            if (![destController isKindOfClass:[UINavigationController class]] && __navigationControllerClass != NULL) {
+                [target presentViewController:[[__navigationControllerClass alloc] initWithRootViewController:destController] animated:YES completion:nil];
+            } else {
+                [target presentViewController:destController animated:YES completion:nil];
             }
         }
         return YES;

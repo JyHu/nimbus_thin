@@ -34,11 +34,6 @@ NSInvocation* NIInvocationWithInstanceTarget(NSObject *targetObject, SEL selecto
     return inv;
 }
 
-// Deprecated. Please delete on the next minor version upgrade.
-NSInvocation* NIInvocationWithClassTarget(Class targetClass, SEL selector) {
-    return NIInvocationWithInstanceTarget((NSObject *)targetClass, selector);
-}
-
 #pragma mark - CGRect
 
 CGRect NIRectContract(CGRect rect, CGFloat dx, CGFloat dy) {
@@ -266,16 +261,6 @@ NSString* NIStringByAddingQueryDictionaryToString(NSString* string, NSDictionary
 }
 
 #pragma mark - General Purpose
-
-// Deprecated.
-CGFloat boundf(CGFloat value, CGFloat min, CGFloat max) {
-    return NIBoundf(value, min, max);
-}
-
-// Deprecated.
-NSInteger boundi(NSInteger value, NSInteger min, NSInteger max) {
-    return NIBoundi(value, min, max);
-}
 
 CGFloat NIBoundf(CGFloat value, CGFloat min, CGFloat max) {
     if (max < min) {

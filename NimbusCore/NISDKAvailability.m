@@ -63,10 +63,3 @@ BOOL NIIsRetina(void) {
     return NIScreenScale() > 1.f;
 }
 
-Class NIUIPopoverControllerClass(void) {
-    return [UIPopoverController class];
-}
-
-Class NIUITapGestureRecognizerClass(void) {
-    return [UITapGestureRecognizer class];
-}

@@ -333,16 +333,6 @@ CGSize NISizeOfAttributedStringConstrainedToSize(NSAttributedString* attributedS
     [self.mutableAttributedString setKern:_textKern];
 }
 
-// Deprecated.
-- (void)setAttributedString:(NSAttributedString *)attributedString {
-    self.attributedText = attributedString;
-}
-
-// Deprecated.
-- (NSAttributedString *)attributedString {
-    return self.attributedText;
-}
-
 - (NSAttributedString *)attributedText {
     return [self.mutableAttributedString copy];
 }

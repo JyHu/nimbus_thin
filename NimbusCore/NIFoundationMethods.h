@@ -44,12 +44,6 @@ extern "C" {
  */
 NSInvocation* NIInvocationWithInstanceTarget(NSObject* target, SEL selector);
 
-/**
- * This method is deprecated. Please use NIInvocationWithInstanceTarget([object class], selector)
- * instead.
- */
-NSInvocation* NIInvocationWithClassTarget(Class targetClass, SEL selector) __NI_DEPRECATED_METHOD;
-
 #pragma mark - CGRect Methods
 
 /**
@@ -383,17 +377,7 @@ CG_INLINE CGFloat NICGFloatCos(CGFloat x) {
  * @defgroup General-Purpose-Methods General Purpose Methods
  * @{
  */
-
-/**
- * Deprecated method. Use NIBoundf instead.
- */
-CGFloat boundf(CGFloat value, CGFloat min, CGFloat max) __NI_DEPRECATED_METHOD; // Use NIBoundf instead. MAINTENANCE: Remove by Feb 28, 2014.
-
-/**
- * Deprecated method. Use NIBoundi instead.
- */
-NSInteger boundi(NSInteger value, NSInteger min, NSInteger max) __NI_DEPRECATED_METHOD; // Use NIBoundi instead. MAINTENANCE: Remove by Feb 28, 2014.
-
+    
 /**
  * Bounds a given value within the min and max values.
  *

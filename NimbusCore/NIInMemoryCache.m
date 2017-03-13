@@ -168,11 +168,6 @@
 
 #pragma mark - Subclassing
 
-// Deprecated method.
-- (BOOL)willSetObject:(id)object withName:(NSString *)name previousObject:(id)previousObject {
-    return [self shouldSetObject:object withName:name previousObject:previousObject];
-}
-
 - (BOOL)shouldSetObject:(id)object withName:(NSString *)name previousObject:(id)previousObject {
     // Allow anything to be stored.
     return YES;

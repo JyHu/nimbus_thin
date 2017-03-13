@@ -504,6 +504,11 @@
     return [self _effectiveSectionWithIndexPath:[NSIndexPath indexPathForRow:0 inSection:sectionIndex]];
 }
 
+/*
+ 根据给定的indexPath获取一个有效的section，index.{section, row}最多可以比现有的section数据的最后一条数据的indexPath大1。
+ 
+ 比如 indexPath{2,4}，最大的有效IndexPath为 indexPath{3,0}或者 indexPath{2, 5}
+ */
 - (NITableViewModelSection *)_effectiveSectionWithIndexPath:(NSIndexPath *)indexPath
 {
     if (!self.sections || self.sections == 0) {

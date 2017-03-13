@@ -76,9 +76,6 @@ extern NSString* const NIAttributedLabelLinkAttributeName; // Value is an NSText
  */
 @interface NIAttributedLabel : UILabel
 
-// Please use attributedText instead. MAINTENANCE: Remove by Feb 28, 2014.
-@property (nonatomic, copy) NSAttributedString* attributedString __NI_DEPRECATED_METHOD;
-
 @property (nonatomic) BOOL                autoDetectLinks;    // Default: NO
 @property (nonatomic) NSTextCheckingType  dataDetectorTypes;  // Default: NSTextCheckingTypeLink
 @property (nonatomic) BOOL                deferLinkDetection; // Default: NO
