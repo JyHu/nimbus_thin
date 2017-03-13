@@ -32,6 +32,9 @@
  * @param target The target that was attached to the NIActions instance.
  * @param indexPath The index path of the object.
  */
+/*
+ 如果是对于section的header、footer来说的话，要获取section的索引，应该这样用 ：[indexPath indexAtPosition:0]
+ */
 typedef BOOL (^NIActionBlock)(id object, id target, NSIndexPath* indexPath);
 
 /**

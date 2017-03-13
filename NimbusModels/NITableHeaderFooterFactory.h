@@ -173,7 +173,7 @@
 @end
 
 
-@interface NITableHeaderFooterFactory : NSObject
+@interface NITableHeaderFooterFactory : NSObject <NITableViewModelViewsDelegate>
 
 + (UITableViewHeaderFooterView *)headerFooterForTable:(UITableView *)tableView
                                             inSection:(NSUInteger)section
