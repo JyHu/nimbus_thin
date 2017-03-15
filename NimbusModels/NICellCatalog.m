@@ -153,6 +153,13 @@
     return YES;
 }
 
+- (void)transmitUserInfo:(id)userInfo
+{
+    if (self.pri_delegate && [self.pri_delegate respondsToSelector:@selector(tableView:transmitUserInfo:atIndexPath:)]) {
+        [self.pri_delegate tableView:self.pri_tableView transmitUserInfo:userInfo atIndexPath:[self.pri_tableView indexPathForCell:self]];
+    }
+}
+
 @end
 
 

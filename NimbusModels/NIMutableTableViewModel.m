@@ -125,7 +125,7 @@
  */
 - (NSArray *)setObjects:(NSArray *)objects toSection:(NSUInteger)sectionIndex
 {
-    if (objects && objects.count > 0) {
+    if (objects) {
         // 先取出目标组，如果有效的话，先清空这个分组内的数据，然后再添加数据到这个分组里
         NITableViewModelSection *section = [self _effectiveSectionAtIndex:sectionIndex];
         if (section) {

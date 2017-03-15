@@ -16,6 +16,7 @@
 
 #import "NITableViewModel.h"
 #import "NITableViewModel+Private.h"
+#import "NICellFactory+Private.h"
 #import "NITableHeaderFooterFactory.h"
 #import "NimbusCore.h"
 #import "NICellCatalog.h"
@@ -400,7 +401,7 @@
          cellForRowAtIndexPath: (NSIndexPath *)indexPath {
     id object = [self objectAtIndexPath:indexPath];
     
-    UITableViewCell* cell = nil;
+    NITextCell* cell = nil;
     
 #if NS_BLOCKS_AVAILABLE
     if (nil != self.createCellBlock) {
@@ -414,7 +415,8 @@
                                  atIndexPath:indexPath
                                   withObject:object];
     }
-    
+    cell.pri_tableView = tableView;
+    cell.pri_delegate = self.delegate;
     return cell;
 }
 
