@@ -34,6 +34,8 @@
 
 @protocol NITableHeaderFooterDelegate <NSObject>
 
+@optional
+
 /**
  事件传递的方法，用于将header、footer上的点击事件传递到viewController，只需要实现这个代理方法即可
 
@@ -42,6 +44,16 @@
  */
 - (void)tableView:(nullable UITableView *)tableView didSelectSectionHeaderAtIndex:(NSUInteger)sectionIndex;
 - (void)tableView:(nullable UITableView *)tableView didSelectSectionFooterAtIndex:(NSUInteger)sectionIndex;
+
+/**
+ 事件传递方法，用于将header、footer上用户自定义的事件数据传递到viewcontroller
+
+ @param tableView header、footer所在的table
+ @param userInfo 需要传递的用户数据
+ @param sectionIndex 索引
+ */
+- (void)tableView:(nullable UITableView *)tableView transmitUserInfo:(nullable id)userInfo atSectionHeaderWithIndex:(NSUInteger)sectionIndex;
+- (void)tableView:(nullable UITableView *)tableView transmitUserInfo:(nullable id)userInfo atSectionFooterWithIndex:(NSUInteger)sectionIndex;
 
 @end
 
@@ -68,6 +80,12 @@ typedef NS_ENUM(NSUInteger, NITableViewHeaderFooterType) {
  将点击事件传递到header、footer视图里，重写这个方法即可
  */
 - (void)handleForTap;
+
+// 将section header、footer上得数据、事件传递向viewcontroller
+// userInfo 需要传递的信息
+// 需要实现 tableView:transmitUserInfo:atSectionFooterWithIndex: 或 tableView:transmitUserInfo:atSectionHeaderWithIndex: 方法
+- (void)transmitHeaderInfo:(nullable id)userInfo;
+- (void)transmitFooterInfo:(nullable id)userInfo;
 
 @end
 

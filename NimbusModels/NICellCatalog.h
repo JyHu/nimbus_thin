@@ -16,7 +16,7 @@
 
 #import "NICellFactory.h"
 
-typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, id object, UITableViewCell* cell);
+typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, _Nullable id object,  UITableViewCell* _Nullable  cell);
 
 /**
  * An object that will draw the contents of the cell using a provided block.
@@ -25,10 +25,10 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, id object, UITableViewCell* 
  */
 @interface NIDrawRectBlockCellObject : NICellObject
 // Designated initializer.
-- (id)initWithBlock:(NICellDrawRectBlock)block object:(id)object;
-+ (id)objectWithBlock:(NICellDrawRectBlock)block object:(id)object;
-@property (nonatomic, copy) NICellDrawRectBlock block;
-@property (nonatomic, strong) id object;
+- (nullable id)initWithBlock:(nullable NICellDrawRectBlock)block object:(nullable id)object;
++ (nullable id)objectWithBlock:(nullable NICellDrawRectBlock)block object:(nullable id)object;
+@property (nonatomic, copy) _Nullable NICellDrawRectBlock block;
+@property (nonatomic, strong) _Nullable id object;
 @end
 
 /**
@@ -42,13 +42,13 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, id object, UITableViewCell* 
  */
 @interface NITitleCellObject : NICellObject
 // Designated initializer.
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image;
-- (id)initWithTitle:(NSString *)title;
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image cellClass:(Class)cellClass userInfo:(id)userInfo;
-+ (id)objectWithTitle:(NSString *)title image:(UIImage *)image;
-+ (id)objectWithTitle:(NSString *)title;
-@property (nonatomic, copy) NSString* title;
-@property (nonatomic, strong) UIImage* image;
+- (nullable id)initWithTitle:(nullable NSString *)title image:(nullable UIImage *)image;
+- (nullable id)initWithTitle:(nullable NSString *)title;
+- (nullable id)initWithTitle:(nullable NSString *)title image:(nullable UIImage *)image cellClass:(nullable Class)cellClass userInfo:(nullable id)userInfo;
++ (nullable id)objectWithTitle:(nullable NSString *)title image:(nullable UIImage *)image;
++ (nullable id)objectWithTitle:(nullable NSString *)title;
+@property (nonatomic, copy)  NSString* _Nullable  title;
+@property (nonatomic, strong)  UIImage* _Nullable  image;
 @end
 
 /**
@@ -62,12 +62,12 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, id object, UITableViewCell* 
  */
 @interface NISubtitleCellObject : NITitleCellObject
 // Designated initializer.
-- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle image:(UIImage *)image;
-- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
-- (id)initWithTitle:(NSString *)title subtitle:(NSString *)subtitle image:(UIImage *)image cellClass:(Class)cellClass userInfo:(id)userInfo;
-+ (id)objectWithTitle:(NSString *)title subtitle:(NSString *)subtitle image:(UIImage *)image;
-+ (id)objectWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
-@property (nonatomic, copy) NSString* subtitle;
+- (nullable id)initWithTitle:(nullable NSString *)title subtitle:(nullable NSString *)subtitle image:(nullable UIImage *)image;
+- (nullable id)initWithTitle:(nullable NSString *)title subtitle:(nullable NSString *)subtitle;
+- (nullable id)initWithTitle:(nullable NSString *)title subtitle:(nullable NSString *)subtitle image:(nullable UIImage *)image cellClass:(nullable Class)cellClass userInfo:(nullable id)userInfo;
++ (nullable id)objectWithTitle:(nullable NSString *)title subtitle:(nullable NSString *)subtitle image:(nullable UIImage *)image;
++ (nullable id)objectWithTitle:(nullable NSString *)title subtitle:(nullable NSString *)subtitle;
+@property (nonatomic, copy) NSString* _Nullable subtitle;
 @property (nonatomic, assign) UITableViewCellStyle cellStyle;
 @end
 
@@ -81,7 +81,18 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, id object, UITableViewCell* 
  */
 @interface NITextCell : UITableViewCell <NICell>
 
+/**
+ 在cell中，将自定义的操作信息传递到Viewcontroller里，在viewcontroller里需要
+ 实现NITextCellDelegate的tableView:transmitUserInfo:atIndexPath:这个协议方法。
+ 默认的在FTFTableViewController里已经添加了NITextCellDelegate协议，所以只需要实现
+ 这个协议方法即可。
+ 
+ @param userInfo 需要传递的信息
+ */
+- (void)transmitUserInfo:(nullable id)userInfo;
+
 @end
+
 
 /**
  * A cell that renders its contents using a block.
@@ -89,7 +100,26 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, id object, UITableViewCell* 
  * @ingroup TableCellCatalog
  */
 @interface NIDrawRectBlockCell : UITableViewCell <NICell>
-@property (nonatomic, strong) UIView* blockView;
+@property (nonatomic, strong) UIView* _Nullable blockView;
+@end
+
+
+@protocol NITextCellDelegate <NSObject>
+
+@optional
+
+/**
+ 点击cell的时候，往viewcontroller里传值的协议方法，如果想要从cell中往viewcontroller传值，
+ 调用cell的 `- (void)transmitUserInfo:(id)userInfo;` 方法，然后在vc中实现一下协议方法就可
+ 
+ @param tableView cell所在的table
+ @param userInfo 传递的信息
+ @param indexPath cell的索引
+ */
+- (void)tableView:(nullable UITableView *)tableView
+ transmitUserInfo:(nullable id)userInfo
+      atIndexPath:(nullable NSIndexPath *)indexPath;
+
 @end
 
 /**

@@ -14,12 +14,22 @@
 // limitations under the License.
 //
 
-#import "NICellFactory.h"
+#import "NICellCatalog.h"
 
 // Private classes for use in Nimbus.
 @interface NICellObject ()
 
 // A property to change the cell class of this cell object.
 @property(nonatomic, assign) Class cellClass;
+
+@end
+
+
+
+@interface NITextCell ()
+// 当前cell所在的table，在tableModel里默认的添加，用于数据的传递
+@property (weak, nonatomic) UITableView *pri_tableView;
+// cell上自定义信息事件的传递的代理，在tableModel里默认的添加，用于数据的传递
+@property (weak, nonatomic) id <NITextCellDelegate> pri_delegate;
 
 @end

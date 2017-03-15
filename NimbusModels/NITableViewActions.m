@@ -20,7 +20,7 @@
 #import "NimbusCore.h"
 #import "NIActions+Subclassing.h"
 #import <objc/runtime.h>
-#import "NITableHeaderFooterFactory.h"
+#import "NITableHeaderFooterFactory+Private.h"
 #import "NITableHeaderFooterView+Private.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -154,7 +154,7 @@
         headerView.type = NITableViewHeaderFooterTypeHeader;
         headerView.pri_sectionIndex = section;
         headerView.pri_tableView = tableView;
-        headerView.pri_headerFooterDelegate = self;
+        headerView.pri_headerFooterDelegate = self.forwardDelegates;
     }
     
     return headerView;
@@ -177,9 +177,16 @@
         footerView.type = NITableViewHeaderFooterTypeFooter;
         footerView.pri_sectionIndex = section;
         footerView.pri_tableView = tableView;
-        footerView.pri_headerFooterDelegate = self;
+        footerView.pri_headerFooterDelegate = self.forwardDelegates;
     }
     
+    // Forward the invocation along.
+    for (id<UITableViewDelegate> delegate in self.forwardDelegates) {
+        if ([delegate respondsToSelector:_cmd]) {
+            return [delegate tableView:tableView viewForFooterInSection:section];
+        }
+    }
+
     return footerView;
 }
 
@@ -193,6 +200,7 @@
             height = [class heightForObject:object atSection:section tableView:tableView];
         }
     }
+    
     return height;
 }
 
@@ -206,6 +214,13 @@
             height = [class heightForObject:object atSection:section tableView:tableView];
         }
     }
+    // Forward the invocation along.
+    for (id<UITableViewDelegate> delegate in self.forwardDelegates) {
+        if ([delegate respondsToSelector:_cmd]) {
+            return [delegate tableView:tableView heightForFooterInSection:section];
+        }
+    }
+    
     return height;
 }
 
@@ -218,6 +233,7 @@
             height = [class heightForObject:object atIndexPath:indexPath tableView:tableView];
         }
     }
+    
     return height;
 }
 

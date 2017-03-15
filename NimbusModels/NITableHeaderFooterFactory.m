@@ -59,10 +59,6 @@
     return self;
 }
 
-- (Class)headerFooterClass {
-    return [NITableHeaderFooterView class];
-}
-
 @end
 
 
@@ -273,6 +269,18 @@
 
 
 @implementation NITableHeaderFooterFactory
+
+- (Class)headerFooterClassFromObject:(id)object
+{
+    if (object == nil) {
+        return nil;
+    }
+    
+    Class objectClass = [object class];
+//    Class headerFooterClass = [self.obje]
+    
+    return nil;
+}
 
 - (UITableViewHeaderFooterView *)tableViewModel:(NITableViewModel *)tableViewModel
                              headerForTableView:(UITableView *)tableView
