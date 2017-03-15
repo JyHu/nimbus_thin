@@ -326,13 +326,6 @@
  */
 - (void)clearAllDatas;
 
-/**
- 获取当前tableView Model里的所有的数据
-
- @return 以二维数组的方式返回，每个一位数组为一个section里的所有数据
- */
-- (NSArray *)allDatas;
-
 - (void)updateSectionIndex;
 
 @property (nonatomic, weak) id<NIMutableTableViewModelDelegate> delegate;

@@ -486,6 +486,31 @@
     }
 }
 
+/**
+ 获取当前tableView Model里的所有的数据
+ 
+ @return 以二维数组的方式返回，每个一位数组为一个section里的所有数据
+ */
+- (NSArray *)allDatas
+{
+    NSMutableArray *datas = [[NSMutableArray alloc] initWithCapacity:self.sections.count];
+    for (NITableViewModelSection *section in self.sections) {
+        if (section.rows && section.rows.count > 0) {
+            [datas addObject:[section.rows mutableCopy]];
+        }
+    }
+    return datas;
+}
+
+- (NSArray *)objectsInSection:(NSUInteger)sectionIndex
+{
+    if (self.sections && self.sections.count > 0 && sectionIndex < self.sections.count) {
+        NITableViewModelSection *section = [self.sections objectAtIndex:sectionIndex];
+        return section.rows;
+    }
+    return nil;
+}
+
 @end
 
 
