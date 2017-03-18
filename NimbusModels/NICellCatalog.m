@@ -160,6 +160,14 @@
     }
 }
 
+- (void)reloadSelf
+{
+    if (self.pri_tableView) {
+        NSIndexPath *indexPath = [self.pri_tableView indexPathForCell:self];
+        [self.pri_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
 @end
 
 

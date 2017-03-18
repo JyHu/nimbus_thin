@@ -91,6 +91,11 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, _Nullable id object,  UITabl
  */
 - (void)transmitUserInfo:(nullable id)userInfo;
 
+/**
+ 在当前cell里刷新自己
+ */
+- (void)reloadSelf;
+
 @end
 
 
