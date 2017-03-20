@@ -221,6 +221,28 @@
     return nil;
 }
 
+/**
+ 根据给定的range删除cell数据
+ 
+ @param range 限定删除的开始位置和个数
+ @return 被清理掉的section的索引集合
+ */
+- (NSArray *)removeObjectsWithRange:(NSRange)range inSection:(NSUInteger)sectionIndex
+{
+    if (sectionIndex < self.sections.count) {
+        NITableViewModelSection *section = [self.sections objectAtIndex:sectionIndex];
+        if (range.location < section.rows.count) {
+            NSMutableArray *indexPaths = [[NSMutableArray alloc] init];
+            NSUInteger minIndex = MIN(range.location + range.length, section.rows.count);
+            for (NSUInteger i = minIndex - 1; i >= range.location; i --) {
+                [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
+                [section.mutableRows removeObjectAtIndex:i];
+            }
+            return indexPaths;
+        }
+    }
+    return nil;
+}
 
 #pragma mark - 追加一个分组，并设置header、footer视图
 #pragma mark -

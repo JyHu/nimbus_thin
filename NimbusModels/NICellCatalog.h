@@ -93,8 +93,12 @@ typedef CGFloat (^NICellDrawRectBlock)(CGRect rect, _Nullable id object,  UITabl
 
 /**
  在当前cell里刷新自己
+
+ @param animation 刷新的时候用的动画类型
  */
+- (void)reloadSelfWithRowAnimation:(UITableViewRowAnimation)animation;
 - (void)reloadSelf;
+
 
 @end
 

@@ -162,9 +162,14 @@
 
 - (void)reloadSelf
 {
+    [self reloadSelfWithRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)reloadSelfWithRowAnimation:(UITableViewRowAnimation)animation
+{
     if (self.pri_tableView) {
         NSIndexPath *indexPath = [self.pri_tableView indexPathForCell:self];
-        [self.pri_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.pri_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:animation];
     }
 }
 

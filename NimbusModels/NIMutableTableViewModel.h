@@ -180,7 +180,6 @@
  */
 - (NSArray *)setObjects:(NSArray *)objects toSection:(NSUInteger)sectionIndex;
 
-
 #pragma mark - 移动数据
 #pragma mark -
 
@@ -223,7 +222,13 @@
  */
 - (NSIndexSet *)removeObjectsInSection:(NSUInteger)sectionIndex;
 
+/**
+ 根据给定的range删除cell数据
 
+ @param range 限定删除的开始位置和个数
+ @return 被清理掉的section的索引集合
+ */
+- (NSArray *)removeObjectsWithRange:(NSRange)range inSection:(NSUInteger)sectionIndex;
 
 #pragma mark - 追加一个分组，并设置header、footer视图
 #pragma mark -
