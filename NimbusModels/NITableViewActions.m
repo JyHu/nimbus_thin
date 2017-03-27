@@ -154,7 +154,7 @@
         headerView.type = NITableViewHeaderFooterTypeHeader;
         headerView.pri_sectionIndex = section;
         headerView.pri_tableView = tableView;
-        headerView.pri_headerFooterDelegate = self.forwardDelegates;
+        headerView.pri_delegate = self;
     }
     
     return headerView;
@@ -177,16 +177,9 @@
         footerView.type = NITableViewHeaderFooterTypeFooter;
         footerView.pri_sectionIndex = section;
         footerView.pri_tableView = tableView;
-        footerView.pri_headerFooterDelegate = self.forwardDelegates;
+        footerView.pri_delegate = self;
     }
     
-    // Forward the invocation along.
-    for (id<UITableViewDelegate> delegate in self.forwardDelegates) {
-        if ([delegate respondsToSelector:_cmd]) {
-            return [delegate tableView:tableView viewForFooterInSection:section];
-        }
-    }
-
     return footerView;
 }
 
@@ -334,6 +327,7 @@
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
         object = [(id<NIActionsDataSource>)tableView.dataSource objectForHeaderInSection:index];
     }
+    
     [self tableView:tableView didSelectHeaderFooterViewWithObject:object sectionIndex:index type:NITableViewHeaderFooterTypeHeader];
 }
 
@@ -342,8 +336,28 @@
     id object = nil;
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
         object = [(id<NIActionsDataSource>)tableView.dataSource objectForFooterInSection:index];
+        [self performSelectorForTableHeaderFooterHandleWithObject:object];
     }
+    
     [self tableView:tableView didSelectHeaderFooterViewWithObject:object sectionIndex:index type:NITableViewHeaderFooterTypeFooter];
+}
+
+- (void)tableView:(UITableView *)tableView transmitUserInfo:(id)userInfo atSectionHeaderWithIndex:(NSUInteger)sectionIndex
+{
+    for (id<NITableHeaderFooterDelegate>delegate in self.forwardDelegates) {
+        if ([delegate respondsToSelector:_cmd]) {
+            [delegate tableView:tableView transmitUserInfo:userInfo atSectionHeaderWithIndex:sectionIndex];
+        }
+    }
+}
+
+- (void)tableView:(UITableView *)tableView transmitUserInfo:(id)userInfo atSectionFooterWithIndex:(NSUInteger)sectionIndex
+{
+    for (id<NITableHeaderFooterDelegate>delegate in self.forwardDelegates) {
+        if ([delegate respondsToSelector:_cmd]) {
+            [delegate tableView:tableView transmitUserInfo:userInfo atSectionFooterWithIndex:sectionIndex];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -378,39 +392,7 @@
 {
     NITableViewActions *strongSelf = self;
     if (object) {
-        if ([self isObjectActionable:object]) {
-            
-            NSUInteger indexes[1] = {sectionIndex};
-            NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:1];// [NSIndexPath indexPathWithIndex:index];
-            
-            NIObjectActions* action = [strongSelf actionForObjectOrClassOfObject:object];
-            if (action.tapAction) {
-                action.tapAction(object, strongSelf.target, indexPath);
-            }
-            if (action.tapSelector && [strongSelf.target respondsToSelector:action.tapSelector]) {
-                NSMethodSignature *methodSignature = [strongSelf.target methodSignatureForSelector:action.tapSelector];
-                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
-                invocation.selector = action.tapSelector;
-                if (methodSignature.numberOfArguments >= 3) {
-                    [invocation setArgument:&object atIndex:2];
-                }
-                if (methodSignature.numberOfArguments >= 4) {
-                    [invocation setArgument:&indexPath atIndex:3];
-                }
-                [invocation invokeWithTarget:strongSelf.target];
-            }
-            
-            if (action.navigateAction) {
-                action.navigateAction(object, strongSelf.target, indexPath);
-            }
-            
-            if (action.navigateSelector && [strongSelf.target respondsToSelector:action.navigateSelector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                [strongSelf.target performSelector:action.navigateSelector withObject:object withObject:indexPath];
-#pragma clang diagnostic pop
-            }
-        }
+        [self performSelectorForTableHeaderFooterHandleWithObject:object];
     }
     
     // Forward the invocation along.
@@ -423,6 +405,31 @@
             if ([delegate respondsToSelector:@selector(tableView:didSelectSectionFooterAtIndex:)]) {
                 [delegate tableView:tableView didSelectSectionFooterAtIndex:sectionIndex];
             }
+        }
+    }
+}
+
+- (void)performSelectorForTableHeaderFooterHandleWithObject:(id)object
+{
+    if ([self isObjectActionable:object]) {
+        NIObjectActions *action = [self actionForObjectOrClassOfObject:object];
+        if (action.tapAction) {
+            action.tapAction(object, self.target, [NSIndexPath indexPathWithIndex:index]);
+        }
+        if (action.tapSelector && [self.target respondsToSelector:action.tapSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [self.target performSelector:action.tapSelector withObject:object withObject:[NSIndexPath indexPathWithIndex:index]];
+#pragma clang diagnostic pop
+        }
+        if (action.navigateAction) {
+            action.navigateAction(object, self.target, [NSIndexPath indexPathWithIndex:index]);
+        }
+        if (action.navigateSelector && [self.target respondsToSelector:action.navigateSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [self.target performSelector:action.navigateSelector withObject:object withObject:[NSIndexPath indexPathWithIndex:index]];
+#pragma clang diagnostic pop
         }
     }
 }

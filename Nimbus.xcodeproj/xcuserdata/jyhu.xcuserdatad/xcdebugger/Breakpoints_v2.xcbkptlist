@@ -120,86 +120,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "NimbusModels/NITableViewActions.m"
-            timestampString = "511013501.573307"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NimbusModels/NITableViewActions.m"
-            timestampString = "511018338.775162"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
-            landmarkName = "-tableView:didSelectHeaderFooterViewWithObject:sectionIndex:type:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[NITableViewActions tableView:didSelectHeaderFooterViewWithObject:sectionIndex:type:]"
-                  moduleName = "NimbusModels"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jyhu/Dropbox/Objective-C/Fork/TinyNimbus/Nimbus/NimbusModels/NITableViewActions.m"
-                  timestampString = "511015492.166745"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "400"
-                  endingLineNumber = "400"
-                  offsetFromSymbolStart = "1993">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[NITableViewActions tableView:didSelectHeaderFooterViewWithObject:sectionIndex:type:]"
-                  moduleName = "NimbusModels"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jyhu/Dropbox/Objective-C/Fork/TinyNimbus/Nimbus/NimbusModels/NITableViewActions.m"
-                  timestampString = "511015492.170313"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "400"
-                  endingLineNumber = "400"
-                  offsetFromSymbolStart = "2001">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NimbusModels/NITableViewActions.m"
-            timestampString = "511013501.573307"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "NimbusTest/Tests/Table/AUUMutableTableViewModelController.m"
             timestampString = "511025898.543741"
             startingColumnNumber = "9223372036854775807"
@@ -255,22 +175,6 @@
             startingLineNumber = "144"
             endingLineNumber = "144"
             landmarkName = "-tableView:viewForHeaderInSection:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "NimbusModels/NITableViewActions.m"
-            timestampString = "511017695.454366"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "-tableView:viewForFooterInSection:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
