@@ -405,19 +405,19 @@
     
 #if NS_BLOCKS_AVAILABLE
     if (nil != self.createCellBlock) {
-        cell = self.createCellBlock(tableView, indexPath, object);
+        cell = (NITextCell *)self.createCellBlock(tableView, indexPath, object);
     }
 #endif
     
     if (nil == cell) {
-        cell = [self.delegate tableViewModel:self
+        cell = (NITextCell *)[self.delegate tableViewModel:self
                             cellForTableView:tableView
                                  atIndexPath:indexPath
                                   withObject:object];
     }
     if ([cell isKindOfClass:[NITextCell class]]) {
         cell.pri_tableView = tableView;
-        cell.pri_delegate = self.delegate;
+        cell.pri_delegate = (id <NITextCellDelegate>)self.delegate;
     }
     return cell;
 }

@@ -142,11 +142,11 @@
     
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
         NITableHeaderFooterObject *headerObject = [(id<NIActionsDataSource>)tableView.dataSource objectForHeaderInSection:section];
-        NITableViewModel *tableViewModel = tableView.dataSource;
+        NITableViewModel *tableViewModel = (NITableViewModel *)tableView.dataSource;
         if (headerObject && [tableViewModel.delegate respondsToSelector:@selector(tableViewModel:headerForTableView:inSection:withObject:)]) {
-            headerView = [tableViewModel.delegate tableViewModel:self headerForTableView:tableView inSection:section withObject:headerObject];
+            headerView = (NITableHeaderFooterView *)[tableViewModel.delegate tableViewModel:tableViewModel headerForTableView:tableView inSection:section withObject:headerObject];
         } else {
-            headerView = [NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:self object:headerObject];
+            headerView = (NITableHeaderFooterView *)[NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:tableViewModel object:headerObject];
         }
     }
     
@@ -165,11 +165,11 @@
     NITableHeaderFooterView *footerView = nil;
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
         NITableHeaderFooterObject *footerObject = [(id<NIActionsDataSource>)tableView.dataSource objectForFooterInSection:section];
-        NITableViewModel *tableViewModel = tableView.dataSource;
+        NITableViewModel *tableViewModel = (NITableViewModel *)tableView.dataSource;
         if (footerObject && [tableViewModel.delegate respondsToSelector:@selector(tableViewModel:footerForTableView:inSection:withObject:)]) {
-            footerView = [tableViewModel.delegate tableViewModel:self footerForTableView:tableView inSection:section withObject:footerObject];
+            footerView = (NITableHeaderFooterView *)[tableViewModel.delegate tableViewModel:tableViewModel footerForTableView:tableView inSection:section withObject:footerObject];
         } else {
-            footerView = [NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:self object:footerObject];
+            footerView = (NITableHeaderFooterView *)[NITableHeaderFooterFactory headerFooterForTable:tableView inSection:section withTableViewModel:tableViewModel object:footerObject];
         }
     }
     
@@ -336,7 +336,7 @@
     id object = nil;
     if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
         object = [(id<NIActionsDataSource>)tableView.dataSource objectForFooterInSection:index];
-        [self performSelectorForTableHeaderFooterHandleWithObject:object];
+        [self performSelectorForTableHeaderFooterHandleWithObject:object sectionIndex:index];
     }
     
     [self tableView:tableView didSelectHeaderFooterViewWithObject:object sectionIndex:index type:NITableViewHeaderFooterTypeFooter];
@@ -392,7 +392,7 @@
 {
     NITableViewActions *strongSelf = self;
     if (object) {
-        [self performSelectorForTableHeaderFooterHandleWithObject:object];
+        [self performSelectorForTableHeaderFooterHandleWithObject:object sectionIndex:sectionIndex];
     }
     
     // Forward the invocation along.
@@ -409,7 +409,7 @@
     }
 }
 
-- (void)performSelectorForTableHeaderFooterHandleWithObject:(id)object
+- (void)performSelectorForTableHeaderFooterHandleWithObject:(id)object sectionIndex:(NSInteger)index
 {
     if ([self isObjectActionable:object]) {
         NIObjectActions *action = [self actionForObjectOrClassOfObject:object];
