@@ -33,7 +33,7 @@
 
 /**
  在所有section的最后一个section插入一个数据，如果当前没有数据，默认的会新建一个section，并把数据方法第一个section里
-
+ 
  @param object 要插入的数据
  @return 插入位置的 IndexPath
  */
@@ -41,6 +41,7 @@
     // 因为是追加，所以直接取最后一个section即可，如果当前没有数据，则追加一个section
     NITableViewModelSection* section = self.sections.count == 0 ? [self _appendSection] : [self.sections lastObject];
     [section.mutableRows addObject:object];
+    [self notifierDataChange];
     return [NSArray arrayWithObject:[NSIndexPath indexPathForRow:section.mutableRows.count - 1
                                                        inSection:self.sections.count - 1]];
 }
@@ -49,7 +50,7 @@
  在指定的section最后追加一条数据，默认最远是当前所有section的后一个。
  比如当前有4个section，如果要追加到第5个的话，会新建一个section，然后把数据添加到第五个section里。
  如果要插入到第6个的话，就是超出最大的距离了。
-
+ 
  @param object 要追加的数据
  @param sectionIndex 要追加的数据所在的section的索引
  @return 追加数据位置的IndexPath
@@ -59,6 +60,7 @@
         NITableViewModelSection *section = [self _effectiveSectionAtIndex:sectionIndex];
         if (section) {
             [section.mutableRows addObject:object];
+            [self notifierDataChange];
             return @[ [NSIndexPath indexPathForRow:section.mutableRows.count - 1 inSection:sectionIndex] ];
         }
     }
@@ -68,21 +70,25 @@
 
 /**
  追加一组数据到最后一个分组，如果当前一个分组也没有，那么先在最后追加一个分组，然后把数据放置进去
-
+ 
  @param array 要追加的数据数组
  @return 追加的所有数据的IndexPath
  */
 - (NSArray *)addObjectsFromArray:(NSArray *)array {
-    NSMutableArray* indices = [NSMutableArray array];
-    for (id object in array) {
-        [indices addObject:[[self addObject:object] firstObject]];
+    if (array && array.count > 0) {
+        NSMutableArray* indices = [NSMutableArray array];
+        for (id object in array) {
+            [indices addObject:[[self addObject:object] firstObject]];
+        }
+        [self notifierDataChange];
+        return indices;
     }
-    return indices;
+    return nil;
 }
 
 /**
  插入一条数据到指定的位置
-
+ 
  @param object 要插入的数据
  @param indexPath 要插入的数据的位置
  @return 插入数据的IndexPath
@@ -91,6 +97,7 @@
     if (object) {
         NITableViewModelSection *section = [self _effectiveSectionWithIndexPath:indexPath];
         [section.mutableRows insertObject:object atIndex:indexPath.row];
+        [self notifierDataChange];
         return @[ indexPath ];
     }
     
@@ -99,7 +106,7 @@
 
 /**
  追加一组数据到指定的分组
-
+ 
  @param array 要追加的数据
  @param sectionIndex 要追加数据的分组的索引
  @return 追加的数据的 IndexPath
@@ -111,14 +118,16 @@
         for (id object in array) {
             [indexPathes addObject:[self addObject:object toSection:sectionIndex]];
         }
+        [self notifierDataChange];
         return indexPathes;
     }
+    [self notifierDataChange];
     return nil;
 }
 
 /**
  重新添加一个分组内的数据
-
+ 
  @param objects 要添加的数据列表
  @param sectionIndex 添加到的分组的索引
  @return 追加的数据的 IndexPath
@@ -133,7 +142,7 @@
             return [self addObjectsFromArray:objects toSection:sectionIndex];
         }
     }
-    
+    [self notifierDataChange];
     return nil;
 }
 
@@ -144,7 +153,7 @@
 
 /**
  移动一个数据到指定位置
-
+ 
  @param fIndexPath 开始位置
  @param tIndexPath 目标位置
  @return 移动的结果
@@ -162,7 +171,7 @@
             
             [fSection.mutableRows removeObjectAtIndex:fIndexPath.row];
             [tSection.mutableRows insertObject:fObject atIndex:tIndexPath.row];
-            
+            [self notifierDataChange];
             return YES;
         }
     }
@@ -176,7 +185,7 @@
 
 /**
  移除table数据中指定位置的数据
-
+ 
  @param indexPath 要移除的数据的位置
  @return 移除位置的 IndexPath
  */
@@ -185,6 +194,7 @@
         NITableViewModelSection* section = [self.sections objectAtIndex:indexPath.section];
         if (indexPath.row < section.mutableRows.count) {
             [section.mutableRows removeObjectAtIndex:indexPath.row];
+            [self notifierDataChange];
             return @[ indexPath ];
         }
     }
@@ -193,7 +203,7 @@
 
 /**
  清空指定section下的所有数据，但是保留这个section
-
+ 
  @param sectionIndex 要清理的section的索引
  @return 被清理掉的section的索引集合
  */
@@ -202,6 +212,7 @@
     if (sectionIndex < self.sections.count) {
         NITableViewModelSection *section = [self.sections objectAtIndex:sectionIndex];
         [section.mutableRows removeAllObjects];
+        [self notifierDataChange];
         return [NSIndexSet indexSetWithIndex:sectionIndex];
     }
     return nil;
@@ -209,13 +220,14 @@
 
 /**
  完全删除一个分组section
-
+ 
  @param sectionIndex 要删除的分组section
  @return 被删除的section的索引集合
  */
 - (NSIndexSet *)removeSectionAtIndex:(NSUInteger)sectionIndex {
     if (sectionIndex < self.sections.count) {
         [self.sections removeObjectAtIndex:sectionIndex];
+        [self notifierDataChange];
         return [NSIndexSet indexSetWithIndex:sectionIndex];
     }
     return nil;
@@ -238,6 +250,7 @@
                 [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:sectionIndex]];
                 [section.mutableRows removeObjectAtIndex:i];
             }
+            [self notifierDataChange];
             return indexPaths;
         }
     }
@@ -270,6 +283,7 @@
         NITableViewModelSection *section = [self.sections lastObject];
         if (!section.headerObject) {
             section.headerObject = object;
+            [self notifierDataChange];
             return [NSIndexSet indexSetWithIndex:self.sections.count - 1];
         }
     }
@@ -281,6 +295,7 @@
         NITableViewModelSection *section = [self.sections lastObject];
         if (!section.footerObject) {
             section.footerObject = object;
+            [self notifierDataChange];
             return [NSIndexSet indexSetWithIndex:self.sections.count - 1];
         }
     }
@@ -312,12 +327,14 @@
 {
     NITableViewModelSection *section = [self _appendSection];
     section.headerObject = object;
+    [self notifierDataChange];
     return [NSIndexSet indexSetWithIndex:self.sections.count - 1];
 }
 - (NSIndexSet *)appendSectionFooterWithObject:(id)object
 {
     NITableViewModelSection *section = [self _appendSection];
     section.footerObject = object;
+    [self notifierDataChange];
     return [NSIndexSet indexSetWithIndex:self.sections.count - 1];
 }
 
@@ -348,9 +365,11 @@
     if (section) {
         if (!section.headerObject) {
             section.headerObject = object;
+            [self notifierDataChange];
             return [NSIndexSet indexSetWithIndex:sectionIndex];
         }
     }
+    [self notifierDataChange];
     return nil;
 }
 - (NSIndexSet *)addSectionFooterWithObject:(id)object toSection:(NSUInteger)sectionIndex
@@ -359,9 +378,11 @@
     if (section) {
         if (!section.footerObject) {
             section.footerObject = object;
+            [self notifierDataChange];
             return [NSIndexSet indexSetWithIndex:sectionIndex];
         }
     }
+    [self notifierDataChange];
     return nil;
 }
 
@@ -391,8 +412,10 @@
     NITableViewModelSection *section = [self _effectiveSectionAtIndex:sectionIndex];
     if (section) {
         section.headerObject = object;
+        [self notifierDataChange];
         return [NSIndexSet indexSetWithIndex:sectionIndex];
     }
+    [self notifierDataChange];
     return nil;
 }
 - (NSIndexSet *)replaceSectionFooterWithObject:(id)object inSection:(NSUInteger)sectionIndex
@@ -400,8 +423,10 @@
     NITableViewModelSection *section = [self _effectiveSectionAtIndex:sectionIndex];
     if (section) {
         section.footerObject = object;
+        [self notifierDataChange];
         return [NSIndexSet indexSetWithIndex:sectionIndex];
     }
+    [self notifierDataChange];
     return nil;
 }
 
@@ -422,9 +447,11 @@
         NITableViewModelSection *section = [self.sections objectAtIndex:sectionIndex];
         if (section) {
             section.headerObject = nil;
+            [self notifierDataChange];
             return [NSIndexSet indexSetWithIndex:sectionIndex];
         }
     }
+    [self notifierDataChange];
     return nil;
 }
 - (NSIndexSet *)removeSectionFooterInSection:(NSUInteger)sectionIndex
@@ -433,9 +460,11 @@
         NITableViewModelSection *section = [self.sections objectAtIndex:sectionIndex];
         if (section) {
             section.footerObject = nil;
+            [self notifierDataChange];
             return [NSIndexSet indexSetWithIndex:sectionIndex];
         }
     }
+    [self notifierDataChange];
     return nil;
 }
 
@@ -450,6 +479,7 @@
     for (NITableViewModelSection *section in self.sections) {
         [section.mutableRows removeAllObjects];
     }
+    [self notifierDataChange];
 }
 
 /**
@@ -457,6 +487,7 @@
  */
 - (void)clearAllDatas {
     [self _setSectionsWithArray:@[]];
+    [self notifierDataChange];
 }
 
 - (void)updateSectionIndex {
@@ -465,6 +496,26 @@
 
 #pragma mark - Private
 
+- (void)notifierDataChange
+{
+    if (self.dataChangeBlock) {
+        NITableModelDataChangeNotifierType type = NINotifierDataChange;
+        NSArray *allDatas = [self allDatas];
+        if (allDatas && allDatas.count > 0) {
+            NSInteger count = 0;
+            for (NSArray *subCellObjects in allDatas) {
+                count += (subCellObjects ? subCellObjects.count : 0);
+            }
+            if (count == 0) {
+                type |= NINotifierNoData;
+            }
+        } else {
+            type |= NINotifierEmpty;
+        }
+        
+        self.dataChangeBlock(type);
+    }
+}
 
 /**
  拼接一个空得section

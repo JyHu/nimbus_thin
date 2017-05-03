@@ -120,7 +120,17 @@
  *
  * @ingroup TableViewModels
  */
+
+typedef NS_ENUM(NSUInteger, NITableModelDataChangeNotifierType) {
+    NINotifierDataChange    = 1 << 0,       // 当数据变动的时候
+    NINotifierNoData        = 1 << 1,       // 没有数据的时候，即没有cell的时候
+    NINotifierEmpty         = 1 << 2,       // 没有任何数据的时候，即连header都没有的时候
+};
+
+
 @interface NIMutableTableViewModel : NITableViewModel
+
+@property (copy, nonatomic) void (^dataChangeBlock)(NITableModelDataChangeNotifierType type);
 
 #pragma mark - 添加数据
 #pragma mark -
@@ -224,7 +234,7 @@
 
 /**
  根据给定的range删除cell数据
-
+ 
  @param range 限定删除的开始位置和个数
  @return 被清理掉的section的索引集合
  */
