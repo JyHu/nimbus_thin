@@ -125,6 +125,12 @@ typedef enum {
                                       inSection:(NSUInteger)section
                                      withObject:(id)object;
 
+/**
+ 当页面tablemodel切换过快或者滑动过快的时候会出现找不到CellObject的情况，导致返回空的cell，导致程序崩溃
+ 可以实现这个代理，用来返回一个占位的cell，避免崩溃
+ */
+- (id)placeholderCellObjectForTableViewModel:(NITableViewModel *)tableViewModel;
+
 @end
 
 

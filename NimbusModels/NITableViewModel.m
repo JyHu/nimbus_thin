@@ -435,7 +435,13 @@
             return [rows objectAtIndex:indexPath.row];
         }
     }
-    return nil;
+    
+    if (!object && [self.delegate respondsToSelector:@selector(placeholderCellObjectForTableViewModel:)]) {
+        object = [self.delegate placeholderCellObjectForTableViewModel:self];
+    }
+    
+    return object;
+
 }
 
 // 获取section header 的 object

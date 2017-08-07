@@ -13,6 +13,16 @@
 		1C10CFE91E73F8E9000B3860 /* 19.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C10CFE81E73F8E9000B3860 /* 19.jpg */; };
 		1C10CFEC1E7478DC000B3860 /* NITableHeaderFooterView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C10CFEA1E7478DC000B3860 /* NITableHeaderFooterView+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1C10CFF41E764FA9000B3860 /* AUUTestDataTransitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C10CFF31E764FA9000B3860 /* AUUTestDataTransitionViewController.m */; };
+		1C1CE1F71F024AEF0036941E /* NimbusAttributedLabel.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9050DC1E65B66E00B95641 /* NimbusAttributedLabel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1F81F024AF00036941E /* NimbusBadge.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9050F91E65B69700B95641 /* NimbusBadge.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1F91F024AF00036941E /* NimbusCollections.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9051211E65B78900B95641 /* NimbusCollections.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1FA1F024AF00036941E /* NimbusCore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9051511E65B7D000B95641 /* NimbusCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1FB1F024AF00036941E /* NimbusInterapp.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9051C51E65B81100B95641 /* NimbusInterapp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1FC1F024AF00036941E /* NimbusLauncher.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9051E51E65B84400B95641 /* NimbusLauncher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1FD1F024AF00036941E /* NimbusModels.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9052191E65B86600B95641 /* NimbusModels.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1FE1F024AF00036941E /* NimbusOverview.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C90525F1E65B8E300B95641 /* NimbusOverview.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE1FF1F024AF00036941E /* NimbusPagingScrollView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C90529B1E65B9CB00B95641 /* NimbusPagingScrollView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C1CE2001F024AF00036941E /* NimbusTextField.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1C9052C11E65BA8800B95641 /* NimbusTextField.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1C9050E61E65B66E00B95641 /* NimbusAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C9050DC1E65B66E00B95641 /* NimbusAttributedLabel.framework */; };
 		1C9050EB1E65B66E00B95641 /* NimbusAttributedLabelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9050EA1E65B66E00B95641 /* NimbusAttributedLabelTests.m */; };
 		1C9050ED1E65B66E00B95641 /* NimbusAttributedLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C9050DF1E65B66E00B95641 /* NimbusAttributedLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -268,6 +278,28 @@
 			remoteInfo = NimbusTextField;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1C1CE1F61F024ADA0036941E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1C1CE1F71F024AEF0036941E /* NimbusAttributedLabel.framework in CopyFiles */,
+				1C1CE1F81F024AF00036941E /* NimbusBadge.framework in CopyFiles */,
+				1C1CE1F91F024AF00036941E /* NimbusCollections.framework in CopyFiles */,
+				1C1CE1FA1F024AF00036941E /* NimbusCore.framework in CopyFiles */,
+				1C1CE1FB1F024AF00036941E /* NimbusInterapp.framework in CopyFiles */,
+				1C1CE1FC1F024AF00036941E /* NimbusLauncher.framework in CopyFiles */,
+				1C1CE1FD1F024AF00036941E /* NimbusModels.framework in CopyFiles */,
+				1C1CE1FE1F024AF00036941E /* NimbusOverview.framework in CopyFiles */,
+				1C1CE1FF1F024AF00036941E /* NimbusPagingScrollView.framework in CopyFiles */,
+				1C1CE2001F024AF00036941E /* NimbusTextField.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1C10CFE01E72A807000B3860 /* NITableHeaderFooterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NITableHeaderFooterFactory.h; sourceTree = "<group>"; };
@@ -1635,6 +1667,7 @@
 				1C90530E1E670ED200B95641 /* Sources */,
 				1C90530F1E670ED200B95641 /* Frameworks */,
 				1C9053101E670ED200B95641 /* Resources */,
+				1C1CE1F61F024ADA0036941E /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -4480,7 +4513,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyhu.NimbusTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "84004756-aedc-4295-95b4-4eee2ae8669c";
+				PROVISIONING_PROFILE = "d02c02fd-ebb6-431c-b3c2-c435794af836";
 				PROVISIONING_PROFILE_SPECIFIER = "hujinyou-mbp-dev-all-170329";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
