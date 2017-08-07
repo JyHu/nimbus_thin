@@ -426,13 +426,13 @@
 
 // 获取指定位置的cell object
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath == nil) {
-        return nil;
-    }
+    
+    id object = nil;
+    
     if ((NSUInteger)indexPath.section < self.sections.count) {
         NSArray *rows = [[self.sections objectAtIndex:indexPath.section] rows];
         if ((NSUInteger)indexPath.row < rows.count) {
-            return [rows objectAtIndex:indexPath.row];
+            object = [rows objectAtIndex:indexPath.row];
         }
     }
     
@@ -441,7 +441,6 @@
     }
     
     return object;
-
 }
 
 // 获取section header 的 object
