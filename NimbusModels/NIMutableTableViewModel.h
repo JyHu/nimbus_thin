@@ -173,6 +173,16 @@ typedef NS_ENUM(NSUInteger, NITableModelDataChangeNotifierType) {
 - (NSArray *)insertObject:(id)object atIndexPath:(NSIndexPath *)indexPath;
 
 /**
+ 插入一列数据到指定的分组的指定的位置
+ 
+ @param objects 要插入的数据列表
+ @param section 要插入到的分组
+ @param index 要插入到的位置
+ @return 插入数据的indexPath数组
+ */
+- (NSArray *)insertObjects:(NSArray *)objects inSection:(NSInteger)section atIndex:(NSInteger)index;
+
+/**
  追加一组数据到指定的分组
  
  @param array 要追加的数据
