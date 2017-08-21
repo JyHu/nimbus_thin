@@ -200,7 +200,18 @@
     return NO;
 }
 
-
+- (BOOL)replaceWithObject:(id)object atIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section < self.sections.count && object) {
+        NITableViewModelSection *tableModelSection = self.sections[indexPath.section];
+        if (indexPath.row < tableModelSection.rows.count) {
+            [tableModelSection.mutableRows replaceObjectAtIndex:indexPath.row withObject:object];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
 
 #pragma mark - 删除数据
 #pragma mark -

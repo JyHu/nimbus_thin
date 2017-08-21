@@ -213,6 +213,14 @@ typedef NS_ENUM(NSUInteger, NITableModelDataChangeNotifierType) {
  */
 - (BOOL)bringObjectFromIndexPath:(NSIndexPath *)fIndexPath toIndexPath:(NSIndexPath *)tIndexPath;
 
+/**
+ 替换某个索引位置的object
+ 
+ @param object 要用来替换的object
+ @param indexPath 要替换的索引
+ @return 替换的结果
+ */
+- (BOOL)replaceWithObject:(id)object atIndexPath:(NSIndexPath *)indexPath;
 
 #pragma mark - 删除数据
 #pragma mark -
