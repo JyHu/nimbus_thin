@@ -78,6 +78,13 @@
 
 @end
 
+@protocol NIRadioGroupItemDelegate <NSObject>
+
+@optional
+- (void)radioGroup:(NIRadioGroup *)radioGroup itemSelectionChanged:(BOOL)selected;
+
+@end
+
 /**
  * The delegate for NIRadioGroup.
  *

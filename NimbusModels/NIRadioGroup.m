@@ -225,10 +225,14 @@ static const NSInteger kInvalidSelection = NSIntegerMin;
         NITableViewModel* model = (NITableViewModel *)tableView.dataSource;
         id object = [model objectAtIndexPath:indexPath];
         if ([self isObjectInRadioGroup:object]) {
-            cell.accessoryType = ([self isObjectSelected:object]
-                                  ? UITableViewCellAccessoryCheckmark
-                                  : UITableViewCellAccessoryNone);
-            cell.selectionStyle = self.tableViewCellSelectionStyle;
+            if ([object conformsToProtocol:@protocol(NIRadioGroupItemDelegate)] && [object respondsToSelector:@selector(radioGroup:itemSelectionChanged:)]) {
+                [object radioGroup:self itemSelectionChanged:[self isObjectSelected:object]];
+            } else {
+                cell.accessoryType = ([self isObjectSelected:object]
+                                      ? UITableViewCellAccessoryCheckmark
+                                      : UITableViewCellAccessoryNone);
+                cell.selectionStyle = self.tableViewCellSelectionStyle;
+            }
         }
     }
     
