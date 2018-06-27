@@ -204,6 +204,8 @@
 		1C9053551E6712CD00B95641 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 1C9053531E6712CD00B95641 /* star.png */; };
 		1C9053601E6726AD00B95641 /* NITableHeaderFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C90535E1E6726AD00B95641 /* NITableHeaderFooterView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1C9053611E6726AD00B95641 /* NITableHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C90535F1E6726AD00B95641 /* NITableHeaderFooterView.m */; };
+		668805FB20E35CF0005F9CC8 /* NITableViewHeightAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 668805F920E35CF0005F9CC8 /* NITableViewHeightAction.h */; };
+		668805FC20E35CF0005F9CC8 /* NITableViewHeightAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 668805FA20E35CF0005F9CC8 /* NITableViewHeightAction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -530,6 +532,8 @@
 		1C9053531E6712CD00B95641 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		1C90535E1E6726AD00B95641 /* NITableHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NITableHeaderFooterView.h; sourceTree = "<group>"; };
 		1C90535F1E6726AD00B95641 /* NITableHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NITableHeaderFooterView.m; sourceTree = "<group>"; };
+		668805F920E35CF0005F9CC8 /* NITableViewHeightAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NITableViewHeightAction.h; sourceTree = "<group>"; };
+		668805FA20E35CF0005F9CC8 /* NITableViewHeightAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NITableViewHeightAction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -969,6 +973,8 @@
 				1C90523F1E65B89400B95641 /* NIRadioGroupController.m */,
 				1C9052401E65B89400B95641 /* NITableViewActions.h */,
 				1C9052411E65B89400B95641 /* NITableViewActions.m */,
+				668805F920E35CF0005F9CC8 /* NITableViewHeightAction.h */,
+				668805FA20E35CF0005F9CC8 /* NITableViewHeightAction.m */,
 				1C9052421E65B89400B95641 /* NITableViewModel.h */,
 				1C9052431E65B89400B95641 /* NITableViewModel.m */,
 				1C9052441E65B89400B95641 /* NITableViewModel+Private.h */,
@@ -1247,6 +1253,7 @@
 				1C90524E1E65B89400B95641 /* NIMutableTableViewModel.h in Headers */,
 				1C90524C1E65B89400B95641 /* NIFormCellCatalog.h in Headers */,
 				1C9052451E65B89400B95641 /* NICellBackgrounds.h in Headers */,
+				668805FB20E35CF0005F9CC8 /* NITableViewHeightAction.h in Headers */,
 				1C9052571E65B89400B95641 /* NITableViewModel.h in Headers */,
 				1C9052551E65B89400B95641 /* NITableViewActions.h in Headers */,
 				1C9052531E65B89400B95641 /* NIRadioGroupController.h in Headers */,
@@ -1688,7 +1695,7 @@
 				TargetAttributes = {
 					1C9050DB1E65B66E00B95641 = {
 						CreatedOnToolsVersion = 8.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					1C9050E41E65B66E00B95641 = {
 						CreatedOnToolsVersion = 8.1;
@@ -1768,7 +1775,7 @@
 					};
 					1C9053111E670ED200B95641 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = NFE8L9VTV6;
+						DevelopmentTeam = UG5A43U6UD;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -2105,6 +2112,7 @@
 				1C10CFE31E72A807000B3860 /* NITableHeaderFooterFactory.m in Sources */,
 				1C9052521E65B89400B95641 /* NIRadioGroup.m in Sources */,
 				1C9052481E65B89400B95641 /* NICellCatalog.m in Sources */,
+				668805FC20E35CF0005F9CC8 /* NITableViewHeightAction.m in Sources */,
 				1C9052461E65B89400B95641 /* NICellBackgrounds.m in Sources */,
 				1C90524A1E65B89400B95641 /* NICellFactory.m in Sources */,
 			);
@@ -2343,10 +2351,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2374,6 +2384,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyhu.NimbusAttributedLabel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2405,10 +2416,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2429,6 +2442,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyhu.NimbusAttributedLabel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4489,7 +4503,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = NFE8L9VTV6;
+				DEVELOPMENT_TEAM = UG5A43U6UD;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -4513,8 +4527,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jyhu.NimbusTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d02c02fd-ebb6-431c-b3c2-c435794af836";
-				PROVISIONING_PROFILE_SPECIFIER = "hujinyou-mbp-dev-all-170329";
+				PROVISIONING_PROFILE = "a5888ce5-6ce2-4872-8497-89e2ed0559a9";
+				PROVISIONING_PROFILE_SPECIFIER = dev_any_ids;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

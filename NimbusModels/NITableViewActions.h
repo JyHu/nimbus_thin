@@ -62,6 +62,8 @@
 
 @property (nonatomic, assign) UITableViewCellSelectionStyle tableViewCellSelectionStyle;
 
+@property (nonatomic, assign) BOOL estimatedEnable;
+
 @end
 
 /** @name Forwarding */

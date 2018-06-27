@@ -22,6 +22,7 @@
 #import <objc/runtime.h>
 #import "NITableHeaderFooterFactory+Private.h"
 #import "NITableHeaderFooterView+Private.h"
+#import "NITableViewHeightAction.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "Nimbus requires ARC support."
@@ -29,6 +30,7 @@
 
 @interface NITableViewActions() <NITableHeaderFooterDelegate>
 @property (nonatomic, strong) NSMutableSet* forwardDelegates;
+@property (nonatomic, strong) NITableViewHeightAction *heightAction;
 @end
 
 @implementation NITableViewActions
@@ -55,7 +57,6 @@
 - (BOOL)respondsToSelector:(SEL)selector {
     if ([super respondsToSelector:selector]) {
         return YES;
-        
     } else if ([self shouldForwardSelector:selector]) {
         for (id delegate in self.forwardDelegates) {
             if ([delegate respondsToSelector:selector]) {
@@ -218,16 +219,20 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height = tableView.rowHeight;
-    if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
-        id object = [(id<NIActionsDataSource>)tableView.dataSource objectAtIndexPath:indexPath];
-        id class = [object cellClass];
-        if ([class respondsToSelector:@selector(heightForObject:atIndexPath:tableView:)]) {
-            height = [class heightForObject:object atIndexPath:indexPath tableView:tableView];
+    if (self.estimatedEnable) {
+        return UITableViewAutomaticDimension;
+    } else {    
+        CGFloat height = tableView.rowHeight;
+        if ([tableView.dataSource conformsToProtocol:@protocol(NIActionsDataSource)]) {
+            id object = [(id<NIActionsDataSource>)tableView.dataSource objectAtIndexPath:indexPath];
+            id class = [object cellClass];
+            if ([class respondsToSelector:@selector(heightForObject:atIndexPath:tableView:)]) {
+                height = [class heightForObject:object atIndexPath:indexPath tableView:tableView];
+            }
         }
+        
+        return height;
     }
-    
-    return height;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -431,6 +436,23 @@
             [self.target performSelector:action.navigateSelector withObject:object withObject:[NSIndexPath indexPathWithIndex:index]];
 #pragma clang diagnostic pop
         }
+    }
+}
+
+- (NITableViewHeightAction *)heightAction {
+    if (!_heightAction) {
+        _heightAction = [[NITableViewHeightAction alloc] init];
+    }
+    return _heightAction;
+}
+
+- (void)setEstimatedEnable:(BOOL)estimatedEnable {
+    _estimatedEnable = estimatedEnable;
+    
+    if (estimatedEnable && [self.forwardDelegates containsObject:self.heightAction]) {
+        [self.forwardDelegates removeObject:self.heightAction];
+    } else if (!estimatedEnable && ![self.forwardDelegates containsObject:self.heightAction]) {
+        [self.forwardDelegates addObject:self.heightAction];
     }
 }
 
